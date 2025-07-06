@@ -68,8 +68,8 @@ internal fun LoginPager(
     navController: NavController,
     viewModel: LoginWithEmailPhoneViewModel
 ) {
-    val pagerState = rememberPagerState()
     val pages = LoginPages.values().asList()
+    val pagerState = rememberPagerState(pageCount = { pages.size })
     val coroutineScope = rememberCoroutineScope()
     LaunchedEffect(key1 = pagerState) {
         snapshotFlow { pagerState.settledPage }.collect {
@@ -110,7 +110,6 @@ internal fun LoginPager(
     HorizontalPager(
         modifier = Modifier.fillMaxSize(),
         state = pagerState,
-        pageCount = pages.size,
         key = { it }
     ) { page ->
 

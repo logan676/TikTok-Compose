@@ -84,7 +84,7 @@ private fun PhoneNumberField(
         textStyle = MaterialTheme.typography.labelLarge,
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.colors(
             containerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
