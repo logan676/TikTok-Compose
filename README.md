@@ -45,6 +45,7 @@ This app consist of following modules:
 - domain
 - common
 - core
+- filter - provides video filter capabilities accessed via the camera screen
 
 <img src="screenshots/tiktokcompose_modularization.jpg" width=760  />
 
