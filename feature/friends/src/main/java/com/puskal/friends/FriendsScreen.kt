@@ -8,7 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
-import com.puskal.core.utils.SessionManager
+import com.puskal.core.SessionManager
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute.AUTHENTICATION_ROUTE
 import com.puskal.theme.R

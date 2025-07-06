@@ -24,7 +24,6 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
 import com.puskal.core.AppContract
-import com.puskal.core.SessionManager
 import com.puskal.core.extension.Space
 import com.puskal.loginwithemailphone.LoginEmailPhoneEvent
 import com.puskal.loginwithemailphone.LoginWithEmailPhoneViewModel
