@@ -7,7 +7,7 @@ import android.graphics.ColorMatrix
  */
 enum class VideoFilter(val title: String, val colorMatrix: ColorMatrix?) {
     NONE("None", null),
-    GRAY("Gray", ColorMatrix().apply { setToSaturation(0f) }),
+    GRAY("Gray", ColorMatrix().apply { setSaturation(0f) }),
     SEPIA("Sepia", ColorMatrix().apply { setScale(1f, 0.95f, 0.82f, 1f) }),
     INVERT("Invert", ColorMatrix(floatArrayOf(
         -1f, 0f, 0f, 0f, 255f,
