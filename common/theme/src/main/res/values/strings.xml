@@ -53,6 +53,7 @@
     <string name="email_username">Email / Username</string>
     <string name="phone_number">Phone number</string>
     <string name="enter_email_address_or_username">Enter email address or username</string>
+    <string name="password">Password</string>
     <string name="next">Next</string>
     <string name="by_continuing_you_agree">By continuing, you agree to our </string>
     <string name="and_acknowledge_that_you_have">and acknowledge that you have read our</string>
