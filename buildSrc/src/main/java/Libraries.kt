@@ -35,7 +35,7 @@ object Version {
     const val HiltAndroidVersion = "2.44"
     const val Media3 = "1.0.0-rc02"
     const val Accompanist = "0.28.0"
-    const val SplashScreenApi = "1.1.0-alpha01"
+    const val SplashScreenApi = "1.0.1"
     const val ConstraintLayoutCompose = "1.0.1"
     const val GsonVersion = "2.10.1"
     const val CameraXVersion = "1.3.0-alpha05"
