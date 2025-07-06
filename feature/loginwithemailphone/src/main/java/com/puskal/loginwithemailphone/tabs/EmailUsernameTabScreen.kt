@@ -24,6 +24,7 @@ import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
 import com.puskal.core.AppContract
+import com.puskal.core.SessionManager
 import com.puskal.core.extension.Space
 import com.puskal.loginwithemailphone.LoginEmailPhoneEvent
 import com.puskal.loginwithemailphone.LoginWithEmailPhoneViewModel
@@ -63,8 +64,7 @@ fun EmailUsernameTabScreen(
                 modifier = Modifier.fillMaxWidth(),
                 isEnabled = email.first.isNotEmpty() && password.isNotEmpty()
             ) {
-                SessionManager.isLoggedIn = true
-                SessionManager.email = email.first
+                SessionManager.logIn(email.first)
                 navController.popBackStack()
             }
         }
@@ -96,7 +96,7 @@ fun EmailField(email: Pair<String, String?>, viewModel: LoginWithEmailPhoneViewM
         onValueChange = { viewModel.onTriggerEvent(LoginEmailPhoneEvent.OnChangeEmailEntry(it)) },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.colors(
             containerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
@@ -145,7 +145,7 @@ fun PasswordField(password: String, viewModel: LoginWithEmailPhoneViewModel) {
         },
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         singleLine = true,
-        colors = TextFieldDefaults.textFieldColors(
+        colors = TextFieldDefaults.colors(
             containerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,

@@ -81,11 +81,10 @@ fun VideoItem(
     creatorList: List<ContentCreatorFollowingModel>,
     onclickUser: (userId: Long) -> Unit
 ) {
-    val pagerState = rememberPagerState()
+    val pagerState = rememberPagerState(pageCount = { creatorList.size })
     HorizontalPager(
-        pageCount = creatorList.size,
-        contentPadding = PaddingValues(horizontal = 54.dp),
         state = pagerState,
+        contentPadding = PaddingValues(horizontal = 54.dp),
         beyondBoundsPageCount = 1
     ) {
         CreatorCard(
