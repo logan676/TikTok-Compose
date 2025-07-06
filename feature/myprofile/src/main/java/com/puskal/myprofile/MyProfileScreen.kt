@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
+import com.puskal.composable.LoggedInInfo
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute
 import com.puskal.core.DestinationRoute.SETTING_ROUTE
@@ -44,7 +45,7 @@ fun MyProfileScreen(navController: NavController) {
                 .fillMaxSize()
         ) {
             if (SessionManager.isLoggedIn) {
-                Text(text = "Logged in as ${SessionManager.email}")
+                LoggedInInfo(SessionManager.email ?: "")
             } else {
                 UnAuthorizedInboxScreen {
                     navController.navigate(DestinationRoute.AUTHENTICATION_ROUTE)

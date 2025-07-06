@@ -102,5 +102,7 @@
     <string name="timer">Timer</string>
     <string name="flash">Flash</string>
     <string name="upload_photos">Upload photos</string>
+    <string name="logged_in_as">Logged in as %1$s</string>
+    <string name="demo_video_compositor">This is a demo for video compositor</string>
 
 </resources>
