@@ -3,6 +3,11 @@ package com.puskal.cameramedia.gl
 import android.content.Context
 import android.graphics.SurfaceTexture
 import android.opengl.GLES20
+import android.opengl.EGL14
+import android.opengl.EGLConfig
+import android.opengl.EGLContext
+import android.opengl.EGLDisplay
+import android.opengl.EGLSurface
 import android.view.Surface
 import android.view.TextureView
 import androidx.camera.core.Preview
@@ -23,8 +28,55 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
     private var previewFilter: GlPreviewFilter? = null
     private var glFilter: GlFilter = GlFilter()
 
+    private var eglDisplay: EGLDisplay? = null
+    private var eglContext: EGLContext? = null
+    private var eglSurface: EGLSurface? = null
+
     init {
         surfaceTextureListener = this
+    }
+
+    private fun initEgl(surface: SurfaceTexture) {
+        eglDisplay = EGL14.eglGetDisplay(EGL14.EGL_DEFAULT_DISPLAY)
+        if (eglDisplay == EGL14.EGL_NO_DISPLAY) {
+            throw RuntimeException("unable to get EGL14 display")
+        }
+        val version = IntArray(2)
+        if (!EGL14.eglInitialize(eglDisplay, version, 0, version, 1)) {
+            eglDisplay = null
+            throw RuntimeException("unable to initialize EGL14")
+        }
+
+        val attribList = intArrayOf(
+            EGL14.EGL_RED_SIZE, 8,
+            EGL14.EGL_GREEN_SIZE, 8,
+            EGL14.EGL_BLUE_SIZE, 8,
+            EGL14.EGL_RENDERABLE_TYPE, EGL14.EGL_OPENGL_ES2_BIT,
+            EGL14.EGL_NONE
+        )
+        val configs = arrayOfNulls<EGLConfig>(1)
+        val num = IntArray(1)
+        EGL14.eglChooseConfig(eglDisplay, attribList, 0, configs, 0, configs.size, num, 0)
+        val attrib_list = intArrayOf(EGL14.EGL_CONTEXT_CLIENT_VERSION, 2, EGL14.EGL_NONE)
+        eglContext = EGL14.eglCreateContext(eglDisplay, configs[0], EGL14.EGL_NO_CONTEXT, attrib_list, 0)
+        val surfaceAttribs = intArrayOf(EGL14.EGL_NONE)
+        eglSurface = EGL14.eglCreateWindowSurface(eglDisplay, configs[0], surface, surfaceAttribs, 0)
+        if (eglSurface == null) {
+            throw RuntimeException("surface was null")
+        }
+        EGL14.eglMakeCurrent(eglDisplay, eglSurface, eglSurface, eglContext)
+    }
+
+    private fun releaseEgl() {
+        eglDisplay?.let { display ->
+            eglSurface?.let { EGL14.eglDestroySurface(display, it) }
+            eglContext?.let { EGL14.eglDestroyContext(display, it) }
+            EGL14.eglReleaseThread()
+            EGL14.eglTerminate(display)
+        }
+        eglDisplay = null
+        eglContext = null
+        eglSurface = null
     }
 
     fun setGlFilter(filter: GlFilter) {
@@ -41,7 +93,8 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
     }
 
     override fun onSurfaceTextureAvailable(surface: SurfaceTexture, width: Int, height: Int) {
-        // Initialize GL wrapper objects when the TextureView becomes available
+        // Initialize EGL context and GL wrapper objects when the TextureView becomes available
+        initEgl(surface)
         val tex = IntArray(1)
         GLES20.glGenTextures(1, tex, 0)
         surfaceTextureWrapper = GlSurfaceTexture(tex[0])
@@ -59,6 +112,7 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
         surfaceTextureWrapper?.release()
         previewFilter?.release()
         glFilter.release()
+        releaseEgl()
         return true
     }
 
