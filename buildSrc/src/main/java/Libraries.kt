@@ -22,7 +22,7 @@ import Version.TruthExt
 object Version {
     const val CoreKtx = "1.9.0"
     const val AppCompat = "1.6.1"
-    const val ComposeBom = "2023.01.00"
+    const val ComposeBom = "2025.05.00"
     const val LifecycleRunTimeKtx = "2.3.1"
     const val NavigationCompose = "2.5.3"
     const val AndroidXTestVersion = "1.5.0"
