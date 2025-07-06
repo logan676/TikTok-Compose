@@ -105,6 +105,7 @@ fun DependencyHandler.moduleDependencies() {
     FEATURE_MY_PROFILE
     FEATURE_SETTING
     FEATURE_CAMERA_MEDIA
+    FEATURE_FILTER
 }
 
 
@@ -152,3 +153,6 @@ val DependencyHandler.FEATURE_SETTING
 
 val DependencyHandler.FEATURE_CAMERA_MEDIA
     get() = implementation(project(mapOf("path" to ":feature:cameramedia")))
+
+val DependencyHandler.FEATURE_FILTER
+    get() = implementation(project(mapOf("path" to ":feature:filter")))
