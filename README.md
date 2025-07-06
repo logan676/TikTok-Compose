@@ -70,4 +70,8 @@ You are always welcome to contribute to this project. For contributing, feel fre
     distributed under the License is distributed on an "AS IS" BASIS,
     WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
     See the License for the specific language governing permissions and
-    limitations under the License.
+limitations under the License.
+
+The **feature/filter** module includes code from the mp4compose project which is
+licensed separately under the Apache License 2.0. A copy of that license is
+available in [feature/filter/LICENSE-mp4compose](feature/filter/LICENSE-mp4compose).
