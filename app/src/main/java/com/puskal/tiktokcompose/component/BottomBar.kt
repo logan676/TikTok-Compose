@@ -28,9 +28,8 @@ fun BottomBar(
 ) {
     NavigationBar(
         modifier = Modifier
-            .height(52.dp)
+            .height(92.dp)
             .shadow(elevation = 16.dp)
-            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
             .padding(top = 2.dp)
     ) {
         BottomBarDestination.values().asList().forEach {
@@ -103,4 +102,4 @@ fun RowScope.BottomItem(
     )
 }
 
-private val BottomBarItemVerticalOffset = 10.dp
+private val BottomBarItemVerticalOffset = 0.dp
