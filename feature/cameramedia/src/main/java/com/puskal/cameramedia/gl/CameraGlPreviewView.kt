@@ -108,7 +108,7 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
         previewFilter?.setup()
         glFilter.setup()
         surfaceTextureWrapper!!.setOnFrameAvailableListener {
-            this@CameraGlPreviewView.invalidate()
+            drawFrame()
         }
     }
 
@@ -125,10 +125,11 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
         return true
     }
 
-    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+    override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {
+        drawFrame()
+    }
 
-    override fun onDraw(canvas: Canvas) {
-        super.onDraw(canvas)
+    private fun drawFrame() {
         val wrapper = surfaceTextureWrapper ?: return
         wrapper.updateTexImage()
         wrapper.getTransformMatrix(stMatrix)
