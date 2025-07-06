@@ -10,13 +10,14 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.puskal.filter.VideoFilter
+import com.otaliastudios.cameraview.filter.Filters
+import java.util.Locale
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun FilterBottomSheet(
-    currentFilter: VideoFilter,
-    onSelectFilter: (VideoFilter) -> Unit,
+    currentFilter: Filters,
+    onSelectFilter: (Filters) -> Unit,
     onDismiss: () -> Unit,
 ) {
     ModalBottomSheet(onDismissRequest = onDismiss) {
@@ -30,7 +31,7 @@ fun FilterBottomSheet(
                 text = "Choose filter",
                 style = MaterialTheme.typography.titleMedium
             )
-            VideoFilter.values().forEach { filter ->
+            Filters.values().forEach { filter ->
                 Row(
                     verticalAlignment = Alignment.CenterVertically,
                     modifier = Modifier
@@ -39,7 +40,7 @@ fun FilterBottomSheet(
                         .padding(vertical = 8.dp)
                 ) {
                     Text(
-                        text = filter.title,
+                        text = filter.displayName(),
                         style = MaterialTheme.typography.bodyLarge
                     )
                 }
@@ -47,3 +48,11 @@ fun FilterBottomSheet(
         }
     }
 }
+
+private fun Filters.displayName(): String =
+    name.split('_')
+        .joinToString(" ") { word ->
+            word.lowercase(Locale.getDefault())
+                .replaceFirstChar { it.titlecase(Locale.getDefault()) }
+        }
+

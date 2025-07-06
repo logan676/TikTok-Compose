@@ -56,15 +56,12 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
 import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import kotlinx.coroutines.launch
-import com.puskal.filter.VideoFilter
 import com.otaliastudios.cameraview.filter.Filters
 import com.otaliastudios.cameraview.filter.Filter as CameraFilter
-
 
 /**
  * Created by Puskal Khadka on 4/2/2023.
  */
-
 
 @OptIn(ExperimentalPermissionsApi::class)
 @Composable
@@ -88,7 +85,6 @@ fun CameraScreen(
     val fileLauncher =
         rememberLauncherForActivityResult(contract = ActivityResultContracts.PickMultipleVisualMedia(),
             onResult = {})
-
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (multiplePermissionState.permissions[0].status.isGranted) {
@@ -119,7 +115,6 @@ fun CameraScreen(
         }
     }
 }
-
 
 @Composable
 fun CameraMicrophoneAccessPage(
@@ -229,7 +224,6 @@ fun CameraMicrophoneAccessPage(
     }
 }
 
-
 @Composable
 fun CameraPreview(
     cameraOpenType: Tabs,
@@ -240,7 +234,7 @@ fun CameraPreview(
     val lifecycleOwner = LocalLifecycleOwner.current
     var defaultCameraFacing by remember { mutableStateOf(Facing.FRONT) }
     var showFilterSheet by remember { mutableStateOf(false) }
-    var selectedFilter by remember { mutableStateOf(VideoFilter.NONE) }
+    var selectedFilter by remember { mutableStateOf(Filters.NONE) }
 
     val cameraView = remember {
         CameraView(context).apply {
@@ -250,7 +244,7 @@ fun CameraPreview(
         }
     }
     LaunchedEffect(selectedFilter) {
-        cameraView.filter = selectedFilter.toCameraFilter()
+        cameraView.filter = selectedFilter.newInstance()
     }
     LaunchedEffect(defaultCameraFacing) {
         cameraView.facing = defaultCameraFacing
@@ -309,7 +303,6 @@ fun CameraPreview(
                 isEnabledLayout = true
             )
 
-
             CameraSideControllerSection(
                 modifier = Modifier
                     .align(Alignment.TopEnd)
@@ -326,8 +319,6 @@ fun CameraPreview(
                     else -> {}
                 }
             }
-
-
 
             Icon(painter = painterResource(id = R.drawable.ic_cancel),
                 contentDescription = null,
@@ -368,7 +359,6 @@ fun CameraPreview(
     }
 
 }
-
 
 @OptIn(ExperimentalFoundationApi::class, ExperimentalSnapperApi::class)
 @Composable
@@ -511,7 +501,6 @@ fun FooterCameraController(
     }
 }
 
-
 @Composable
 fun CameraSideControllerSection(
     modifier: Modifier,
@@ -557,18 +546,5 @@ val pickVisualMediaRequest by lazy {
 }
 
 fun alphaForInteractiveView(isEnabledLayout: Boolean): Float = if (isEnabledLayout) 1f else 0.28f
-
-private fun VideoFilter.toCameraFilter(): CameraFilter = when (this) {
-    VideoFilter.GRAY -> Filters.GRAYSCALE.newInstance()
-    VideoFilter.SEPIA -> Filters.SEPIA.newInstance()
-    VideoFilter.INVERT -> Filters.INVERT_COLORS.newInstance()
-    VideoFilter.CONTRAST -> Filters.CONTRAST.newInstance()
-    VideoFilter.VIGNETTE -> Filters.VIGNETTE.newInstance()
-    else -> Filters.NONE.newInstance()
-}
-
-
-
-
 
 
