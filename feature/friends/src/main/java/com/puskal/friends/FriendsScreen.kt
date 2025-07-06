@@ -8,6 +8,7 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
+import com.puskal.core.utils.SessionManager
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute.AUTHENTICATION_ROUTE
 import com.puskal.theme.R
@@ -29,15 +30,19 @@ fun FriendsScreen(navController: NavController) {
                 .padding(it)
                 .fillMaxSize()
         ) {
-
+            if (SessionManager.isLoggedIn) {
+                Text(text = "Logged in as ${SessionManager.email}")
+            }
         }
     }
 
-    LaunchedEffect(key1 = Unit) {
-        //for now:- (default guest user) redirect to auth
-        navController.apply {
-            popBackStack()
-            navController.navigate(AUTHENTICATION_ROUTE)
+    if (!SessionManager.isLoggedIn) {
+        LaunchedEffect(key1 = Unit) {
+            //for now:- (default guest user) redirect to auth
+            navController.apply {
+                popBackStack()
+                navController.navigate(AUTHENTICATION_ROUTE)
+            }
         }
     }
 }
