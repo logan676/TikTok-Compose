@@ -1,6 +1,8 @@
 package com.puskal.tiktokcompose.component
 
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.layout.WindowInsetsSides
+import androidx.compose.foundation.layout.windowInsetsPadding
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
@@ -28,6 +30,7 @@ fun BottomBar(
         modifier = Modifier
             .height(52.dp)
             .shadow(elevation = 16.dp)
+            .windowInsetsPadding(WindowInsets.safeDrawing.only(WindowInsetsSides.Bottom))
             .padding(top = 2.dp)
     ) {
         BottomBarDestination.values().asList().forEach {
