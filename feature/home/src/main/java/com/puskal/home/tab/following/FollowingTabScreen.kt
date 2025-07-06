@@ -84,8 +84,7 @@ fun VideoItem(
     val pagerState = rememberPagerState(pageCount = { creatorList.size })
     HorizontalPager(
         state = pagerState,
-        contentPadding = PaddingValues(horizontal = 54.dp),
-        beyondBoundsPageCount = 1
+        contentPadding = PaddingValues(horizontal = 54.dp)
     ) {
         CreatorCard(
             page = it,
