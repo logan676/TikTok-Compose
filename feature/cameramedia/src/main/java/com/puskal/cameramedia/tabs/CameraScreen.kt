@@ -30,6 +30,7 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.platform.LocalLifecycleOwner
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
@@ -42,6 +43,7 @@ import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
 import com.puskal.cameramedia.*
+import com.puskal.cameramedia.filter.FilterBottomSheet
 import com.puskal.composable.CaptureButton
 import com.puskal.core.extension.MediumSpace
 import com.puskal.core.extension.Space
@@ -54,6 +56,9 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
 import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import kotlinx.coroutines.launch
+import android.graphics.RenderEffect
+import android.graphics.ColorMatrixColorFilter
+import com.puskal.filter.VideoFilter
 
 
 /**
@@ -239,8 +244,19 @@ fun CameraPreview(
     var defaultCameraFacing by remember { mutableStateOf(CameraSelector.DEFAULT_FRONT_CAMERA) }
     val cameraProvider = cameraProviderFuture.get()
     val preview = remember { Preview.Builder().build() }
+    var showFilterSheet by remember { mutableStateOf(false) }
+    var selectedFilter by remember { mutableStateOf(VideoFilter.NONE) }
+    val renderEffect = remember(selectedFilter) {
+        selectedFilter.colorMatrix?.let {
+            RenderEffect.createColorFilterEffect(ColorMatrixColorFilter(it))
+        }
+    }
 
-    Box(modifier = Modifier.fillMaxSize()) {
+    Box(modifier = Modifier
+        .fillMaxSize()
+        .graphicsLayer {
+            renderEffect?.let { this.renderEffect = it }
+        }) {
         AndroidView(
             factory = {
                 val cameraPreview = PreviewView(it)
@@ -287,6 +303,9 @@ fun CameraPreview(
                         defaultCameraFacing =
                             if (defaultCameraFacing == CameraSelector.DEFAULT_FRONT_CAMERA) CameraSelector.DEFAULT_BACK_CAMERA else CameraSelector.DEFAULT_FRONT_CAMERA
                     }
+                    CameraController.FILTER -> {
+                        showFilterSheet = true
+                    }
                     else -> {}
                 }
             }
@@ -321,6 +340,16 @@ fun CameraPreview(
                 Text(
                     text = stringResource(id = R.string.add_sound),
                     style = MaterialTheme.typography.labelLarge
+                )
+            }
+            if (showFilterSheet) {
+                FilterBottomSheet(
+                    currentFilter = selectedFilter,
+                    onSelectFilter = {
+                        selectedFilter = it
+                        showFilterSheet = false
+                    },
+                    onDismiss = { showFilterSheet = false }
                 )
             }
         }
