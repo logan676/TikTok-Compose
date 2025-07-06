@@ -6,6 +6,7 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
+import com.puskal.composable.LoggedInInfo
 import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavController
 import com.puskal.core.SessionManager
@@ -31,7 +32,7 @@ fun FriendsScreen(navController: NavController) {
                 .fillMaxSize()
         ) {
             if (SessionManager.isLoggedIn) {
-                Text(text = "Logged in as ${SessionManager.email}")
+                LoggedInInfo(SessionManager.email ?: "")
             }
         }
     }
