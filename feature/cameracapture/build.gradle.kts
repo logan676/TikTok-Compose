@@ -37,6 +37,7 @@ dependencies {
     api("com.google.android.gms:play-services-tasks:17.2.1")
     implementation("androidx.annotation:annotation:1.2.0")
     implementation("com.otaliastudios.opengl:egloo:0.6.1")
+    implementation(Libraries.Google.material)
 }
 
 // Publishing
