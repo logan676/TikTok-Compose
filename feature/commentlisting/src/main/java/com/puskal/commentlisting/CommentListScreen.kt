@@ -224,8 +224,9 @@ fun CommentUserField() {
                 placeholder = {
                     Text(text = stringResource(R.string.add_comment))
                 },
-                colors = TextFieldDefaults.outlinedTextFieldColors(
-                    containerColor = GrayMainColor,
+                colors = OutlinedTextFieldDefaults.colors(
+                    focusedContainerColor = GrayMainColor,
+                    unfocusedContainerColor = GrayMainColor,
                     unfocusedBorderColor = Color.Transparent
                 ),
                 modifier = Modifier.height(46.dp),

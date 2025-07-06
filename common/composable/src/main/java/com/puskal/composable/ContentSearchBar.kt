@@ -35,11 +35,14 @@ fun ContentSearchBar(
     marginHorizontal: Dp = 16.dp,
     marginTop: Dp = 8.dp
 ) {
-    val textFieldColors = TextFieldDefaults.outlinedTextFieldColors(
+    val textFieldColors = OutlinedTextFieldDefaults.colors(
+        focusedTextColor = Color.White,
+        unfocusedTextColor = Color.White,
+        focusedPlaceholderColor = Color.White,
+        unfocusedPlaceholderColor = Color.White,
+        focusedContainerColor = Color.Transparent,
+        unfocusedContainerColor = Color.Transparent,
         unfocusedBorderColor = OverlayWhiteColor,
-        containerColor = Color.Transparent,
-        textColor = Color.White,
-        placeholderColor = Color.White
     )
     val shape = RoundedCornerShape(8.dp)
     val interactionSource = remember {
