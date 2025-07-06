@@ -34,7 +34,7 @@ object Version {
     const val HiltNavigationCompose = "1.0.0"
     const val HiltAndroidVersion = "2.44"
     const val Media3 = "1.0.0-rc02"
-    const val Accompanist = "0.28.0"
+    const val Accompanist = "0.36.0"
     const val SplashScreenApi = "1.0.1"
     const val ConstraintLayoutCompose = "1.0.1"
     const val GsonVersion = "2.10.1"
@@ -72,7 +72,7 @@ object Libraries {
 
     object Accompanist {
         const val pager =
-            "com.google.accompanist:accompanist-pager:0.29.2-rc"
+            "com.google.accompanist:accompanist-pager:${Version.Accompanist}"
         const val swiperefresh =
             "com.google.accompanist:accompanist-swiperefresh:${Version.Accompanist}"
         const val indicators =
