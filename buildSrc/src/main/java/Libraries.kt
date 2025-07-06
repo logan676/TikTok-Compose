@@ -40,6 +40,7 @@ object Version {
     const val GsonVersion = "2.10.1"
     const val CameraXVersion = "1.3.0-alpha05"
     const val GuavaAndroid="31.0.1-android"
+    const val Material = "1.11.0"
 }
 
 
@@ -68,6 +69,7 @@ object Libraries {
     object Google {
         const val gson = "com.google.code.gson:gson:$GsonVersion"
         const val guava="com.google.guava:guava:$GuavaAndroid"
+        const val material = "com.google.android.material:material:${Version.Material}"
     }
 
     object Accompanist {
