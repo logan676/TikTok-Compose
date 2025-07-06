@@ -85,7 +85,8 @@ private fun PhoneNumberField(
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Phone),
         singleLine = true,
         colors = TextFieldDefaults.colors(
-            containerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
         ),

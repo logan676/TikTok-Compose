@@ -97,7 +97,8 @@ fun EmailField(email: Pair<String, String?>, viewModel: LoginWithEmailPhoneViewM
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Email),
         singleLine = true,
         colors = TextFieldDefaults.colors(
-            containerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
         ),
@@ -146,7 +147,8 @@ fun PasswordField(password: String, viewModel: LoginWithEmailPhoneViewModel) {
         keyboardOptions = KeyboardOptions(keyboardType = KeyboardType.Password),
         singleLine = true,
         colors = TextFieldDefaults.colors(
-            containerColor = Color.Transparent,
+            focusedContainerColor = Color.Transparent,
+            unfocusedContainerColor = Color.Transparent,
             focusedIndicatorColor = SubTextColor,
             unfocusedIndicatorColor = SubTextColor,
         ),
