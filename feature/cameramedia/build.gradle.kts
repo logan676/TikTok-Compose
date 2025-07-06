@@ -11,4 +11,5 @@ dependencies {
     CORE
     FEATURE_FILTER
     cameraXDependencies()
+    implementation(project(":feature:cameracapture"))
 }
