@@ -15,6 +15,7 @@ import androidx.navigation.NavController
 import com.puskal.composable.CustomButton
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute.AUTHENTICATION_ROUTE
+import com.puskal.core.utils.SessionManager
 import com.puskal.theme.R
 import com.puskal.theme.SubTextColor
 
@@ -33,8 +34,12 @@ fun InboxScreen(navController: NavController) {
                 .padding(it)
                 .fillMaxSize()
         ) {
-            UnAuthorizedInboxScreen {
-                navController.navigate(AUTHENTICATION_ROUTE)
+            if (SessionManager.isLoggedIn) {
+                Text(text = "Logged in as ${SessionManager.email}")
+            } else {
+                UnAuthorizedInboxScreen {
+                    navController.navigate(AUTHENTICATION_ROUTE)
+                }
             }
         }
     }

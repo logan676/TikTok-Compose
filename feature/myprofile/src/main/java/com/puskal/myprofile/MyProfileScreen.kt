@@ -14,6 +14,7 @@ import com.puskal.composable.CustomButton
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute
 import com.puskal.core.DestinationRoute.SETTING_ROUTE
+import com.puskal.core.utils.SessionManager
 import com.puskal.theme.R
 import com.puskal.theme.SubTextColor
 
@@ -42,8 +43,12 @@ fun MyProfileScreen(navController: NavController) {
                 .padding(it)
                 .fillMaxSize()
         ) {
-            UnAuthorizedInboxScreen {
-                navController.navigate(DestinationRoute.AUTHENTICATION_ROUTE)
+            if (SessionManager.isLoggedIn) {
+                Text(text = "Logged in as ${SessionManager.email}")
+            } else {
+                UnAuthorizedInboxScreen {
+                    navController.navigate(DestinationRoute.AUTHENTICATION_ROUTE)
+                }
             }
         }
     }
