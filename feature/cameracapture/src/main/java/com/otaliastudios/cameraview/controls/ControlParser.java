@@ -3,7 +3,7 @@ package com.otaliastudios.cameraview.controls;
 import android.content.Context;
 import android.content.res.TypedArray;
 
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;

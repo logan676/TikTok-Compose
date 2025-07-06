@@ -13,7 +13,7 @@ import android.view.SurfaceHolder;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 import com.otaliastudios.cameraview.internal.GlTextureDrawer;
 import com.otaliastudios.cameraview.filter.Filter;
 import com.otaliastudios.cameraview.filter.NoFilter;

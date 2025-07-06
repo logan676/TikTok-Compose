@@ -15,7 +15,7 @@ import androidx.annotation.Nullable;
 import androidx.annotation.VisibleForTesting;
 
 import com.otaliastudios.cameraview.CameraLogger;
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 
 
 @SuppressLint("CustomViewStyleable")

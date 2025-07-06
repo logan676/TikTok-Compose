@@ -85,6 +85,7 @@ import com.otaliastudios.cameraview.size.Size;
 import com.otaliastudios.cameraview.size.SizeSelector;
 import com.otaliastudios.cameraview.size.SizeSelectorParser;
 import com.otaliastudios.cameraview.size.SizeSelectors;
+import com.puskal.cameracapture.R;
 
 import java.io.File;
 import java.io.FileDescriptor;

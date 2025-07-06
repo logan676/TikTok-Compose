@@ -3,7 +3,7 @@ package com.otaliastudios.cameraview.markers;
 import android.content.Context;
 import android.content.res.TypedArray;
 
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 import com.otaliastudios.cameraview.controls.Audio;
 import com.otaliastudios.cameraview.controls.Facing;
 import com.otaliastudios.cameraview.controls.Flash;

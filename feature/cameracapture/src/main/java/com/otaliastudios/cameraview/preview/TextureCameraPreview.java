@@ -16,7 +16,7 @@ import android.view.ViewGroup;
 
 import com.google.android.gms.tasks.TaskCompletionSource;
 import com.google.android.gms.tasks.Tasks;
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 import com.otaliastudios.cameraview.size.AspectRatio;
 
 import java.util.concurrent.ExecutionException;

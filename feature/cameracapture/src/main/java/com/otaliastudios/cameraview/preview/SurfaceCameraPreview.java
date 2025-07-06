@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.otaliastudios.cameraview.CameraLogger;
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 
 /**
  * This is the fallback preview when hardware acceleration is off, and is the last resort.

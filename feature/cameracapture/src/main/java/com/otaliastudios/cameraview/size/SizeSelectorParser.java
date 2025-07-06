@@ -2,7 +2,7 @@ package com.otaliastudios.cameraview.size;
 
 import android.content.res.TypedArray;
 
-import com.otaliastudios.cameraview.R;
+import com.puskal.cameracapture.R;
 
 import java.util.ArrayList;
 import java.util.List;
