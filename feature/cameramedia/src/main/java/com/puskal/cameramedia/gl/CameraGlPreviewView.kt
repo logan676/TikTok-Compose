@@ -2,6 +2,7 @@ package com.puskal.cameramedia.gl
 
 import android.content.Context
 import android.graphics.SurfaceTexture
+import android.graphics.Canvas
 import android.opengl.GLES20
 import android.opengl.EGL14
 import android.opengl.EGLConfig
@@ -27,6 +28,10 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
     private var surfaceTextureWrapper: GlSurfaceTexture? = null
     private var previewFilter: GlPreviewFilter? = null
     private var glFilter: GlFilter = GlFilter()
+
+    private var texName: Int = 0
+    private val mvpMatrix = FloatArray(16)
+    private val stMatrix = FloatArray(16)
 
     private var eglDisplay: EGLDisplay? = null
     private var eglContext: EGLContext? = null
@@ -97,7 +102,8 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
         initEgl(surface)
         val tex = IntArray(1)
         GLES20.glGenTextures(1, tex, 0)
-        surfaceTextureWrapper = GlSurfaceTexture(tex[0])
+        texName = tex[0]
+        surfaceTextureWrapper = GlSurfaceTexture(texName)
         previewFilter = GlPreviewFilter(surfaceTextureWrapper!!.textureTarget)
         previewFilter?.setup()
         glFilter.setup()
@@ -113,8 +119,23 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
         previewFilter?.release()
         glFilter.release()
         releaseEgl()
+        texName = 0
+        surfaceTextureWrapper = null
+        previewFilter = null
         return true
     }
 
     override fun onSurfaceTextureUpdated(surface: SurfaceTexture) {}
+
+    override fun onDraw(canvas: Canvas) {
+        super.onDraw(canvas)
+        val wrapper = surfaceTextureWrapper ?: return
+        wrapper.updateTexImage()
+        wrapper.getTransformMatrix(stMatrix)
+        GLES20.glViewport(0, 0, width, height)
+        android.opengl.Matrix.setIdentityM(mvpMatrix, 0)
+        previewFilter?.draw(texName, mvpMatrix, stMatrix, 1f)
+        glFilter.draw(texName, null)
+        EGL14.eglSwapBuffers(eglDisplay, eglSurface)
+    }
 }
