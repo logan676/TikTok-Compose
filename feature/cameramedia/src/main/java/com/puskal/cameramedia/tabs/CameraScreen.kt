@@ -287,12 +287,17 @@ fun CameraPreview(
                             cameraView.mode = Mode.PICTURE
                             cameraView.takePicture()
                         }
-                        CameraCaptureOptions.VIDEO -> {
+                        CameraCaptureOptions.VIDEO,
+                        CameraCaptureOptions.FIFTEEN_SECOND,
+                        CameraCaptureOptions.SIXTY_SECOND -> {
                             cameraView.mode = Mode.VIDEO
                             if (isRecording) {
                                 cameraView.stopVideo()
                             } else {
-                                val file = File(context.filesDir, "video_${'$'}{System.currentTimeMillis()}.mp4")
+                                val file = File(
+                                    context.filesDir,
+                                    "video_${'$'}{System.currentTimeMillis()}.mp4"
+                                )
                                 cameraView.takeVideo(file)
                                 isRecording = true
                             }
