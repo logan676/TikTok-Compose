@@ -51,6 +51,12 @@ This app consist of following modules:
 
 <br/>
 
+## Video Feed Gesture Handling
+For details on how swiping vertically changes pages in the feed, refer to
+[docs/video_feed_swipe_analysis.md](docs/video_feed_swipe_analysis.md).
+
+<br/>
+
 ## Contribution
 You are always welcome to contribute to this project. For contributing, feel free to [create an issue](https://github.com/puskal-khadka/TikTok-Compose/issues/new/choose) or submit a pull request.
 
