@@ -55,16 +55,6 @@ fun VideoEditScreen(
                     .padding(padding)
                     .fillMaxSize()
             ) {
-                Icon(
-                    painter = painterResource(id = R.drawable.ic_arrow_back),
-                    contentDescription = null,
-                    tint = White,
-                    modifier = Modifier
-                        .align(Alignment.TopStart)
-                        .padding(start = 16.dp, top = 32.dp)
-                        .size(24.dp)
-                        .clickable { onClickBack() }
-                )
                 AndroidView(
                     factory = {
                         PlayerView(it).apply {
@@ -74,6 +64,17 @@ fun VideoEditScreen(
                         }
                     },
                     modifier = Modifier.fillMaxSize()
+                )
+
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_back),
+                    contentDescription = null,
+                    tint = White,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 16.dp, top = 32.dp)
+                        .size(24.dp)
+                        .clickable { onClickBack() }
                 )
 
                 MusicBarLayout(
