@@ -84,8 +84,13 @@ fun CameraScreen(
     }
 
     val fileLauncher =
-        rememberLauncherForActivityResult(contract = ActivityResultContracts.PickMultipleVisualMedia(),
-            onResult = {})
+        rememberLauncherForActivityResult(
+            contract = ActivityResultContracts.PickMultipleVisualMedia()
+        ) { uris ->
+            uris.firstOrNull()?.let { uri ->
+                navController.navigate("${DestinationRoute.VIDEO_EDIT_ROUTE}/$uri")
+            }
+        }
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (multiplePermissionState.permissions[0].status.isGranted) {
