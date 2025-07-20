@@ -25,6 +25,7 @@ fun DependencyHandler.composeDependencies() {
     implementation(Libraries.Compose.composeFoundation)
     implementation(Libraries.Compose.composeRuntime)
     implementation(Libraries.Compose.composeMaterial3)
+    implementation(Libraries.Compose.materialIconsExtended)
 
     //navgation
     implementation(Libraries.Naviagtion.navigationCompose)
