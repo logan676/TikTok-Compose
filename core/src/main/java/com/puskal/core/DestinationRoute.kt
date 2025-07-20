@@ -24,6 +24,9 @@ object DestinationRoute {
     const val VIDEO_EDIT_ROUTE = "video_edit_route"
     const val FORMATTED_VIDEO_EDIT_ROUTE = "$VIDEO_EDIT_ROUTE/{${PassedKey.VIDEO_URI}}"
 
+    const val VIDEO_TRIM_ROUTE = "video_trim_route"
+    const val FORMATTED_VIDEO_TRIM_ROUTE = "$VIDEO_TRIM_ROUTE/{${PassedKey.VIDEO_URI}}"
+
     const val AUTHENTICATION_ROUTE = "authentication_route"
     const val LOGIN_OR_SIGNUP_WITH_PHONE_EMAIL_ROUTE = "login_signup_phone_email_route"
 
