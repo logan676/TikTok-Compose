@@ -4,6 +4,10 @@ import android.net.Uri
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.clickable
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -20,7 +24,7 @@ import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
-import com.puskal.composable.TopBar
+import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import androidx.compose.ui.unit.dp
 
@@ -31,7 +35,7 @@ fun VideoEditScreen(
     onClickBack: () -> Unit
 ) {
     TikTokTheme(darkTheme = true) {
-        Scaffold(topBar = { TopBar(onClickNavIcon = onClickBack) }) { padding ->
+        Scaffold { padding ->
             val context = LocalContext.current
             var showResizeMenu by remember { mutableStateOf(false) }
             val exoPlayer = remember(videoUri) {
@@ -49,6 +53,16 @@ fun VideoEditScreen(
                     .padding(padding)
                     .fillMaxSize()
             ) {
+                Icon(
+                    painter = painterResource(id = R.drawable.ic_arrow_back),
+                    contentDescription = null,
+                    tint = Color.Unspecified,
+                    modifier = Modifier
+                        .align(Alignment.TopStart)
+                        .padding(start = 16.dp, top = 16.dp)
+                        .size(24.dp)
+                        .clickable { onClickBack() }
+                )
                 AndroidView(
                     factory = {
                         PlayerView(it).apply {
