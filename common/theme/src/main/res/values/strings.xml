@@ -105,4 +105,10 @@
     <string name="logged_in_as">Logged in as %1$s</string>
     <string name="demo_video_compositor">This is a demo for video compositor</string>
 
+    <!-- choose sound -->
+    <string name="sounds">Sounds</string>
+    <string name="use_this_sound">Use this sound</string>
+    <string name="original_sound_of">Original sound - %1$s</string>
+    <string name="number_posts">%1$d posts</string>
+
 </resources>

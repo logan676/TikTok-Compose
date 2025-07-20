@@ -48,6 +48,7 @@ import com.puskal.composable.CaptureButton
 import com.puskal.core.extension.MediumSpace
 import com.puskal.core.extension.Space
 import com.puskal.core.utils.openAppSetting
+import com.puskal.core.DestinationRoute
 import com.puskal.theme.LightGreenColor
 import com.puskal.theme.R
 import com.puskal.theme.TealColor
@@ -88,12 +89,15 @@ fun CameraScreen(
 
     Column(modifier = Modifier.fillMaxSize()) {
         if (multiplePermissionState.permissions[0].status.isGranted) {
-            CameraPreview(cameraOpenType,
+            CameraPreview(
+                cameraOpenType,
                 onClickCancel = { navController.navigateUp() },
                 onClickOpenFile = {
                     fileLauncher.launch(pickVisualMediaRequest)
+                },
+                onClickAddSound = {
+                    navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE)
                 }
-
             )
         } else {
             CameraMicrophoneAccessPage(multiplePermissionState.permissions[1].status.isGranted,
@@ -229,6 +233,7 @@ fun CameraPreview(
     cameraOpenType: Tabs,
     onClickCancel: () -> Unit,
     onClickOpenFile: () -> Unit,
+    onClickAddSound: () -> Unit,
 ) {
     val context = LocalContext.current
     val lifecycleOwner = LocalLifecycleOwner.current
@@ -336,7 +341,9 @@ fun CameraPreview(
                     })
 
             Row(
-                modifier = Modifier.align(Alignment.TopCenter),
+                modifier = Modifier
+                    .align(Alignment.TopCenter)
+                    .clickable { onClickAddSound() },
                 horizontalArrangement = Arrangement.spacedBy(6.dp),
                 verticalAlignment = Alignment.CenterVertically
             ) {
