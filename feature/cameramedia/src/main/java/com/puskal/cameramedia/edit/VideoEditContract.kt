@@ -5,7 +5,7 @@ import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Crop
 import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Face
-import androidx.compose.material.icons.filled.Filter
+import androidx.compose.material.icons.filled.InvertColors
 import androidx.compose.material.icons.filled.Flag
 import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
@@ -26,7 +26,7 @@ enum class VideoEditTool(val icon: ImageVector) {
     CHALLENGE(Icons.Filled.Flag),
     STICKERS(Icons.Filled.EmojiEmotions),
     EFFECTS(Icons.Filled.Wallpaper),
-    FILTERS(Icons.Filled.Filter),
+    FILTERS(Icons.Filled.InvertColors),
     BEAUTY(Icons.Filled.Face),
     CROP_RESIZE(Icons.Filled.Crop)
 }
