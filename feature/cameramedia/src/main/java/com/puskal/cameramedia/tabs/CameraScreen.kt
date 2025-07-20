@@ -88,7 +88,7 @@ fun CameraScreen(
             contract = ActivityResultContracts.PickMultipleVisualMedia()
         ) { uris ->
             uris.firstOrNull()?.let { uri ->
-                navController.navigate("${DestinationRoute.VIDEO_EDIT_ROUTE}/$uri")
+                navController.navigate("${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uri.toString())}")
             }
         }
 
