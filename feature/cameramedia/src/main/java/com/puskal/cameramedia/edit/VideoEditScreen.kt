@@ -16,19 +16,21 @@ import androidx.compose.runtime.remember
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.MediaItem
 import androidx.media3.common.Player
 import androidx.media3.exoplayer.ExoPlayer
-import androidx.media3.ui.AspectRatioFrameLayout
-import androidx.media3.ui.PlayerView
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
 import androidx.compose.ui.unit.dp
 import com.puskal.cameramedia.MusicBarLayout
+import com.puskal.filter.VideoFilter
+import com.puskal.cameramedia.edit.GlFilterPlayerView
+import com.puskal.cameramedia.edit.VideoFilterBottomSheet
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
@@ -41,6 +43,8 @@ fun VideoEditScreen(
         Scaffold { padding ->
             val context = LocalContext.current
             var showResizeMenu by remember { mutableStateOf(false) }
+            var showFilterSheet by remember { mutableStateOf(false) }
+            var selectedFilter by remember { mutableStateOf(VideoFilter.NONE) }
             val exoPlayer = remember(videoUri) {
                 ExoPlayer.Builder(context).build().apply {
                     repeatMode = Player.REPEAT_MODE_ONE
@@ -51,20 +55,24 @@ fun VideoEditScreen(
             }
             DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
 
+            val filterPlayerView = remember { GlFilterPlayerView(context) }
+            DisposableEffect(filterPlayerView) { onDispose { filterPlayerView.player = null } }
+            LaunchedEffect(exoPlayer) { filterPlayerView.player = exoPlayer }
+            LaunchedEffect(selectedFilter) {
+                filterPlayerView.setGlFilter(selectedFilter.create())
+            }
+
             Box(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize()
             ) {
                 AndroidView(
-                    factory = {
-                        PlayerView(it).apply {
-                            player = exoPlayer
-                            useController = false
-                            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-                        }
-                    },
-                    modifier = Modifier.fillMaxSize()
+                    factory = { filterPlayerView },
+                    modifier = Modifier.fillMaxSize(),
+                    update = { view ->
+                        view.player = exoPlayer
+                    }
                 )
 
                 Icon(
@@ -103,10 +111,22 @@ fun VideoEditScreen(
                                 showResizeMenu = !showResizeMenu
                             }
                             VideoEditTool.TRIM -> onTrimVideo(videoUri)
+                            VideoEditTool.FILTERS -> showFilterSheet = true
                             else -> {}
                         }
                     }
                 )
+
+                if (showFilterSheet) {
+                    VideoFilterBottomSheet(
+                        currentFilter = selectedFilter,
+                        onSelectFilter = {
+                            selectedFilter = it
+                            showFilterSheet = false
+                        },
+                        onDismiss = { showFilterSheet = false }
+                    )
+                }
             }
         }
     }
