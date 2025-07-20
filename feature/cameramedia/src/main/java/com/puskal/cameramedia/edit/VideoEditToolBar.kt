@@ -8,6 +8,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
 import androidx.compose.material.icons.Icons
@@ -33,22 +34,26 @@ fun VideoEditToolBar(
                 VideoEditTool.SETTINGS -> Icon(
                     imageVector = Icons.Filled.Settings,
                     contentDescription = null,
-                    modifier = iconModifier
+                    modifier = iconModifier,
+                    tint = Color.White
                 )
                 VideoEditTool.SHARE -> Icon(
                     imageVector = Icons.Filled.Share,
                     contentDescription = null,
-                    modifier = iconModifier
+                    modifier = iconModifier,
+                    tint = Color.White
                 )
                 VideoEditTool.TRIM -> Icon(
                     imageVector = Icons.Filled.ContentCut,
                     contentDescription = null,
-                    modifier = iconModifier
+                    modifier = iconModifier,
+                    tint = Color.White
                 )
                 else -> Icon(
                     painter = painterResource(id = tool.iconRes!!),
                     contentDescription = null,
-                    modifier = iconModifier
+                    modifier = iconModifier,
+                    tint = Color.White
                 )
             }
         }
