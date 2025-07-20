@@ -1,14 +1,14 @@
 package com.puskal.cameramedia.edit
 
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.Icon
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -22,13 +22,13 @@ fun ResizeToolBar(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         ResizeMenuFeature.values().forEach { feature ->
-            Image(
-                painter = painterResource(id = feature.icon),
+            Icon(
+                imageVector = feature.icon,
                 contentDescription = null,
+                tint = Color.White,
                 modifier = Modifier
                     .size(32.dp)
-                    .clickable { onFeatureSelected(feature) },
-                alignment = Alignment.Center
+                    .clickable { onFeatureSelected(feature) }
             )
         }
     }

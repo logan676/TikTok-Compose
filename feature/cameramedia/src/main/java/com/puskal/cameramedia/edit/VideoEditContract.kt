@@ -7,13 +7,16 @@ import androidx.compose.material.icons.filled.EmojiEmotions
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.Filter
 import androidx.compose.material.icons.filled.Flag
+import androidx.compose.material.icons.filled.KeyboardArrowDown
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.TextFields
 import androidx.compose.material.icons.filled.Wallpaper
+import androidx.compose.material.icons.outlined.Brush
+import androidx.compose.material.icons.outlined.Mic
+import androidx.compose.material.icons.outlined.Subtitles
+import androidx.compose.material.icons.outlined.Star
 import androidx.compose.ui.graphics.vector.ImageVector
-import androidx.annotation.DrawableRes
-import com.puskal.theme.R
 
 enum class VideoEditTool(val icon: ImageVector) {
     SETTINGS(Icons.Filled.Settings),
@@ -28,10 +31,10 @@ enum class VideoEditTool(val icon: ImageVector) {
     CROP_RESIZE(Icons.Filled.Crop)
 }
 
-enum class ResizeMenuFeature(@DrawableRes val icon: Int) {
-    AUTO_SUBTITLES(R.drawable.ic_auto_subtitles),
-    QUALITY_ENHANCEMENT(R.drawable.ic_quality_enhance),
-    VOICE_CHANGER(R.drawable.ic_microphone),
-    BRUSH_TOOL(R.drawable.ic_brush_tool),
-    COLLAPSE_TOOLBAR(R.drawable.ic_arrow_down)
+enum class ResizeMenuFeature(val icon: ImageVector) {
+    AUTO_SUBTITLES(Icons.Outlined.Subtitles),
+    QUALITY_ENHANCEMENT(Icons.Outlined.Star),
+    VOICE_CHANGER(Icons.Outlined.Mic),
+    BRUSH_TOOL(Icons.Outlined.Brush),
+    COLLAPSE_TOOLBAR(Icons.Filled.KeyboardArrowDown)
 }
