@@ -346,23 +346,10 @@ fun CameraPreview(
                         onClickCancel()
                     })
 
-            Row(
-                modifier = Modifier
-                    .align(Alignment.TopCenter)
-                    .clickable { onClickAddSound() },
-                horizontalArrangement = Arrangement.spacedBy(6.dp),
-                verticalAlignment = Alignment.CenterVertically
-            ) {
-                Icon(
-                    painterResource(id = R.drawable.ic_music_note),
-                    contentDescription = null,
-                    modifier = Modifier.size(18.dp),
-                )
-                Text(
-                    text = stringResource(id = R.string.add_sound),
-                    style = MaterialTheme.typography.labelLarge
-                )
-            }
+            MusicBarLayout(
+                modifier = Modifier.align(Alignment.TopCenter),
+                onClickAddSound = onClickAddSound
+            )
             if (showFilterSheet) {
                 FilterBottomSheet(
                     currentFilter = selectedFilter,
