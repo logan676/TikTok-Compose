@@ -81,13 +81,7 @@ fun VideoTrimScreen(
             }
             DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
 
-            var isPlaying by remember { mutableStateOf(true) }
-            LaunchedEffect(isPlaying) {
-                if (isPlaying) exoPlayer.play() else exoPlayer.pause()
-            }
-
-            Column(
-                modifier = Modifier
+            modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
             ) {
@@ -102,6 +96,8 @@ fun VideoTrimScreen(
                             PlayerView(it).apply {
                                 player = exoPlayer
                                 useController = false
+                                // Use a TextureView so the video layers correctly with other Compose UI
+                                useTextureView = true
                                 resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                             }
                         },
