@@ -77,7 +77,9 @@ fun VideoEditScreen(
                 )
 
                 MusicBarLayout(
-                    modifier = Modifier.align(Alignment.TopCenter),
+                    modifier = Modifier
+                        .align(Alignment.TopCenter)
+                        .padding(top = 32.dp),
                     onClickAddSound = {}
                 )
 
