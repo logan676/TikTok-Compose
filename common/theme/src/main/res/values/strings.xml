@@ -106,6 +106,8 @@
     <string name="demo_video_compositor">This is a demo for video compositor</string>
 
     <string name="trim">Trim</string>
+    <string name="cancel">Cancel</string>
+    <string name="save">Save</string>
 
     <!-- choose sound -->
     <string name="sounds">Sounds</string>
