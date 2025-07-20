@@ -1,7 +1,10 @@
 package com.puskal.cameramedia
 
-import androidx.annotation.DrawableRes
 import androidx.annotation.StringRes
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Filter
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.res.vectorResource
 import com.puskal.data.model.TemplateModel
 import com.puskal.theme.R
 
@@ -30,15 +33,15 @@ enum class PermissionType {
 
 enum class CameraController(
     @StringRes val title: Int,
-    @DrawableRes val icon: Int
+    val icon: ImageVector
 ) {
-    FLIP(title = R.string.flip, icon = R.drawable.ic_flip),
-    SPEED(title = R.string.speed, icon = R.drawable.ic_speed),
-    BEAUTY(title = R.string.beauty, icon = R.drawable.ic_profile_fill),
-    FILTER(title = R.string.filters, icon = R.drawable.ic_filter),
-    MIRROR(title = R.string.mirror, icon = R.drawable.ic_mirror),
-    TIMER(title = R.string.timer, icon = R.drawable.ic_timer),
-    FLASH(title = R.string.flash, icon = R.drawable.ic_flash),
+    FLIP(title = R.string.flip, icon = ImageVector.vectorResource(R.drawable.ic_flip)),
+    SPEED(title = R.string.speed, icon = ImageVector.vectorResource(R.drawable.ic_speed)),
+    BEAUTY(title = R.string.beauty, icon = ImageVector.vectorResource(R.drawable.ic_profile_fill)),
+    FILTER(title = R.string.filters, icon = Icons.Filled.Filter),
+    MIRROR(title = R.string.mirror, icon = ImageVector.vectorResource(R.drawable.ic_mirror)),
+    TIMER(title = R.string.timer, icon = ImageVector.vectorResource(R.drawable.ic_timer)),
+    FLASH(title = R.string.flash, icon = ImageVector.vectorResource(R.drawable.ic_flash)),
 }
 
 enum class CameraCaptureOptions(val value: String) {
