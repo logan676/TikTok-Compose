@@ -534,7 +534,7 @@ fun ControllerItem(
         onClickController(cameraController)
     }) {
         Icon(
-            imageVector = cameraController.icon,
+            imageVector = cameraController.icon(),
             contentDescription = null,
             modifier = Modifier.size(27.dp),
             tint = Color.White.copy(alpha = 0.8f)
