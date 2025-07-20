@@ -41,7 +41,6 @@ object Version {
     const val CameraXVersion = "1.3.0-alpha05"
     const val GuavaAndroid="31.0.1-android"
     const val Material = "1.11.0"
-    const val MaterialIconsExtended = "1.8.3"
 }
 
 
@@ -66,7 +65,7 @@ object Libraries {
         const val constraintLayoutCompose =
             "androidx.constraintlayout:constraintlayout-compose:$ConstraintLayoutCompose"
         const val materialIconsExtended =
-            "androidx.compose.material:material-icons-extended:${Version.MaterialIconsExtended}"
+            "androidx.compose.material:material-icons-extended"
     }
 
     object Google {
