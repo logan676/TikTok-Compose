@@ -1,8 +1,10 @@
 package com.puskal.cameramedia.edit
 
 import android.net.Uri
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.ui.Alignment
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
@@ -18,6 +20,10 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.puskal.composable.TopBar
 import com.puskal.theme.TikTokTheme
+import androidx.compose.ui.unit.dp
+
+import com.puskal.cameramedia.edit.VideoEditToolBar
+
 
 @OptIn(ExperimentalMaterial3Api::class)
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
@@ -39,18 +45,28 @@ fun VideoEditScreen(
             }
             DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
 
-            AndroidView(
-                factory = {
-                    PlayerView(it).apply {
-                        player = exoPlayer
-                        useController = false
-                        resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
-                    }
-                },
+            Box(
                 modifier = Modifier
                     .padding(padding)
                     .fillMaxSize()
-            )
+            ) {
+                AndroidView(
+                    factory = {
+                        PlayerView(it).apply {
+                            player = exoPlayer
+                            useController = false
+                            resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
+                        }
+                    },
+                    modifier = Modifier.fillMaxSize()
+                )
+
+                VideoEditToolBar(
+                    modifier = Modifier
+                        .align(Alignment.CenterEnd)
+                        .padding(end = 16.dp)
+                )
+            }
         }
     }
 }
