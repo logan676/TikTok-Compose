@@ -34,7 +34,8 @@ import com.puskal.cameramedia.MusicBarLayout
 @Composable
 fun VideoEditScreen(
     videoUri: String,
-    onClickBack: () -> Unit
+    onClickBack: () -> Unit,
+    onTrimVideo: (String) -> Unit = {}
 ) {
     TikTokTheme(darkTheme = true) {
         Scaffold { padding ->
@@ -94,8 +95,12 @@ fun VideoEditScreen(
                         .align(Alignment.CenterEnd)
                         .padding(end = 16.dp),
                     onToolSelected = {
-                        if (it == VideoEditTool.CROP_RESIZE) {
-                            showResizeMenu = !showResizeMenu
+                        when (it) {
+                            VideoEditTool.CROP_RESIZE -> {
+                                showResizeMenu = !showResizeMenu
+                            }
+                            VideoEditTool.TRIM -> onTrimVideo(videoUri)
+                            else -> {}
                         }
                     }
                 )

@@ -105,6 +105,8 @@
     <string name="logged_in_as">Logged in as %1$s</string>
     <string name="demo_video_compositor">This is a demo for video compositor</string>
 
+    <string name="trim">Trim</string>
+
     <!-- choose sound -->
     <string name="sounds">Sounds</string>
     <string name="use_this_sound">Use this sound</string>
