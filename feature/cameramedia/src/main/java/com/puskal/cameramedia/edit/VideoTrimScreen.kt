@@ -81,7 +81,13 @@ fun VideoTrimScreen(
             }
             DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
 
-            modifier = Modifier
+            var isPlaying by remember { mutableStateOf(true) }
+            LaunchedEffect(isPlaying) {
+                if (isPlaying) exoPlayer.play() else exoPlayer.pause()
+            }
+
+            Column(
+                modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
             ) {
