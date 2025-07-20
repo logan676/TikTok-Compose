@@ -10,6 +10,9 @@ import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.remember
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.viewinterop.AndroidView
@@ -23,6 +26,8 @@ import com.puskal.theme.TikTokTheme
 import androidx.compose.ui.unit.dp
 
 import com.puskal.cameramedia.edit.VideoEditToolBar
+import com.puskal.cameramedia.edit.VideoEditTool
+import com.puskal.cameramedia.edit.ResizeToolBar
 
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -35,6 +40,7 @@ fun VideoEditScreen(
     TikTokTheme(darkTheme = true) {
         Scaffold(topBar = { TopBar(onClickNavIcon = onClickBack) }) { padding ->
             val context = LocalContext.current
+            var showResizeMenu by remember { mutableStateOf(false) }
             val exoPlayer = remember(videoUri) {
                 ExoPlayer.Builder(context).build().apply {
                     repeatMode = Player.REPEAT_MODE_ONE
@@ -61,10 +67,23 @@ fun VideoEditScreen(
                     modifier = Modifier.fillMaxSize()
                 )
 
+                if (showResizeMenu) {
+                    ResizeToolBar(
+                        modifier = Modifier
+                            .align(Alignment.CenterEnd)
+                            .padding(end = 64.dp)
+                    )
+                }
+
                 VideoEditToolBar(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
-                        .padding(end = 16.dp)
+                        .padding(end = 16.dp),
+                    onToolSelected = {
+                        if (it == VideoEditTool.CROP_RESIZE) {
+                            showResizeMenu = !showResizeMenu
+                        }
+                    }
                 )
             }
         }
