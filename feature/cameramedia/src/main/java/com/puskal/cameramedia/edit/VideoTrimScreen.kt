@@ -73,6 +73,8 @@ fun VideoTrimScreen(
                     PlayerView(it).apply {
                         player = exoPlayer
                         useController = false
+                        // Use a TextureView so the video layers correctly with other Compose UI
+                        useTextureView = true
                         resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                     }
                 },
