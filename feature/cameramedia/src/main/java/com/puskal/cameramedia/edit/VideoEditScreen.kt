@@ -5,7 +5,6 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.ui.Alignment
-import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.DisposableEffect
@@ -25,12 +24,6 @@ import com.puskal.composable.TopBar
 import com.puskal.theme.TikTokTheme
 import androidx.compose.ui.unit.dp
 
-import com.puskal.cameramedia.edit.VideoEditToolBar
-import com.puskal.cameramedia.edit.VideoEditTool
-import com.puskal.cameramedia.edit.ResizeToolBar
-
-
-@OptIn(ExperimentalMaterial3Api::class)
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
 fun VideoEditScreen(
