@@ -23,6 +23,7 @@ import androidx.media3.ui.PlayerView
 import com.puskal.composable.TopBar
 import com.puskal.theme.TikTokTheme
 import androidx.compose.ui.unit.dp
+import com.puskal.cameramedia.MusicBarLayout
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @Composable
@@ -58,6 +59,11 @@ fun VideoEditScreen(
                         }
                     },
                     modifier = Modifier.fillMaxSize()
+                )
+
+                MusicBarLayout(
+                    modifier = Modifier.align(Alignment.TopCenter),
+                    onClickAddSound = {}
                 )
 
                 if (showResizeMenu) {
