@@ -5,6 +5,7 @@ import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
+import android.net.Uri
 import com.puskal.core.DestinationRoute
 import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_EDIT_ROUTE
 import com.puskal.core.DestinationRoute.PassedKey
@@ -24,7 +25,9 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
         route = FORMATTED_VIDEO_EDIT_ROUTE,
         arguments = listOf(navArgument(PassedKey.VIDEO_URI) { type = NavType.StringType })
     ) { backStackEntry ->
-        val uri = backStackEntry.arguments?.getString(PassedKey.VIDEO_URI) ?: ""
+        val uri = backStackEntry.arguments
+            ?.getString(PassedKey.VIDEO_URI)
+            ?.let { Uri.decode(it) } ?: ""
         VideoEditScreen(videoUri = uri) { navController.navigateUp() }
     }
 }
