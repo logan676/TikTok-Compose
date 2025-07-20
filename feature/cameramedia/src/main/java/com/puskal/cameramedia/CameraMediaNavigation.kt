@@ -12,4 +12,7 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
     composable(route = DestinationRoute.CAMERA_ROUTE) {
         CameraMediaScreen(navController)
     }
+    composable(route = DestinationRoute.CHOOSE_SOUND_ROUTE) {
+        com.puskal.cameramedia.sound.ChooseSoundScreen(navController)
+    }
 }

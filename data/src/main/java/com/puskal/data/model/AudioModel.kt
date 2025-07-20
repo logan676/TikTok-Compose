@@ -9,4 +9,8 @@ data class AudioModel(
     val audioAuthor:UserModel,
     val numberOfPost:Long,
     val originalVideoUrl:String,
-)
+){
+    fun parseCoverImage(): String =
+        if (audioCoverImage.startsWith("http")) audioCoverImage
+        else "file:///android_asset/templateimages/$audioCoverImage"
+}
