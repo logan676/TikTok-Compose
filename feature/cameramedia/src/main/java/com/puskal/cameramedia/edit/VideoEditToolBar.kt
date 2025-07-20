@@ -11,10 +11,6 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
 import androidx.compose.material3.Icon
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.ContentCut
-import androidx.compose.material.icons.filled.Settings
-import androidx.compose.material.icons.filled.Share
 
 @Composable
 fun VideoEditToolBar(
@@ -27,35 +23,14 @@ fun VideoEditToolBar(
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         VideoEditTool.values().forEach { tool ->
-            val iconModifier = Modifier
-                .size(32.dp)
-                .clickable { onToolSelected(tool) }
-            when (tool) {
-                VideoEditTool.SETTINGS -> Icon(
-                    imageVector = Icons.Filled.Settings,
-                    contentDescription = null,
-                    modifier = iconModifier,
-                    tint = Color.White
-                )
-                VideoEditTool.SHARE -> Icon(
-                    imageVector = Icons.Filled.Share,
-                    contentDescription = null,
-                    modifier = iconModifier,
-                    tint = Color.White
-                )
-                VideoEditTool.TRIM -> Icon(
-                    imageVector = Icons.Filled.ContentCut,
-                    contentDescription = null,
-                    modifier = iconModifier,
-                    tint = Color.White
-                )
-                else -> Icon(
-                    painter = painterResource(id = tool.iconRes!!),
-                    contentDescription = null,
-                    modifier = iconModifier,
-                    tint = Color.White
-                )
-            }
+            Icon(
+                imageVector = tool.icon,
+                contentDescription = null,
+                tint = Color.White,
+                modifier = Modifier
+                    .size(32.dp)
+                    .clickable { onToolSelected(tool) }
+            )
         }
     }
 }
