@@ -7,7 +7,6 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.clickable
 import androidx.compose.material3.Icon
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.Alignment
 import androidx.compose.material3.Scaffold
@@ -27,6 +26,7 @@ import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
+import com.puskal.theme.White
 import androidx.compose.ui.unit.dp
 import com.puskal.cameramedia.MusicBarLayout
 
@@ -58,10 +58,10 @@ fun VideoEditScreen(
                 Icon(
                     painter = painterResource(id = R.drawable.ic_arrow_back),
                     contentDescription = null,
-                    tint = Color.Unspecified,
+                    tint = White,
                     modifier = Modifier
                         .align(Alignment.TopStart)
-                        .padding(start = 16.dp, top = 16.dp)
+                        .padding(start = 16.dp, top = 32.dp)
                         .size(24.dp)
                         .clickable { onClickBack() }
                 )
