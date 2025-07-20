@@ -48,6 +48,10 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
         val uri = backStackEntry.arguments
             ?.getString(PassedKey.VIDEO_URI)
             ?.let { Uri.decode(it) } ?: ""
-        VideoTrimScreen(videoUri = uri) { navController.navigateUp() }
+        VideoTrimScreen(
+            videoUri = uri,
+            onCancel = { navController.navigateUp() },
+            onSave = { navController.navigateUp() }
+        )
     }
 }
