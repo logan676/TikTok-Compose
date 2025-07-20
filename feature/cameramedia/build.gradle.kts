@@ -12,5 +12,6 @@ dependencies {
     FEATURE_FILTER
     cameraXDependencies()
     media3Dependency()
+    implementation(project(":common:videotrimmer"))
     implementation(project(":feature:cameracapture"))
 }

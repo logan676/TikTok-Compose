@@ -12,6 +12,7 @@ import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.NavigationBar
 import androidx.compose.material3.NavigationBarItem
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
@@ -29,7 +30,11 @@ import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.Close
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.R
-import com.puskal.cameramedia.edit.TimelineEditor
+import com.puskal.videotrimmer.VideoEditor
+import kotlinx.coroutines.GlobalScope
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.delay
 
 @androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
 @OptIn(ExperimentalMaterial3Api::class)
@@ -37,7 +42,7 @@ import com.puskal.cameramedia.edit.TimelineEditor
 fun VideoTrimScreen(
     videoUri: String,
     onCancel: () -> Unit = {},
-    onSave: () -> Unit = {}
+    onSave: (String) -> Unit = {}
 ) {
     TikTokTheme(darkTheme = true) {
         var selectedTool by remember { mutableStateOf(TrimTool.TRIM) }
@@ -55,7 +60,22 @@ fun VideoTrimScreen(
                         }
                     },
                     actions = {
-                        IconButton(onClick = onSave) {
+                        IconButton(onClick = {
+                            if (!isSaving) {
+                                isSaving = true
+                                saveVideo(
+                                    context = context,
+                                    inputUri = Uri.parse(videoUri),
+                                    startMs = startMs,
+                                    endMs = endMs,
+                                    onProgress = { progress = it },
+                                    onSave = { uri ->
+                                        isSaving = false
+                                        uri?.let { onSave(it.toString()) }
+                                    }
+                                )
+                            }
+                        }) {
                             Icon(
                                 imageVector = Icons.Filled.Check,
                                 contentDescription = stringResource(id = R.string.save),
@@ -86,6 +106,11 @@ fun VideoTrimScreen(
                 if (isPlaying) exoPlayer.play() else exoPlayer.pause()
             }
 
+            var startMs by remember { mutableLongStateOf(0L) }
+            var endMs by remember { mutableLongStateOf(0L) }
+            var isSaving by remember { mutableStateOf(false) }
+            var progress by remember { mutableStateOf(0) }
+
             Column(
                 modifier = Modifier
                     .fillMaxSize()
@@ -111,11 +136,35 @@ fun VideoTrimScreen(
                     )
                 }
 
-                TimelineEditor(
+                AndroidView(
+                    factory = { ctx ->
+                        VideoEditor(ctx).apply {
+                            setVideoUri(Uri.parse(videoUri))
+                            onRangeChanged = { start, end ->
+                                startMs = start
+                                endMs = end
+                            }
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(vertical = 8.dp)
+                        .padding(vertical = 8.dp),
+                    update = { view ->
+                        view.onRangeChanged = { s, e ->
+                            startMs = s
+                            endMs = e
+                        }
+                    }
                 )
+
+                if (isSaving) {
+                    LinearProgressIndicator(
+                        progress = progress / 100f,
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    )
+                }
             }
         }
     }
@@ -136,6 +185,60 @@ private fun TrimBottomBar(
                     Icon(imageVector = tool.icon, contentDescription = null, tint = Color.White)
                 }
             )
+        }
+    }
+}
+
+@androidx.annotation.OptIn(androidx.media3.common.util.UnstableApi::class)
+private fun saveVideo(
+    context: android.content.Context,
+    inputUri: Uri,
+    startMs: Long,
+    endMs: Long,
+    onProgress: (Int) -> Unit = {},
+    onSave: (Uri?) -> Unit
+) {
+    val output = java.io.File(context.cacheDir, "trim_${'$'}{System.currentTimeMillis()}.mp4")
+    val mediaItem = MediaItem.Builder()
+        .setUri(inputUri)
+        .setClippingConfiguration(
+            MediaItem.ClippingConfiguration.Builder()
+                .setStartPositionMs(startMs)
+                .setEndPositionMs(endMs)
+                .build()
+        )
+        .build()
+    val edited = androidx.media3.transformer.EditedMediaItem.Builder(mediaItem).build()
+    val transformer = androidx.media3.transformer.Transformer.Builder(context)
+        .addListener(object : androidx.media3.transformer.Transformer.Listener {
+            override fun onCompleted(
+                composition: androidx.media3.transformer.Composition,
+                exportResult: androidx.media3.transformer.ExportResult
+            ) {
+                onSave(Uri.fromFile(output))
+            }
+
+            override fun onError(
+                composition: androidx.media3.transformer.Composition,
+                exportResult: androidx.media3.transformer.ExportResult,
+                exportException: androidx.media3.transformer.ExportException
+            ) {
+                exportException.printStackTrace()
+                onSave(null)
+            }
+        })
+        .build()
+
+    transformer.start(edited, output.absolutePath)
+
+    kotlinx.coroutines.GlobalScope.launch(kotlinx.coroutines.Dispatchers.Default) {
+        val holder = androidx.media3.transformer.ProgressHolder()
+        while (true) {
+            when (transformer.getProgress(holder)) {
+                androidx.media3.transformer.Transformer.PROGRESS_STATE_AVAILABLE -> onProgress(holder.progress)
+                androidx.media3.transformer.Transformer.PROGRESS_STATE_NOT_STARTED -> break
+            }
+            kotlinx.coroutines.delay(100)
         }
     }
 }

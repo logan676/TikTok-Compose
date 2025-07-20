@@ -105,6 +105,7 @@ object Libraries {
         const val exoplayer = "androidx.media3:media3-exoplayer:$Media3"
         const val expplayerDash = "androidx.media3:media3-exoplayer-dash:$Media3"
         const val media3Ui = "androidx.media3:media3-ui:$Media3"
+        const val transformer = "androidx.media3:media3-transformer:$Media3"
     }
 
     object Test {

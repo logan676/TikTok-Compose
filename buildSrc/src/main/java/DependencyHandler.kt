@@ -79,6 +79,7 @@ fun DependencyHandler.media3Dependency() {
     implementation(Libraries.AudioVideo.exoplayer)
     implementation(Libraries.AudioVideo.expplayerDash)
     implementation(Libraries.AudioVideo.media3Ui)
+    implementation(Libraries.AudioVideo.transformer)
 }
 
 fun DependencyHandler.cameraXDependencies() {
