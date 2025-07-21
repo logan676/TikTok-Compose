@@ -50,6 +50,8 @@ object Libraries {
         const val appCompat = "androidx.appcompat:appcompat:$AppCompat"
         const val lifecycleRunTimeKtx =
             "androidx.lifecycle:lifecycle-runtime-ktx:$LifecycleRunTimeKtx"
+        const val lifecycleViewModelKtx =
+            "androidx.lifecycle:lifecycle-viewmodel-ktx:$LifecycleRunTimeKtx"
         const val splashScreen = "androidx.core:core-splashscreen:$SplashScreenApi"
     }
 

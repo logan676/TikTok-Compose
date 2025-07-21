@@ -49,6 +49,7 @@ fun DependencyHandler.baseDependencies() {
     implementation(Libraries.AndroidX.appCompat)
     implementation(Libraries.AndroidX.coreKtx)
     implementation(Libraries.AndroidX.lifecycleRunTimeKtx)
+    implementation(Libraries.AndroidX.lifecycleViewModelKtx)
     implementation(Libraries.AndroidX.splashScreen)
     implementation(Libraries.Google.gson)
     implementation(Libraries.Hilt.hiltAndroid)
