@@ -13,5 +13,6 @@ dependencies {
     cameraXDependencies()
     media3Dependency()
     implementation(project(":common:videotrimmer"))
+    implementation(project(":feature:video-trimmer"))
     implementation(project(":feature:cameracapture"))
 }
