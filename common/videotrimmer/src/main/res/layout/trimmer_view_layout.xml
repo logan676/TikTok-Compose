@@ -4,10 +4,9 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <com.google.android.material.slider.RangeSlider
+    <com.puskal.videotrimmer.RangeSeekBarView
         android:id="@+id/rangeSlider"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_margin="16dp"
-        app:values="0,100" />
+        android:layout_margin="16dp" />
 </FrameLayout>
