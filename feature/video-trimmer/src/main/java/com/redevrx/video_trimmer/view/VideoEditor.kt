@@ -117,7 +117,6 @@ class VideoEditor @JvmOverloads constructor(
             GestureDetector(context, object : GestureDetector.SimpleOnGestureListener() {
                 override fun onSingleTapConfirmed(e: MotionEvent): Boolean {
                     onClickVideoPlayPause()
-                    Toast.makeText(context,"Click",Toast.LENGTH_LONG).show()
                     return true
                 }
             })
