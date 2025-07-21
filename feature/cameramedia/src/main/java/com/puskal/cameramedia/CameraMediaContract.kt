@@ -2,7 +2,7 @@ package com.puskal.cameramedia
 
 import androidx.annotation.StringRes
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.Filter
+import androidx.compose.material.icons.filled.InvertColors
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.res.vectorResource
 import androidx.compose.runtime.Composable
@@ -40,7 +40,7 @@ enum class CameraController(
     FLIP(title = R.string.flip, iconRes = R.drawable.ic_flip),
     SPEED(title = R.string.speed, iconRes = R.drawable.ic_speed),
     BEAUTY(title = R.string.beauty, iconRes = R.drawable.ic_profile_fill),
-    FILTER(title = R.string.filters, iconVector = Icons.Filled.Filter),
+    FILTERS(title = R.string.filters, iconVector = Icons.Filled.InvertColors),
     MIRROR(title = R.string.mirror, iconRes = R.drawable.ic_mirror),
     TIMER(title = R.string.timer, iconRes = R.drawable.ic_timer),
     FLASH(title = R.string.flash, iconRes = R.drawable.ic_flash),
