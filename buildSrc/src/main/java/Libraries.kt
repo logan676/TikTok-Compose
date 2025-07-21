@@ -33,7 +33,7 @@ object Version {
     const val Coil = "2.2.2"
     const val HiltNavigationCompose = "1.0.0"
     const val HiltAndroidVersion = "2.44"
-    const val Media3 = "1.0.0-rc02"
+    const val Media3 = "1.3.1"
     const val Accompanist = "0.36.0"
     const val SplashScreenApi = "1.0.1"
     const val ConstraintLayoutCompose = "1.0.1"
