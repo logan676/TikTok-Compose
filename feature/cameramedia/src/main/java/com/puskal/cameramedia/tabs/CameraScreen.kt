@@ -6,6 +6,7 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import com.otaliastudios.cameraview.CameraListener
 import com.otaliastudios.cameraview.CameraView
+import com.otaliastudios.cameraview.controls.Engine
 import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
 import com.otaliastudios.cameraview.controls.Mode
@@ -251,6 +252,9 @@ fun CameraPreview(
 
     val cameraView = remember {
         CameraView(context).apply {
+            setExperimental(true)
+            setEngine(Engine.CAMERA2)
+            setRequestPermissions(false)
             setLifecycleOwner(lifecycleOwner)
             mode = Mode.PICTURE
             facing = defaultCameraFacing
