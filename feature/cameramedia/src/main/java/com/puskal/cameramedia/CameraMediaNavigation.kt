@@ -7,7 +7,7 @@ import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
 import android.net.Uri
 import androidx.compose.runtime.collectAsState
-import androidx.lifecycle.getStateFlow
+import androidx.compose.runtime.getValue
 import com.puskal.core.DestinationRoute
 import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_EDIT_ROUTE
 import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_TRIM_ROUTE
