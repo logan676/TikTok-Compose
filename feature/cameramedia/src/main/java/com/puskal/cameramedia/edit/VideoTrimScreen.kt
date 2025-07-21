@@ -41,6 +41,13 @@ fun VideoTrimScreen(
         var isSaving by remember { mutableStateOf(false) }
         val editorRef = remember { mutableStateOf<VideoEditor?>(null) }
 
+        DisposableEffect(Unit) {
+            onDispose {
+                editorRef.value?.onPause()
+                editorRef.value?.destroy()
+            }
+        }
+
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
