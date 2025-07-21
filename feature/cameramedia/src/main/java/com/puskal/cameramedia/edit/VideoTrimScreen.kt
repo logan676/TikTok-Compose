@@ -45,6 +45,22 @@ fun VideoTrimScreen(
     onSave: (String) -> Unit = {}
 ) {
     TikTokTheme(darkTheme = true) {
+        val context = LocalContext.current
+        val exoPlayer = remember(videoUri) {
+            ExoPlayer.Builder(context).build().apply {
+                repeatMode = Player.REPEAT_MODE_ONE
+                setMediaItem(MediaItem.fromUri(Uri.parse(videoUri)))
+                playWhenReady = true
+                prepare()
+            }
+        }
+        DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
+
+        var isPlaying by remember { mutableStateOf(true) }
+        var startMs by remember { mutableLongStateOf(0L) }
+        var endMs by remember { mutableLongStateOf(0L) }
+        var isSaving by remember { mutableStateOf(false) }
+        var progress by remember { mutableStateOf(0) }
         var selectedTool by remember { mutableStateOf(TrimTool.TRIM) }
         Scaffold(
             topBar = {
@@ -90,26 +106,9 @@ fun VideoTrimScreen(
                 TrimBottomBar(selectedTool = selectedTool) { selectedTool = it }
             }
         ) { padding ->
-            val context = LocalContext.current
-            val exoPlayer = remember(videoUri) {
-                ExoPlayer.Builder(context).build().apply {
-                    repeatMode = Player.REPEAT_MODE_ONE
-                    setMediaItem(MediaItem.fromUri(Uri.parse(videoUri)))
-                    playWhenReady = true
-                    prepare()
-                }
-            }
-            DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
-
-            var isPlaying by remember { mutableStateOf(true) }
             LaunchedEffect(isPlaying) {
                 if (isPlaying) exoPlayer.play() else exoPlayer.pause()
             }
-
-            var startMs by remember { mutableLongStateOf(0L) }
-            var endMs by remember { mutableLongStateOf(0L) }
-            var isSaving by remember { mutableStateOf(false) }
-            var progress by remember { mutableStateOf(0) }
 
             Column(
                 modifier = Modifier
