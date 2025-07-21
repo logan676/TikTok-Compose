@@ -339,7 +339,7 @@ fun CameraPreview(
                     CameraController.FLIP -> {
                         defaultCameraFacing = if (defaultCameraFacing == Facing.FRONT) Facing.BACK else Facing.FRONT
                     }
-                    CameraController.FILTER -> {
+                    CameraController.FILTERS -> {
                         showFilterSheet = true
                     }
                     else -> {}
