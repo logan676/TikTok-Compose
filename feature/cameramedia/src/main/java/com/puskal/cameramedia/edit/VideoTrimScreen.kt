@@ -127,7 +127,7 @@ fun VideoTrimScreen(
                                 player = exoPlayer
                                 useController = false
                                 // Use a TextureView so the video layers correctly with other Compose UI
-                                setUseTextureView(true)
+//                                setUseTextureView(true)
                                 resizeMode = AspectRatioFrameLayout.RESIZE_MODE_ZOOM
                             }
                         },
@@ -230,14 +230,14 @@ private fun saveVideo(
 
     transformer.start(edited, output.absolutePath)
 
-    kotlinx.coroutines.GlobalScope.launch(kotlinx.coroutines.Dispatchers.Default) {
+    GlobalScope.launch(Dispatchers.Default) {
         val holder = androidx.media3.transformer.ProgressHolder()
         while (true) {
             when (transformer.getProgress(holder)) {
                 androidx.media3.transformer.Transformer.PROGRESS_STATE_AVAILABLE -> onProgress(holder.progress)
                 androidx.media3.transformer.Transformer.PROGRESS_STATE_NOT_STARTED -> break
             }
-            kotlinx.coroutines.delay(100)
+            delay(100)
         }
     }
 }
