@@ -2,14 +2,13 @@ apply plugin: 'com.android.library'
 
 android {
   namespace 'com.daasuu.mp4compose'
-  compileSdkVersion COMPILE_SDK_VERSION as int
-  buildToolsVersion BUILD_TOOLS_VERSION
+  compileSdkVersion 35
 
   defaultConfig {
-    minSdkVersion COMPILE_MIN_SDK_VERSION as int
-    targetSdkVersion COMPILE_SDK_VERSION as int
-    versionCode VERSION_CODE as int
-    versionName VERSION_NAME
+    minSdkVersion 21
+    targetSdkVersion 35
+    versionCode 1
+    versionName "1.0.0"
   }
 
   buildTypes {
