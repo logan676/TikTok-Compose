@@ -43,6 +43,8 @@ dependencies {
     implementation(Libraries.AndroidX.coreKtx)
     implementation(Libraries.AndroidX.appCompat)
     implementation(Libraries.Google.material)
+    media3Dependency()
+    implementation("com.github.CanHub:Android-Image-Cropper:4.3.2")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(Libraries.Test.junitExtKtx)
     androidTestImplementation(Libraries.Test.espressorCore)
