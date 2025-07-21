@@ -30,6 +30,9 @@ val cameraView = remember {
         setLifecycleOwner(lifecycleOwner)
         mode = Mode.PICTURE
         facing = defaultCameraFacing
+        mapGesture(Gesture.PINCH, GestureAction.ZOOM)
+        mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
+        mapGesture(Gesture.LONG_TAP, GestureAction.TAKE_PICTURE)
     }
 }
 ...
