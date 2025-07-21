@@ -10,7 +10,6 @@ dependencies {
     DATA
     CORE
     FEATURE_FILTER
-    implementation(project(":feature:mp4compose"))
     cameraXDependencies()
     media3Dependency()
     implementation(project(":feature:video-trimmer"))

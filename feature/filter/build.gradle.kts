@@ -9,4 +9,5 @@ dependencies {
     DOMAIN
     DATA
     CORE
+    implementation(project(":feature:mp4compose"))
 }
