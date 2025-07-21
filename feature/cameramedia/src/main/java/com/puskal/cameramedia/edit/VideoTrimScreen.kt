@@ -22,10 +22,13 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.redevrx.video_trimmer.event.OnProgressVideoEvent
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.redevrx.video_trimmer.event.OnVideoEditedEvent
 import com.redevrx.video_trimmer.view.VideoEditor
+import com.puskal.cameramedia.edit.TimelineEditor
+import com.puskal.cameramedia.edit.VideoOperationBar
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -40,6 +43,9 @@ fun VideoTrimScreen(
         var saveRequested by remember { mutableStateOf(false) }
         var isSaving by remember { mutableStateOf(false) }
         val editorRef = remember { mutableStateOf<VideoEditor?>(null) }
+        var currentPosition by remember { mutableStateOf(0L) }
+        var totalDuration by remember { mutableStateOf(0L) }
+        var isPlaying by remember { mutableStateOf(false) }
 
         DisposableEffect(Unit) {
             onDispose {
@@ -80,42 +86,64 @@ fun VideoTrimScreen(
                 TrimBottomBar(selectedTool = selectedTool) { selectedTool = it }
             }
         ) { padding ->
-            AndroidView(
-                factory = { ctx ->
-                    VideoEditor(ctx).apply {
-                        setDestinationPath(ctx.cacheDir.absolutePath)
-                        setVideoURI(Uri.parse(videoUri))
-                        setOnTrimVideoListener(object : OnVideoEditedEvent {
-                            override fun getResult(uri: Uri) {
-                                isSaving = false
-                                onSave(uri.toString())
-                            }
+            Column(modifier = Modifier.padding(padding)) {
+                AndroidView(
+                    factory = { ctx ->
+                        VideoEditor(ctx).apply {
+                            setDestinationPath(ctx.cacheDir.absolutePath)
+                            setVideoURI(Uri.parse(videoUri))
+                            setOnTrimVideoListener(object : OnVideoEditedEvent {
+                                override fun getResult(uri: Uri) {
+                                    isSaving = false
+                                    onSave(uri.toString())
+                                }
 
-                            override fun onError(message: String) {
-                                isSaving = false
-                            }
-                        })
-                        editorRef.value = this
-                    }
-                },
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(padding)
-            ) { view ->
-                editorRef.value = view
-                if (saveRequested) {
-                    saveRequested = false
-                    isSaving = true
-                    view.saveVideo()
-                }
-            }
-
-            if (isSaving) {
-                LinearProgressIndicator(
+                                override fun onError(message: String) {
+                                    isSaving = false
+                                }
+                            })
+                            addOnProgressVideoEvent(object : OnProgressVideoEvent {
+                                override fun updateProgress(time: Float, max: Long, scale: Long) {
+                                    currentPosition = time.toLong()
+                                    totalDuration = max
+                                    isPlaying = this@apply.isPlaying
+                                }
+                            })
+                            editorRef.value = this
+                        }
+                    },
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+                        .weight(1f)
+                ) { view ->
+                    editorRef.value = view
+                    if (saveRequested) {
+                        saveRequested = false
+                        isSaving = true
+                        view.saveVideo()
+                    }
+                }
+
+                VideoOperationBar(
+                    isPlaying = isPlaying,
+                    currentPosition = currentPosition,
+                    totalDuration = totalDuration,
+                    onPlayPause = { editorRef.value?.togglePlayPause() },
+                    onRewind = { editorRef.value?.skipBackward(5000) },
+                    onForward = { editorRef.value?.skipForward(5000) }
                 )
+
+                TimelineEditor(
+                    modifier = Modifier.fillMaxWidth()
+                )
+
+                if (isSaving) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .padding(horizontal = 16.dp)
+                    )
+                }
             }
         }
     }

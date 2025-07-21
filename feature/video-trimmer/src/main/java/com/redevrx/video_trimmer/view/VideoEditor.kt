@@ -104,6 +104,27 @@ class VideoEditor @JvmOverloads constructor(
         setUpMargins()
     }
 
+    /**
+     * Register an [OnProgressVideoEvent] to receive progress updates of the currently
+     * playing video. The listener will be called whenever the player position
+     * changes.
+     */
+    fun addOnProgressVideoEvent(listener: OnProgressVideoEvent) {
+        mListeners.add(listener)
+    }
+
+    /** Current playback position of the player in milliseconds */
+    val currentPosition: Long
+        get() = if (this::mPlayer.isInitialized) mPlayer.currentPosition else 0L
+
+    /** Total duration of the loaded video in milliseconds */
+    val totalDuration: Long
+        get() = mDuration
+
+    /** Whether the player is currently playing */
+    val isPlaying: Boolean
+        get() = if (this::mPlayer.isInitialized) mPlayer.isPlaying else false
+
     @SuppressLint("ClickableViewAccessibility")
     private fun setUpListeners() {
         mListeners = ArrayList()
@@ -215,6 +236,22 @@ class VideoEditor @JvmOverloads constructor(
             mMessageHandler.sendEmptyMessage(SHOW_PROGRESS)
             mPlayer.play()
         }
+    }
+
+    fun togglePlayPause() {
+        onClickVideoPlayPause()
+    }
+
+    fun skipBackward(ms: Long) {
+        val newPos = (currentPosition - ms).coerceAtLeast(0L)
+        mPlayer.seekTo(newPos)
+        notifyProgressUpdate(false)
+    }
+
+    fun skipForward(ms: Long) {
+        val newPos = (currentPosition + ms).coerceAtMost(totalDuration)
+        mPlayer.seekTo(newPos)
+        notifyProgressUpdate(false)
     }
 
     fun onCancelClicked() {

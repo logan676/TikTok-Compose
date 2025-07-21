@@ -115,4 +115,10 @@
     <string name="original_sound_of">Original sound - %1$s</string>
     <string name="number_posts">%1$d posts</string>
 
+    <string name="play">Play</string>
+    <string name="pause">Pause</string>
+    <string name="rewind">Rewind</string>
+    <string name="forward">Forward</string>
+    <string name="fullscreen">Fullscreen</string>
+
 </resources>
