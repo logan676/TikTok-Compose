@@ -16,9 +16,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.unit.dp
+import androidx.compose.material3.Text
+import androidx.compose.ui.res.stringResource
+import com.puskal.data.model.AudioModel
+import com.puskal.theme.R
 
 @Composable
-fun TimelineEditor(modifier: Modifier = Modifier) {
+fun TimelineEditor(
+    audio: AudioModel?,
+    modifier: Modifier = Modifier
+) {
     Column(modifier = modifier) {
         Row(
             modifier = Modifier
@@ -66,14 +73,28 @@ fun TimelineEditor(modifier: Modifier = Modifier) {
                 .height(24.dp)
                 .background(MaterialTheme.colorScheme.onSurface.copy(alpha = 0.1f))
         ) {
-            Icon(
-                imageVector = Icons.Filled.MusicNote,
-                contentDescription = null,
-                tint = Color.White,
-                modifier = Modifier
-                    .align(Alignment.CenterStart)
-                    .padding(start = 8.dp)
-            )
+            Row(
+                verticalAlignment = Alignment.CenterVertically,
+                modifier = Modifier.fillMaxSize()
+            ) {
+                Icon(
+                    imageVector = Icons.Filled.MusicNote,
+                    contentDescription = null,
+                    tint = Color.White,
+                    modifier = Modifier
+                        .padding(start = 8.dp)
+                )
+                audio?.let {
+                    Text(
+                        text = if (it.isOriginal) {
+                            stringResource(id = R.string.original_sound_of, it.audioAuthor.fullName)
+                        } else it.audioAuthor.fullName,
+                        color = Color.White,
+                        style = MaterialTheme.typography.bodySmall,
+                        modifier = Modifier.padding(start = 4.dp)
+                    )
+                }
+            }
         }
     }
 }
