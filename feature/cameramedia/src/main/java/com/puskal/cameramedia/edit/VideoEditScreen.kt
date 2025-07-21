@@ -46,14 +46,14 @@ fun VideoEditScreen(
             var showFilterSheet by remember { mutableStateOf(false) }
             var selectedFilter by remember { mutableStateOf(VideoFilter.NONE) }
             val exoPlayer = remember(videoUri) {
-                ExoPlayer.Builder(context).build().apply {
-                    repeatMode = Player.REPEAT_MODE_ONE
-                    setMediaItem(MediaItem.fromUri(Uri.parse(videoUri)))
-                    playWhenReady = true
-                    prepare()
-                }
+                // Initialize the player but delay preparing it until the surface is ready
+                ExoPlayer.Builder(context).build()
             }
             DisposableEffect(exoPlayer) { onDispose { exoPlayer.release() } }
+
+            // Flag used to make sure the player is only prepared once when the
+            // rendering surface becomes available
+            var isPlayerPrepared by remember { mutableStateOf(false) }
 
             val filterPlayerView = remember { GlFilterPlayerView(context) }
             DisposableEffect(filterPlayerView) { onDispose { filterPlayerView.player = null } }
@@ -72,6 +72,13 @@ fun VideoEditScreen(
                     modifier = Modifier.fillMaxSize(),
                     update = { view ->
                         view.player = exoPlayer
+                        if (!isPlayerPrepared && view.isAvailable) {
+                            exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(videoUri)))
+                            exoPlayer.repeatMode = Player.REPEAT_MODE_ONE
+                            exoPlayer.prepare()
+                            exoPlayer.playWhenReady = true
+                            isPlayerPrepared = true
+                        }
                     }
                 )
 
