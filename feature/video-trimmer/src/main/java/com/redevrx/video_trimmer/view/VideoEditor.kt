@@ -51,7 +51,7 @@ import javax.xml.transform.Transformer
 
 class VideoEditor @JvmOverloads constructor(
     context: Context,
-    attrs: AttributeSet,
+    attrs: AttributeSet? = null,
     defStyleAttr: Int = 0
 ) : FrameLayout(context, attrs, defStyleAttr) {
 
