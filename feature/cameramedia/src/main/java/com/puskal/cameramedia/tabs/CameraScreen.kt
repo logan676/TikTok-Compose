@@ -96,7 +96,8 @@ fun CameraScreen(
     Column(modifier = Modifier.fillMaxSize()) {
         if (multiplePermissionState.permissions[0].status.isGranted) {
             CameraPreview(
-                cameraOpenType,
+                navController = navController,
+                cameraOpenType = cameraOpenType,
                 onClickCancel = { navController.navigateUp() },
                 onClickOpenFile = {
                     fileLauncher.launch(pickVisualMediaRequest)
@@ -236,6 +237,7 @@ fun CameraMicrophoneAccessPage(
 
 @Composable
 fun CameraPreview(
+    navController: NavController,
     cameraOpenType: Tabs,
     onClickCancel: () -> Unit,
     onClickOpenFile: () -> Unit,
@@ -261,6 +263,7 @@ fun CameraPreview(
         cameraView.facing = defaultCameraFacing
     }
     var isRecording by remember { mutableStateOf(false) }
+    var recordedFile by remember { mutableStateOf<File?>(null) }
 
     DisposableEffect(cameraView) {
         val listener = object : CameraListener() {
@@ -271,6 +274,12 @@ fun CameraPreview(
 
             override fun onVideoTaken(result: VideoResult) {
                 isRecording = false
+                val file = recordedFile ?: result.getFile()
+                val uri = Uri.fromFile(file).toString()
+                navController.navigate(
+                    "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uri)}"
+                )
+                recordedFile = null
             }
         }
         cameraView.addCameraListener(listener)
@@ -309,6 +318,7 @@ fun CameraPreview(
                                     context.filesDir,
                                     "video_${'$'}{System.currentTimeMillis()}.mp4"
                                 )
+                                recordedFile = file
                                 cameraView.takeVideo(file)
                                 isRecording = true
                             }
