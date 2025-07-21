@@ -14,4 +14,5 @@ dependencies {
     media3Dependency()
     implementation(project(":feature:video-trimmer"))
     implementation(project(":feature:cameracapture"))
+    implementation(project(":feature:mp4compose"))
 }
