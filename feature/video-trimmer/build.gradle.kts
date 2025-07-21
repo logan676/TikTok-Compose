@@ -2,7 +2,7 @@ import AppConfig
 import Libraries
 
 plugins {
-    id("com.android.application")
+    id("com.android.library")
     id("org.jetbrains.kotlin.android")
 }
 
@@ -11,11 +11,8 @@ android {
     compileSdk = AppConfig.compileSdk
 
     defaultConfig {
-        applicationId = "com.redevrx.video_trimmer"
         minSdk = AppConfig.minSdk
         targetSdk = AppConfig.targetSdk
-        versionCode = 1
-        versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -47,7 +44,7 @@ dependencies {
     implementation(Libraries.AndroidX.appCompat)
     implementation(Libraries.Google.material)
     media3Dependency()
-    implementation("com.github.CanHub:Android-Image-Cropper:4.3.2")
+    implementation("com.github.CanHub:Android-Image-Cropper:4.5.0")
     testImplementation("junit:junit:4.13.2")
     androidTestImplementation(Libraries.Test.junitExtKtx)
     androidTestImplementation(Libraries.Test.espressorCore)
