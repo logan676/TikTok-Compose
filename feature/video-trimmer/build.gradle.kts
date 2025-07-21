@@ -1,3 +1,6 @@
+import AppConfig
+import Libraries
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -5,12 +8,12 @@ plugins {
 
 android {
     namespace = "com.redevrx.video_trimmer"
-    compileSdk = 35
+    compileSdk = AppConfig.compileSdk
 
     defaultConfig {
         applicationId = "com.redevrx.video_trimmer"
-        minSdk = 24
-        targetSdk = 35
+        minSdk = AppConfig.minSdk
+        targetSdk = AppConfig.targetSdk
         versionCode = 1
         versionName = "1.0"
 
@@ -37,10 +40,12 @@ android {
 
 dependencies {
 
-    implementation("androidx.core:core-ktx:1.16.0")
-    implementation("androidx.appcompat:appcompat:1.7.1")
-    implementation("com.google.android.material:material:1.12.0")
+    implementation(Libraries.AndroidX.coreKtx)
+    implementation(Libraries.AndroidX.appCompat)
+    implementation(Libraries.Google.material)
     testImplementation("junit:junit:4.13.2")
-    androidTestImplementation("androidx.test.ext:junit:1.2.1")
-    androidTestImplementation("androidx.test.espresso:espresso-core:3.6.1")
+    androidTestImplementation(Libraries.Test.junitExtKtx)
+    androidTestImplementation(Libraries.Test.espressorCore)
+    androidTestImplementation(Libraries.Test.testCoreKtx)
+    androidTestImplementation(Libraries.Test.runner)
 }
