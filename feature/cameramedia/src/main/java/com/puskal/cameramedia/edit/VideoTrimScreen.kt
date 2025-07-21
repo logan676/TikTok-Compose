@@ -66,7 +66,7 @@ fun VideoTrimScreen(
                             Icon(
                                 imageVector = Icons.Filled.Close,
                                 contentDescription = stringResource(id = R.string.cancel),
-                                tint = Color.Unspecified
+                                tint = Color.White
                             )
                         }
                     },
@@ -75,7 +75,7 @@ fun VideoTrimScreen(
                             Icon(
                                 imageVector = Icons.Filled.Check,
                                 contentDescription = stringResource(id = R.string.save),
-                                tint = Color.Unspecified
+                                tint = Color.White
                             )
                         }
                     },

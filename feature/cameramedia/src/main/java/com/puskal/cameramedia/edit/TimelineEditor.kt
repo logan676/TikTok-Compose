@@ -20,46 +20,6 @@ import androidx.compose.ui.unit.dp
 @Composable
 fun TimelineEditor(modifier: Modifier = Modifier) {
     Column(modifier = modifier) {
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 16.dp),
-            horizontalArrangement = Arrangement.SpaceBetween
-        ) {
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Filled.ZoomOut,
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Filled.ZoomIn,
-                    contentDescription = null,
-                    tint = Color.White
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
-        Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .height(64.dp)
-                .horizontalScroll(rememberScrollState()),
-            horizontalArrangement = Arrangement.spacedBy(4.dp)
-        ) {
-            repeat(10) {
-                Box(
-                    modifier = Modifier
-                        .size(width = 60.dp, height = 64.dp)
-                        .background(
-                            MaterialTheme.colorScheme.onSurface.copy(alpha = 0.2f)
-                        )
-                )
-            }
-        }
-        Spacer(modifier = Modifier.height(8.dp))
         Box(
             modifier = Modifier
                 .fillMaxWidth()
