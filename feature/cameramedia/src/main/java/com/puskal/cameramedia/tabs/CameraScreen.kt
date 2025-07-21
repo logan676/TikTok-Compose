@@ -230,6 +230,7 @@ fun CameraMicrophoneAccessPage(
             cameraOpenType = cameraOpenType,
             onClickEffect = { },
             onClickOpenFile = onClickOpenFile,
+            onOptionChanged = {},
             onClickCapture = { },
             isEnabledLayout = false
         )
@@ -305,16 +306,23 @@ fun CameraPreview(
                 cameraOpenType = cameraOpenType,
                 onClickEffect = { },
                 onClickOpenFile = onClickOpenFile,
+                onOptionChanged = { option ->
+                    when (option) {
+                        CameraCaptureOptions.PHOTO -> cameraView.mode = Mode.PICTURE
+                        CameraCaptureOptions.VIDEO,
+                        CameraCaptureOptions.FIFTEEN_SECOND,
+                        CameraCaptureOptions.SIXTY_SECOND -> cameraView.mode = Mode.VIDEO
+                        else -> {}
+                    }
+                },
                 onClickCapture = { option ->
                     when (option) {
                         CameraCaptureOptions.PHOTO -> {
-                            cameraView.mode = Mode.PICTURE
                             cameraView.takePicture()
                         }
                         CameraCaptureOptions.VIDEO,
                         CameraCaptureOptions.FIFTEEN_SECOND,
                         CameraCaptureOptions.SIXTY_SECOND -> {
-                            cameraView.mode = Mode.VIDEO
                             if (isRecording) {
                                 cameraView.stopVideo()
                             } else {
@@ -386,6 +394,7 @@ fun FooterCameraController(
     cameraOpenType: Tabs,
     onClickEffect: () -> Unit,
     onClickOpenFile: () -> Unit,
+    onOptionChanged: (CameraCaptureOptions) -> Unit = {},
     onClickCapture: (CameraCaptureOptions) -> Unit,
     isEnabledLayout: Boolean = false
 ) {
@@ -420,6 +429,11 @@ fun FooterCameraController(
             }
             else -> emptyList()
         }
+    }
+
+    val selectedIndex = layoutInfo.currentItem?.index ?: 0
+    LaunchedEffect(selectedIndex) {
+        captureOptions.getOrNull(selectedIndex)?.let { onOptionChanged(it) }
     }
 
     Column(
