@@ -10,6 +10,8 @@ import com.otaliastudios.cameraview.PictureResult
 import com.otaliastudios.cameraview.VideoResult
 import com.otaliastudios.cameraview.controls.Mode
 import com.otaliastudios.cameraview.controls.Facing
+import com.otaliastudios.cameraview.gesture.Gesture
+import com.otaliastudios.cameraview.gesture.GestureAction
 import java.io.File
 import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.Image
@@ -254,6 +256,9 @@ fun CameraPreview(
             setLifecycleOwner(lifecycleOwner)
             mode = Mode.PICTURE
             facing = defaultCameraFacing
+            mapGesture(Gesture.PINCH, GestureAction.ZOOM)
+            mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
+            mapGesture(Gesture.LONG_TAP, GestureAction.TAKE_PICTURE)
         }
     }
     LaunchedEffect(selectedFilter) {
