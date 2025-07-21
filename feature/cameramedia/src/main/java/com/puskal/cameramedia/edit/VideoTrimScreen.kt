@@ -18,14 +18,18 @@ import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import com.puskal.data.model.AudioModel
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.redevrx.video_trimmer.event.OnVideoEditedEvent
 import com.redevrx.video_trimmer.view.VideoEditor
+import com.puskal.cameramedia.edit.TimelineEditor
+import com.puskal.cameramedia.edit.ChooseAudioBottomSheet
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -39,6 +43,8 @@ fun VideoTrimScreen(
         var selectedTool by remember { mutableStateOf(TrimTool.TRIM) }
         var saveRequested by remember { mutableStateOf(false) }
         var isSaving by remember { mutableStateOf(false) }
+        var showSoundPicker by remember { mutableStateOf(false) }
+        var selectedAudio by remember { mutableStateOf<AudioModel?>(null) }
         val editorRef = remember { mutableStateOf<VideoEditor?>(null) }
 
         Scaffold(
@@ -70,44 +76,73 @@ fun VideoTrimScreen(
                 )
             },
             bottomBar = {
-                TrimBottomBar(selectedTool = selectedTool) { selectedTool = it }
+                TrimBottomBar(selectedTool = selectedTool) {
+                    selectedTool = it
+                    if (it == TrimTool.SOUND) {
+                        showSoundPicker = true
+                    }
+                }
             }
         ) { padding ->
-            AndroidView(
-                factory = { ctx ->
-                    VideoEditor(ctx).apply {
-                        setDestinationPath(ctx.cacheDir.absolutePath)
-                        setVideoURI(Uri.parse(videoUri))
-                        setOnTrimVideoListener(object : OnVideoEditedEvent {
-                            override fun getResult(uri: Uri) {
-                                isSaving = false
-                                onSave(uri.toString())
-                            }
-
-                            override fun onError(message: String) {
-                                isSaving = false
-                            }
-                        })
-                        editorRef.value = this
-                    }
-                },
+            Box(
                 modifier = Modifier
                     .fillMaxSize()
                     .padding(padding)
-            ) { view ->
-                editorRef.value = view
-                if (saveRequested) {
-                    saveRequested = false
-                    isSaving = true
-                    view.saveVideo()
+            ) {
+                Column(modifier = Modifier.fillMaxSize()) {
+                    AndroidView(
+                        factory = { ctx ->
+                            VideoEditor(ctx).apply {
+                                setDestinationPath(ctx.cacheDir.absolutePath)
+                                setVideoURI(Uri.parse(videoUri))
+                                setOnTrimVideoListener(object : OnVideoEditedEvent {
+                                    override fun getResult(uri: Uri) {
+                                        isSaving = false
+                                        onSave(uri.toString())
+                                    }
+
+                                    override fun onError(message: String) {
+                                        isSaving = false
+                                    }
+                                })
+                                editorRef.value = this
+                            }
+                        },
+                        modifier = Modifier
+                            .weight(1f)
+                            .fillMaxWidth()
+                    ) { view ->
+                        editorRef.value = view
+                        if (saveRequested) {
+                            saveRequested = false
+                            isSaving = true
+                            view.saveVideo()
+                        }
+                    }
+
+                    TimelineEditor(
+                        audio = selectedAudio,
+                        modifier = Modifier.fillMaxWidth()
+                    )
+                }
+
+                if (isSaving) {
+                    LinearProgressIndicator(
+                        modifier = Modifier
+                            .fillMaxWidth()
+                            .align(Alignment.TopCenter)
+                            .padding(horizontal = 16.dp)
+                    )
                 }
             }
 
-            if (isSaving) {
-                LinearProgressIndicator(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(horizontal = 16.dp)
+            if (showSoundPicker) {
+                ChooseAudioBottomSheet(
+                    onSelectAudio = {
+                        selectedAudio = it
+                        showSoundPicker = false
+                    },
+                    onDismiss = { showSoundPicker = false }
                 )
             }
         }
