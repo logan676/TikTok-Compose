@@ -392,7 +392,7 @@ fun FooterCameraController(
     val horizontalContentPadding = screenHalfWidth.minus(itemHorizontalPadding.div(2))
     val lazyListState = rememberLazyListState(
         initialFirstVisibleItemIndex = when (cameraOpenType) {
-            Tabs.CAMERA -> 2
+            Tabs.CAMERA -> 0
             Tabs.STORY -> 1
             else -> 0
         }
@@ -405,9 +405,10 @@ fun FooterCameraController(
     )
     val captureOptions = remember {
         when (cameraOpenType) {
-            Tabs.CAMERA -> CameraCaptureOptions.values().toMutableList().apply {
-                removeAll(listOf(CameraCaptureOptions.TEXT, CameraCaptureOptions.VIDEO))
-            }
+            Tabs.CAMERA -> listOf(
+                CameraCaptureOptions.VIDEO,
+                CameraCaptureOptions.PHOTO
+            )
             Tabs.STORY -> CameraCaptureOptions.values().toMutableList().apply {
                 removeAll(
                     listOf(CameraCaptureOptions.FIFTEEN_SECOND, CameraCaptureOptions.SIXTY_SECOND)
