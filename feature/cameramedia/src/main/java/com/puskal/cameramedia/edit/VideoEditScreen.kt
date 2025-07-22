@@ -201,6 +201,13 @@ fun VideoEditScreen(
                             VideoEditTool.FILTERS     -> if (enableFilters) showFilterSheet = true
                             else                      -> {}
                         }
+                    },
+                    onFeatureSelected = { feature ->
+                        Log.d(TAG, "Feature selected: $feature")
+                        when (feature) {
+                            ResizeMenuFeature.COLLAPSE_TOOLBAR -> {}
+                            else -> {}
+                        }
                     }
                 )
 
