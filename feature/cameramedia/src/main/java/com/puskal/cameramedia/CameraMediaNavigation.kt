@@ -64,7 +64,8 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
             onSave = { output ->
                 navController.previousBackStackEntry?.savedStateHandle?.set(PassedKey.VIDEO_URI, output)
                 navController.navigateUp()
-            }
+            },
+            onAddSound = { navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE) }
         )
     }
 }

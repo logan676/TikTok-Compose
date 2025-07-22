@@ -35,7 +35,8 @@ import com.puskal.cameramedia.edit.VideoOperationBar
 fun VideoTrimScreen(
     videoUri: String,
     onCancel: () -> Unit = {},
-    onSave: (String) -> Unit = {}
+    onSave: (String) -> Unit = {},
+    onAddSound: () -> Unit = {}
 ) {
     TikTokTheme(darkTheme = true) {
         val context = LocalContext.current
@@ -86,7 +87,12 @@ fun VideoTrimScreen(
                 )
             },
             bottomBar = {
-                TrimBottomBar(selectedTool = selectedTool) { selectedTool = it }
+                TrimBottomBar(selectedTool = selectedTool) { tool ->
+                    selectedTool = tool
+                    if (tool == TrimTool.SOUND) {
+                        onAddSound()
+                    }
+                }
             }
         ) { padding ->
             Column(modifier = Modifier.padding(padding)) {
@@ -128,7 +134,8 @@ fun VideoTrimScreen(
                 }
 
                 TimelineEditor(
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
+                    onClickAddSound = onAddSound
                 )
 
                 VideoOperationBar(
