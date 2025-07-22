@@ -7,7 +7,7 @@ This document explains what happens under the hood when the camera screen record
 - **Jetpack Compose** – UI toolkit used for building the camera screen (`CameraScreen.kt`).
 - **CameraView (feature `cameracapture`)** – Open‑source camera library bundled in the project for camera operations. It uses the underlying `Camera1`/`Camera2` APIs and `MediaCodec` to encode media.
 - **CameraX** – Additional AndroidX libraries included for preview/GL filtering (`CameraGlPreviewView.kt`).
-- **mp4compose** – Library used by the `filter` module for applying GPU filters and writing MP4 files.
+- **mp4compose** – Library used for applying GPU filters and writing MP4 files.
 - **Kotlin + Coroutines** – Main language and concurrency toolkit.
 
 ## Process Overview

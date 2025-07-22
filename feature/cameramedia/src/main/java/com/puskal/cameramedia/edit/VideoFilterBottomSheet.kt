@@ -14,7 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import com.puskal.filter.VideoFilter
+import com.puskal.cameramedia.edit.VideoFilter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable

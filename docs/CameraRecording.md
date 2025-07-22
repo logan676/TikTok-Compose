@@ -30,7 +30,7 @@ dependencies {
     DOMAIN
     DATA
     CORE
-    FEATURE_FILTER
+    implementation(project(":feature:mp4compose"))
     cameraXDependencies()
     implementation(project(":feature:cameracapture"))
 }
