@@ -46,6 +46,11 @@ import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
 import com.google.accompanist.permissions.rememberMultiplePermissionsState
 import com.google.accompanist.permissions.shouldShowRationale
+import android.content.Context
+import android.content.ContentValues
+import android.media.MediaScannerConnection
+import android.os.Environment
+import android.provider.MediaStore
 import com.puskal.cameramedia.*
 import com.puskal.cameramedia.filter.FilterBottomSheet
 import com.puskal.composable.CaptureButton
@@ -287,11 +292,12 @@ fun CameraPreview(
             }
 
             override fun onVideoTaken(result: VideoResult) {
-                isRecording = false
                 val file = recordedFile ?: result.getFile()
-                val uri = Uri.fromFile(file).toString()
+                val galleryUri = saveVideoToGallery(context, file)
+                isRecording = false
+                val uriString = (galleryUri ?: Uri.fromFile(file)).toString()
                 navController.navigate(
-                    "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uri)}"
+                    "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uriString)}"
                 )
                 recordedFile = null
             }
@@ -589,5 +595,24 @@ val pickVisualMediaRequest by lazy {
 }
 
 fun alphaForInteractiveView(isEnabledLayout: Boolean): Float = if (isEnabledLayout) 1f else 0.28f
+
+private fun saveVideoToGallery(context: Context, file: File): Uri? {
+    val values = ContentValues().apply {
+        put(MediaStore.Video.Media.DISPLAY_NAME, file.name)
+        put(MediaStore.Video.Media.MIME_TYPE, "video/mp4")
+        put(MediaStore.Video.Media.RELATIVE_PATH, Environment.DIRECTORY_MOVIES)
+    }
+    val resolver = context.contentResolver
+    val uri = resolver.insert(MediaStore.Video.Media.EXTERNAL_CONTENT_URI, values)
+    uri?.let { outputUri ->
+        resolver.openOutputStream(outputUri)?.use { output ->
+            file.inputStream().use { input ->
+                input.copyTo(output)
+            }
+        }
+        MediaScannerConnection.scanFile(context, arrayOf(outputUri.toString()), null, null)
+    }
+    return uri
+}
 
 
