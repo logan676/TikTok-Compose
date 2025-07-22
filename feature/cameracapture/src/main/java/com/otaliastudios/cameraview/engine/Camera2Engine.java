@@ -904,8 +904,10 @@ public class Camera2Engine extends CameraBaseEngine implements
 
     private void doTakeVideo(@NonNull final VideoResult.Stub stub) {
         if (!(mVideoRecorder instanceof Full2VideoRecorder)) {
-            throw new IllegalStateException("doTakeVideo called, but video recorder " +
-                    "is not a Full2VideoRecorder! " + mVideoRecorder);
+            LOG.e("doTakeVideo", "Video recorder not prepared. Aborting recording.");
+            onVideoResult(null,
+                    new IllegalStateException("Video recorder is not a Full2VideoRecorder"));
+            return;
         }
         Full2VideoRecorder recorder = (Full2VideoRecorder) mVideoRecorder;
         try {
