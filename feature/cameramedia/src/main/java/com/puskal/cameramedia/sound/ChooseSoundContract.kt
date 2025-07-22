@@ -1,9 +1,7 @@
 package com.puskal.cameramedia.sound
 
-import com.puskal.data.model.AudioModel
-
 data class ViewState(
-    val audios: List<AudioModel>? = null
+    val audioFiles: List<String>? = null
 )
 
 sealed class SoundEvent

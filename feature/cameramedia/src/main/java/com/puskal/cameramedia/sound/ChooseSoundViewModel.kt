@@ -1,15 +1,16 @@
 package com.puskal.cameramedia.sound
 
+import android.content.Context
 import androidx.lifecycle.viewModelScope
 import com.puskal.core.base.BaseViewModel
-import com.puskal.domain.cameramedia.GetAudioUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
+import dagger.hilt.android.qualifiers.ApplicationContext
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class ChooseSoundViewModel @Inject constructor(
-    private val getAudioUseCase: GetAudioUseCase
+    @ApplicationContext private val context: Context
 ) : BaseViewModel<ViewState, SoundEvent>() {
 
     init {
@@ -18,9 +19,8 @@ class ChooseSoundViewModel @Inject constructor(
 
     private fun fetchAudios() {
         viewModelScope.launch {
-            getAudioUseCase().collect { list ->
-                updateState(ViewState(audios = list))
-            }
+            val files = context.assets.list("audios")?.sorted() ?: emptyArray()
+            updateState(ViewState(audioFiles = files.map { it.substringBeforeLast('.') }))
         }
     }
 
