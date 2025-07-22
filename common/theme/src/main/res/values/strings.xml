@@ -117,8 +117,8 @@
 
     <string name="play">Play</string>
     <string name="pause">Pause</string>
-    <string name="rewind">Rewind</string>
-    <string name="forward">Forward</string>
+    <string name="undo">Undo</string>
+    <string name="redo">Redo</string>
     <string name="fullscreen">Fullscreen</string>
 
 </resources>

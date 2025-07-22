@@ -2,8 +2,8 @@ package com.puskal.cameramedia.edit
 
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.filled.FastForward
-import androidx.compose.material.icons.filled.FastRewind
+import androidx.compose.material.icons.filled.Redo
+import androidx.compose.material.icons.filled.Undo
 import androidx.compose.material.icons.filled.Fullscreen
 import androidx.compose.material.icons.filled.Pause
 import androidx.compose.material3.Icon
@@ -27,8 +27,8 @@ fun VideoOperationBar(
     currentPosition: Long,
     totalDuration: Long,
     onPlayPause: () -> Unit,
-    onRewind: () -> Unit = {},
-    onForward: () -> Unit = {},
+    onUndo: () -> Unit = {},
+    onRedo: () -> Unit = {},
     onFullScreen: () -> Unit = {},
 ) {
     Row(
@@ -61,17 +61,17 @@ fun VideoOperationBar(
         }
 
         Row(verticalAlignment = Alignment.CenterVertically) {
-            IconButton(onClick = onRewind) {
+            IconButton(onClick = onUndo) {
                 Icon(
-                    imageVector = Icons.Filled.FastRewind,
-                    contentDescription = stringResource(id = R.string.rewind),
+                    imageVector = Icons.Filled.Undo,
+                    contentDescription = stringResource(id = R.string.undo),
                     tint = Color.White
                 )
             }
-            IconButton(onClick = onForward) {
+            IconButton(onClick = onRedo) {
                 Icon(
-                    imageVector = Icons.Filled.FastForward,
-                    contentDescription = stringResource(id = R.string.forward),
+                    imageVector = Icons.Filled.Redo,
+                    contentDescription = stringResource(id = R.string.redo),
                     tint = Color.White
                 )
             }
