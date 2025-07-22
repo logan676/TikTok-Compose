@@ -46,6 +46,8 @@ This app consist of following modules:
 - common
 - core
 - filter - provides video filter capabilities accessed via the camera screen
+- `VideoEditScreen` supports filters only when the `enableFilters` parameter is
+  set to `true`.
 
 <img src="screenshots/tiktokcompose_modularization.jpg" width=760  />
 
