@@ -124,6 +124,10 @@ fun VideoTrimScreen(
                     }
                 }
 
+                TimelineEditor(
+                    modifier = Modifier.fillMaxWidth()
+                )
+
                 VideoOperationBar(
                     isPlaying = isPlaying,
                     currentPosition = currentPosition,
@@ -131,10 +135,6 @@ fun VideoTrimScreen(
                     onPlayPause = { editorRef.value?.togglePlayPause() },
                     onRewind = { editorRef.value?.skipBackward(5000) },
                     onForward = { editorRef.value?.skipForward(5000) }
-                )
-
-                TimelineEditor(
-                    modifier = Modifier.fillMaxWidth()
                 )
 
                 if (isSaving) {
