@@ -41,6 +41,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
+import androidx.compose.ui.graphics.graphicsLayer
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -257,6 +258,7 @@ fun CameraPreview(
     var defaultCameraFacing by remember { mutableStateOf(Facing.FRONT) }
     var showFilterSheet by remember { mutableStateOf(false) }
     var selectedFilter by remember { mutableStateOf(Filters.NONE) }
+    var isMirror by remember { mutableStateOf(false) }
 
     val cameraView = remember {
         CameraView(context).apply {
@@ -307,7 +309,12 @@ fun CameraPreview(
     }
 
     Box(modifier = Modifier.fillMaxSize()) {
-        AndroidView(factory = { cameraView }, modifier = Modifier.fillMaxSize())
+        AndroidView(
+            factory = { cameraView },
+            modifier = Modifier
+                .fillMaxSize()
+                .graphicsLayer { scaleX = if (isMirror) -1f else 1f }
+        )
 
         Box(
             modifier = Modifier
@@ -369,6 +376,7 @@ fun CameraPreview(
                     CameraController.FILTERS -> {
                         showFilterSheet = true
                     }
+                    CameraController.MIRROR -> isMirror = !isMirror
                     else -> {}
                 }
             }
