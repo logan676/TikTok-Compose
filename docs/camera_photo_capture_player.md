@@ -88,7 +88,7 @@ fun surfaceProvider(executor: Executor): Preview.SurfaceProvider = Preview.Surfa
     }
 }
 ```
-`CameraGlPreviewView` implements an OpenGL-based preview using CameraX and `GlSurfaceTexture` for applying filters in real time.
+`CameraGlPreviewView` demonstrates how CameraX frames could be fed through `mp4compose` filters. The main camera screen instead applies filters via the built-in `CameraView` pipeline.
 
 ## Performance Notes
 
@@ -98,4 +98,4 @@ fun surfaceProvider(executor: Executor): Preview.SurfaceProvider = Preview.Surfa
 
 ## Summary
 
-When the camera screen is opened, a `CameraView` provides a real-time preview. Selecting the *Photo* capture option triggers `takePicture()`, producing a file in internal storage via `onPictureTaken()`. If the user records a video, `takeVideo()` is invoked and the resulting file can be played through the `VideoPlayer` component built on Media3’s `ExoPlayer`. Filters are rendered with `CameraGlPreviewView`, which manages its own OpenGL environment for performance.
+When the camera screen is opened, a `CameraView` provides a real-time preview. Selecting the *Photo* capture option triggers `takePicture()`, producing a file in internal storage via `onPictureTaken()`. If the user records a video, `takeVideo()` is invoked and the resulting file can be played through the `VideoPlayer` component built on Media3’s `ExoPlayer`. Filters are applied via `cameraView.filter` using the `Filters` enum; `CameraGlPreviewView` is only a sample for custom OpenGL processing.

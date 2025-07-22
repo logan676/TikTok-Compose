@@ -154,7 +154,14 @@ This stores the captured video in the app’s private files directory. When `onV
 
 ### Filtered Preview
 
-For filtered previews, the project provides `CameraGlPreviewView`, a custom `TextureView` that hooks a `CameraX` `Preview.SurfaceProvider` to an OpenGL surface and applies `mp4compose` filters:
+Real‑time effects on the camera screen rely on the filter support built in to
+`CameraView`.  When a user selects a value from the `Filters` enumeration the
+composable updates `cameraView.filter = selectedFilter.newInstance()` so both the
+preview and the recorded video use that effect.  
+
+The repository also contains a `CameraGlPreviewView` class that demonstrates how
+`mp4compose` `GlFilter` implementations could be applied to CameraX frames. This
+view is provided as a sample only and is not wired into the current Compose UI:
 
 ```kotlin
 class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.SurfaceTextureListener {
@@ -184,7 +191,7 @@ class CameraGlPreviewView(context: Context) : TextureView(context), TextureView.
 
 Source: `CameraGlPreviewView.kt` lines 1–141.
 
-This class manages its own EGL context for rendering and is used for real‑time filter application.
+This class manages its own EGL context for rendering and can be used for custom real‑time effects, though it is not part of the default camera flow.
 
 ## Performance Notes
 
@@ -199,6 +206,6 @@ When the user navigates to the camera screen:
 2. A `CameraView` instance is created and attached to the lifecycle.
 3. The preview is shown along with UI controls for capture, switching camera, and applying filters.
 4. Tapping the capture button in video mode calls `cameraView.takeVideo()` and stores the recording to a file. When finished, `onVideoTaken` is triggered and recording stops.
-5. Optional filters are rendered using `CameraGlPreviewView` with OpenGL and `mp4compose` filters for real‑time effects.
+5. Selected filters are applied through `CameraView`'s `Filters` enum. `CameraGlPreviewView` is available as an example of applying `mp4compose` filters but is not used in the current UI.
 
-This flow leverages Jetpack Compose for UI, CameraView for camera control, CameraX for preview surfaces, and mp4compose for filtering, delivering a modern composable camera experience.
+This flow leverages Jetpack Compose for UI and `CameraView` for preview and recording.  `mp4compose` is included primarily for video editing and custom effects rather than the live camera preview.

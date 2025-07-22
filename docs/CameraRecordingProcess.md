@@ -6,8 +6,8 @@ This document explains what happens under the hood when the camera screen record
 
 - **Jetpack Compose** – UI toolkit used for building the camera screen (`CameraScreen.kt`).
 - **CameraView (feature `cameracapture`)** – Open‑source camera library bundled in the project for camera operations. It uses the underlying `Camera1`/`Camera2` APIs and `MediaCodec` to encode media.
-- **CameraX** – Additional AndroidX libraries included for preview/GL filtering (`CameraGlPreviewView.kt`).
-- **mp4compose** – Library used by the `filter` module for applying GPU filters and writing MP4 files.
+- **CameraX** – Included only for the sample `CameraGlPreviewView` class. The main camera preview relies on `CameraView`.
+- **mp4compose** – Library available for post‑processing and video editing with OpenGL filters.
 - **Kotlin + Coroutines** – Main language and concurrency toolkit.
 
 ## Process Overview
@@ -17,7 +17,7 @@ This document explains what happens under the hood when the camera screen record
 2. **Camera Setup**
    - `CameraScreen` creates an `AndroidView` wrapper hosting `CameraView`.
    - `CameraView` is bound to the current `LifecycleOwner` and configured with the desired facing mode.
-   - Optional GL preview/filter pipeline can be attached using `CameraGlPreviewView`.
+  - The selected filter from the `Filters` enum is applied directly via `cameraView.filter`. `CameraGlPreviewView` exists as a demonstration of using `mp4compose` but is not part of the normal flow.
 3. **Recording Start**
    - When the user selects the *Video* capture option, `CameraView` is put in `Mode.VIDEO` and `takeVideo(File)` is invoked.
    - The file passed to `takeVideo` is created inside `context.filesDir` using a timestamped name (`video_<timestamp>.mp4`).

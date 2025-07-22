@@ -7,7 +7,7 @@ The camera feature relies on the following components:
 - **Jetpack Compose** – used for the UI layer to build composables such as `CameraScreen` and `FilterBottomSheet`.
 - **CameraView (Otaliastudios)** – third‑party camera library located under `feature/cameracapture`. It supports real‑time filters through OpenGL.
 - **CameraMedia module** – Compose wrappers around `CameraView` for the recording screen. Implementation is in `feature/cameramedia`.
-- **mp4compose** – included in `feature/filter` for OpenGL filters and potential post‑processing of recorded videos.
+- **mp4compose** – included in `feature/mp4compose` for OpenGL filters and potential post‑processing of recorded videos.
 
 ## Recording Flow
 
