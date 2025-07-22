@@ -57,7 +57,7 @@ fun VideoTrimScreen(
         Scaffold(
             topBar = {
                 CenterAlignedTopAppBar(
-                    title = { Text(text = stringResource(id = R.string.trim)) },
+                    title = {},
                     navigationIcon = {
                         IconButton(onClick = {
                             editorRef.value?.onCancelClicked()
@@ -79,7 +79,10 @@ fun VideoTrimScreen(
                             )
                         }
                     },
-                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(containerColor = Color.Transparent)
+                    colors = TopAppBarDefaults.centerAlignedTopAppBarColors(
+                        containerColor = Color.Transparent,
+                        scrolledContainerColor = Color.Transparent
+                    )
                 )
             },
             bottomBar = {
