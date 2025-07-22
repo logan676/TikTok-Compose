@@ -19,7 +19,11 @@ class ChooseSoundViewModel @Inject constructor(
 
     private fun fetchAudios() {
         viewModelScope.launch {
-            val files = context.assets.list("audios")?.sorted() ?: emptyArray()
+            // AssetManager.list returns an array. Convert it to a List so that the
+            // null coalescing expression keeps a consistent type and we can
+            // safely use collection operations like `map`.
+            val files: List<String> =
+                context.assets.list("audios")?.toList()?.sorted() ?: emptyList()
             updateState(ViewState(audioFiles = files.map { it.substringBeforeLast('.') }))
         }
     }
