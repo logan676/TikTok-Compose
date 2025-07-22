@@ -56,11 +56,11 @@ fun VideoEditToolBar(
     }
 
     Column(
-        modifier = if (expanded.value) modifier.verticalScroll(rememberScrollState()) else modifier,
+        modifier = if (expanded) modifier.verticalScroll(rememberScrollState()) else modifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        val tools = if (expanded.value) expandedTools else collapsedTools
+        val tools = if (expanded) expandedTools else collapsedTools
         tools.forEach { tool ->
             Column(horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(
@@ -71,7 +71,7 @@ fun VideoEditToolBar(
                         .size(32.dp)
                         .clickable {
                             if (tool == VideoEditTool.MORE) {
-                                expanded.value = true
+                                expanded = true
                             } else {
                                 onToolSelected(tool)
                             }
@@ -85,7 +85,7 @@ fun VideoEditToolBar(
                 )
             }
         }
-        if (expanded.value) {
+        if (expanded) {
             ResizeMenuFeature.values().forEach { feature ->
                 Column(horizontalAlignment = Alignment.CenterHorizontally) {
                     Icon(
@@ -96,7 +96,7 @@ fun VideoEditToolBar(
                             .size(32.dp)
                             .clickable {
                                 if (feature == ResizeMenuFeature.COLLAPSE_TOOLBAR) {
-                                    expanded.value = false
+                                    expanded = false
                                 } else {
                                     onFeatureSelected(feature)
                                 }
