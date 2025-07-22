@@ -12,6 +12,7 @@ import android.view.Surface
 import android.view.TextureView
 import androidx.media3.exoplayer.ExoPlayer
 import com.daasuu.mp4compose.filter.GlFilter
+import com.daasuu.mp4compose.gl.GlFramebufferObject
 import com.daasuu.mp4compose.gl.GlPreviewFilter
 import com.daasuu.mp4compose.gl.GlSurfaceTexture
 
@@ -24,6 +25,10 @@ class GlFilterPlayerView(context: Context) : TextureView(context), TextureView.S
     private var surfaceTextureWrapper: GlSurfaceTexture? = null
     private var previewFilter: GlPreviewFilter? = null
     private var glFilter: GlFilter = GlFilter()
+
+    private var framebufferObject: GlFramebufferObject? = null
+    private var filterFramebufferObject: GlFramebufferObject? = null
+    private var normalShader: GlFilter? = null
 
     private var texName: Int = 0
     private val mvpMatrix = FloatArray(16)
@@ -51,6 +56,7 @@ class GlFilterPlayerView(context: Context) : TextureView(context), TextureView.S
         glFilter.release()
         glFilter = filter
         glFilter.setup()
+        framebufferObject?.let { glFilter.setFrameSize(it.getWidth(), it.getHeight()) }
     }
 
     private fun initEgl(surface: SurfaceTexture) {
@@ -101,10 +107,20 @@ class GlFilterPlayerView(context: Context) : TextureView(context), TextureView.S
         val tex = IntArray(1)
         GLES20.glGenTextures(1, tex, 0)
         texName = tex[0]
+
         surfaceTextureWrapper = GlSurfaceTexture(texName)
         previewFilter = GlPreviewFilter(surfaceTextureWrapper!!.textureTarget)
         previewFilter?.setup()
+
+        framebufferObject = GlFramebufferObject().apply { setup(width, height) }
+        filterFramebufferObject = GlFramebufferObject().apply { setup(width, height) }
+        normalShader = GlFilter().apply { setup() }
+
         glFilter.setup()
+        previewFilter?.setFrameSize(width, height)
+        glFilter.setFrameSize(width, height)
+        normalShader?.setFrameSize(width, height)
+
         surfaceTextureWrapper!!.setOnFrameAvailableListener { drawFrame() }
         player?.setVideoSurface(Surface(surfaceTextureWrapper!!.surfaceTexture))
     }
@@ -115,11 +131,17 @@ class GlFilterPlayerView(context: Context) : TextureView(context), TextureView.S
         player?.clearVideoSurface()
         surfaceTextureWrapper?.release()
         previewFilter?.release()
+        framebufferObject?.release()
+        filterFramebufferObject?.release()
+        normalShader?.release()
         glFilter.release()
         releaseEgl()
         texName = 0
         surfaceTextureWrapper = null
         previewFilter = null
+        framebufferObject = null
+        filterFramebufferObject = null
+        normalShader = null
         return true
     }
 
@@ -129,12 +151,41 @@ class GlFilterPlayerView(context: Context) : TextureView(context), TextureView.S
 
     private fun drawFrame() {
         val wrapper = surfaceTextureWrapper ?: return
+        val fbo = framebufferObject ?: return
+        val filterFbo = filterFramebufferObject ?: return
+        val shader = normalShader ?: return
+
         wrapper.updateTexImage()
         wrapper.getTransformMatrix(stMatrix)
-        GLES20.glViewport(0, 0, width, height)
+
+        // Draw camera/video frame into FBO using preview shader
+        fbo.enable()
+        GLES20.glViewport(0, 0, fbo.getWidth(), fbo.getHeight())
         android.opengl.Matrix.setIdentityM(mvpMatrix, 0)
+
+        // If a filter is set, render first into filterFbo
+        val useFilter = glFilter.javaClass != GlFilter::class.java
+        if (useFilter) {
+            filterFbo.enable()
+            GLES20.glViewport(0, 0, filterFbo.getWidth(), filterFbo.getHeight())
+        }
+
         previewFilter?.draw(texName, mvpMatrix, stMatrix, 1f)
-        glFilter.draw(texName, null)
+
+        var tex = if (useFilter) {
+            fbo.enable()
+            GLES20.glViewport(0, 0, fbo.getWidth(), fbo.getHeight())
+            glFilter.draw(filterFbo.getTexName(), fbo)
+            fbo.getTexName()
+        } else {
+            fbo.getTexName()
+        }
+
+        // Draw result back to default framebuffer
+        GLES20.glBindFramebuffer(GLES20.GL_FRAMEBUFFER, 0)
+        GLES20.glViewport(0, 0, width, height)
+        shader.draw(tex, null)
+
         EGL14.eglSwapBuffers(eglDisplay, eglSurface)
     }
 }
