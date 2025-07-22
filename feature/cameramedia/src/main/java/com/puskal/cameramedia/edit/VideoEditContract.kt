@@ -3,7 +3,7 @@ package com.puskal.cameramedia.edit
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Crop
-import androidx.compose.material.icons.filled.EmojiEmotions
+import androidx.compose.material.icons.filled.ArStickers
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.InvertColors
 import androidx.compose.material.icons.filled.Flag
@@ -12,7 +12,7 @@ import androidx.compose.material.icons.filled.KeyboardArrowUp
 import androidx.compose.material.icons.filled.Settings
 import androidx.compose.material.icons.filled.Share
 import androidx.compose.material.icons.filled.TextFields
-import androidx.compose.material.icons.filled.Wallpaper
+import androidx.compose.material.icons.filled.Animation
 import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Subtitles
@@ -27,8 +27,8 @@ enum class VideoEditTool(@StringRes val title: Int, val icon: ImageVector) {
     TRIM(R.string.trim, Icons.Filled.ContentCut),
     TEXT(R.string.text, Icons.Filled.TextFields),
     CHALLENGE(R.string.challenge, Icons.Filled.Flag),
-    STICKERS(R.string.stickers, Icons.Filled.EmojiEmotions),
-    EFFECTS(R.string.effects, Icons.Filled.Wallpaper),
+    STICKERS(R.string.stickers, Icons.Filled.ArStickers),
+    EFFECTS(R.string.effects, Icons.Filled.Animation),
     MORE(R.string.see_more, Icons.Filled.KeyboardArrowUp),
     FILTERS(R.string.filters, Icons.Filled.InvertColors),
     BEAUTY(R.string.beauty, Icons.Filled.Face),
