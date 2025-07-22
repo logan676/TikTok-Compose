@@ -16,19 +16,21 @@ import androidx.compose.material.icons.outlined.Brush
 import androidx.compose.material.icons.outlined.Mic
 import androidx.compose.material.icons.outlined.Subtitles
 import androidx.compose.material.icons.outlined.Star
+import androidx.annotation.StringRes
 import androidx.compose.ui.graphics.vector.ImageVector
+import com.puskal.theme.R
 
-enum class VideoEditTool(val icon: ImageVector) {
-    SETTINGS(Icons.Filled.Settings),
-    SHARE(Icons.Filled.Share),
-    TRIM(Icons.Filled.ContentCut),
-    TEXT(Icons.Filled.TextFields),
-    CHALLENGE(Icons.Filled.Flag),
-    STICKERS(Icons.Filled.EmojiEmotions),
-    EFFECTS(Icons.Filled.Wallpaper),
-    FILTERS(Icons.Filled.InvertColors),
-    BEAUTY(Icons.Filled.Face),
-    CROP_RESIZE(Icons.Filled.Crop)
+enum class VideoEditTool(@StringRes val title: Int, val icon: ImageVector) {
+    SETTINGS(R.string.settings, Icons.Filled.Settings),
+    SHARE(R.string.share, Icons.Filled.Share),
+    TRIM(R.string.trim, Icons.Filled.ContentCut),
+    TEXT(R.string.text, Icons.Filled.TextFields),
+    CHALLENGE(R.string.challenge, Icons.Filled.Flag),
+    STICKERS(R.string.stickers, Icons.Filled.EmojiEmotions),
+    EFFECTS(R.string.effects, Icons.Filled.Wallpaper),
+    FILTERS(R.string.filters, Icons.Filled.InvertColors),
+    BEAUTY(R.string.beauty, Icons.Filled.Face),
+    CROP_RESIZE(R.string.crop_resize, Icons.Filled.Crop)
 }
 
 enum class ResizeMenuFeature(val icon: ImageVector) {
