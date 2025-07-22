@@ -46,7 +46,7 @@ import com.puskal.tiktokcompose.navigation.AppNavHost
     ExperimentalAnimationApi::class
 )
 @Composable
-fun RootScreen(startDestination: String = HOME_SCREEN_ROUTE) {
+fun RootScreen() {
     val bottomSheetNavigator = rememberBottomSheetNavigator()
     val navController = rememberNavController(bottomSheetNavigator)
     val currentBackStackEntryAsState by navController.currentBackStackEntryAsState()
@@ -89,10 +89,7 @@ fun RootScreen(startDestination: String = HOME_SCREEN_ROUTE) {
                         .fillMaxSize()
                         .padding(it)
                 ) {
-                    AppNavHost(
-                        navController = navController,
-                        startDestination = startDestination
-                    )
+                    AppNavHost(navController = navController)
                 }
             }
         }
