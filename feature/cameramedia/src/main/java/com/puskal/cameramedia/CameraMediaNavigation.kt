@@ -43,7 +43,8 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
                 navController.navigate(
                     DestinationRoute.VIDEO_TRIM_ROUTE + "/" + Uri.encode(encoded)
                 )
-            }
+            },
+            enableFilters = true
         )
     }
 
