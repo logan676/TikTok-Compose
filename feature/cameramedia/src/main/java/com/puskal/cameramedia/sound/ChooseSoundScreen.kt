@@ -33,15 +33,15 @@ fun ChooseSoundScreen(
 ) {
     val viewState by viewModel.viewState.collectAsState()
 
-    Scaffold(topBar = {
-        TopBar(title = stringResource(id = R.string.sounds)) {
+    Column(
+        modifier = Modifier.fillMaxHeight(0.96f)
+    ) {
+        TopBar(navIcon = R.drawable.ic_cancel, title = stringResource(id = R.string.sounds)) {
             navController.navigateUp()
         }
-    }) { padding ->
+
         LazyColumn(
-            modifier = Modifier
-                .fillMaxSize()
-                .padding(padding)
+            modifier = Modifier.fillMaxSize()
         ) {
             viewState?.audios?.let { list ->
                 items(list) { audio ->

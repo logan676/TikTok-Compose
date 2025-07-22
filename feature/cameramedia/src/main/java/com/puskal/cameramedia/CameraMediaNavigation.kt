@@ -4,6 +4,8 @@ import androidx.navigation.NavController
 import androidx.navigation.NavGraphBuilder
 import androidx.navigation.NavType
 import androidx.navigation.compose.composable
+import com.google.accompanist.navigation.material.ExperimentalMaterialNavigationApi
+import com.google.accompanist.navigation.material.bottomSheet
 import androidx.navigation.navArgument
 import android.net.Uri
 import androidx.compose.runtime.collectAsState
@@ -18,11 +20,12 @@ import com.puskal.cameramedia.edit.VideoTrimScreen
 /**
  * Created by Puskal Khadka on 4/2/2023.
  */
+@OptIn(ExperimentalMaterialNavigationApi::class)
 fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
     composable(route = DestinationRoute.CAMERA_ROUTE) {
         CameraMediaScreen(navController)
     }
-    composable(route = DestinationRoute.CHOOSE_SOUND_ROUTE) {
+    bottomSheet(route = DestinationRoute.CHOOSE_SOUND_ROUTE) {
         com.puskal.cameramedia.sound.ChooseSoundScreen(navController)
     }
     composable(
