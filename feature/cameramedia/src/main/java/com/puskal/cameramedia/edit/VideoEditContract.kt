@@ -3,7 +3,7 @@ package com.puskal.cameramedia.edit
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.filled.Crop
-import androidx.compose.material.icons.filled.EmojiEmotions
+import androidx.compose.material.icons.filled.ArStickers
 import androidx.compose.material.icons.filled.Face
 import androidx.compose.material.icons.filled.InvertColors
 import androidx.compose.material.icons.filled.Flag
@@ -24,7 +24,7 @@ enum class VideoEditTool(val icon: ImageVector) {
     TRIM(Icons.Filled.ContentCut),
     TEXT(Icons.Filled.TextFields),
     CHALLENGE(Icons.Filled.Flag),
-    STICKERS(Icons.Filled.EmojiEmotions),
+    STICKERS(Icons.Filled.ArStickers),
     EFFECTS(Icons.Filled.Wallpaper),
     FILTERS(Icons.Filled.InvertColors),
     BEAUTY(Icons.Filled.Face),
