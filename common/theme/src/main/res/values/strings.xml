@@ -130,5 +130,14 @@
     <string name="enhance_video_quality">Enhance quality</string>
     <string name="change_voice">Change voice</string>
     <string name="drawing_painter">Drawing</string>
+    <string name="original_sound">Original Sound</string>
+    <string name="music_off">Music Off</string>
+    <string name="volume">Volume</string>
+    <string name="subtitle">Subtitle</string>
+    <string name="import_audio">Import Audio</string>
+    <string name="recommended">Recommended</string>
+    <string name="hot">Hot</string>
+    <string name="favorites">Favorites</string>
+    <string name="used">Used</string>
 
 </resources>
