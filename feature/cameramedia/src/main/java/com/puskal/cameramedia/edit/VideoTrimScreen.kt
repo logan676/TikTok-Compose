@@ -132,9 +132,7 @@ fun VideoTrimScreen(
                     isPlaying = isPlaying,
                     currentPosition = currentPosition,
                     totalDuration = totalDuration,
-                    onPlayPause = { editorRef.value?.togglePlayPause() },
-                    onRewind = { editorRef.value?.skipBackward(5000) },
-                    onForward = { editorRef.value?.skipForward(5000) }
+                    onPlayPause = { editorRef.value?.togglePlayPause() }
                 )
 
                 if (isSaving) {
