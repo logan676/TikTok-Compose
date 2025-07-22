@@ -26,7 +26,7 @@ This document describes the technical stack and the end-to-end flow that occurs 
    - The preview is rendered full screen using `AndroidView`. Compose overlays provide capture controls and filter selection.
    - The preview size automatically adapts based on the view bounds. `MATCH_PARENT` can crop the preview while `WRAP_CONTENT` shows the entire frame.
 5. **Post Processing**
-   - Filters from mp4compose can be used for post‑processing video if desired. Example filter list resides in `VideoFilter.kt`.
+   - Filters from mp4compose can be used for post‑processing video if desired. Example filter list resides in `feature/cameramedia/src/main/java/com/puskal/cameramedia/edit/VideoFilter.kt`.
 
 ## Performance Considerations
 

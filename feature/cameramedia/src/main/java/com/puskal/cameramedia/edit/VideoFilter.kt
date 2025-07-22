@@ -1,4 +1,4 @@
-package com.puskal.filter
+package com.puskal.cameramedia.edit
 
 import com.daasuu.mp4compose.filter.*
 
