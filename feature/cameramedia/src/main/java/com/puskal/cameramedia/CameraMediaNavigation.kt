@@ -26,7 +26,9 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
         CameraMediaScreen(navController)
     }
     bottomSheet(route = DestinationRoute.CHOOSE_SOUND_ROUTE) {
-        com.puskal.cameramedia.sound.ChooseSoundScreen(navController)
+        com.puskal.cameramedia.sound.AudioBottomSheet(onDismiss = {
+            navController.navigateUp()
+        })
     }
     composable(
         route = FORMATTED_VIDEO_EDIT_ROUTE,
