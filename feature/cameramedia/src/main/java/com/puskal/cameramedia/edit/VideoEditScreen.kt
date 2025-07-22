@@ -39,10 +39,10 @@ fun VideoEditScreen(
             val context = LocalContext.current
 
             /*************** STATE *****************/
-            var showResizeMenu   by remember { mutableStateOf(false) }
-            var showFilterSheet  by remember(enableFilters) { mutableStateOf(false) }
-            var selectedFilter   by remember(enableFilters) { mutableStateOf(VideoFilter.NONE) }
-            var isPlayerPrepared by remember { mutableStateOf(false) }
+            var showFilterSheet   by remember(enableFilters) { mutableStateOf(false) }
+            var selectedFilter    by remember(enableFilters) { mutableStateOf(VideoFilter.NONE) }
+            var isPlayerPrepared  by remember { mutableStateOf(false) }
+            var isToolbarExpanded by remember { mutableStateOf(false) }
 
             /*************** PLAYER *****************/
             val exoPlayer = remember(videoUri) {
@@ -178,30 +178,25 @@ fun VideoEditScreen(
                     onClickAddSound = { Log.d(TAG, "Add sound clicked") }
                 )
 
-                /*** Resize toolbar ***/
-                if (showResizeMenu) {
-                    ResizeToolBar(
-                        modifier = Modifier
-                            .align(Alignment.CenterEnd)
-                            .padding(end = 64.dp)
-                    )
-                }
-
                 /*** Main toolbar ***/
                 VideoEditToolBar(
                     modifier = Modifier
                         .align(Alignment.CenterEnd)
                         .padding(end = 16.dp),
                     showFilters = enableFilters,
+                    expanded = isToolbarExpanded,
                     onToolSelected = { tool ->
                         Log.d(TAG, "Tool selected: $tool")
                         when (tool) {
-                            VideoEditTool.CROP_RESIZE -> showResizeMenu = !showResizeMenu
-                            VideoEditTool.TRIM        -> onTrimVideo(videoUri)
-                            VideoEditTool.FILTERS     -> if (enableFilters) showFilterSheet = true
-                            else                      -> {}
+                            VideoEditTool.TRIM    -> onTrimVideo(videoUri)
+                            VideoEditTool.FILTERS -> if (enableFilters) showFilterSheet = true
+                            else                  -> {}
                         }
-                    }
+                    },
+                    onFeatureSelected = { feature ->
+                        Log.d(TAG, "Feature selected: $feature")
+                    },
+                    onToggleExpand = { isToolbarExpanded = !isToolbarExpanded }
                 )
 
                 /*** Filter sheet ***/
