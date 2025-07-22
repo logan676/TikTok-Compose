@@ -126,5 +126,9 @@
     <string name="challenge">Challenge</string>
     <string name="stickers">Stickers</string>
     <string name="crop_resize">Crop/Resize</string>
+    <string name="audio_transcript">Audio transcript</string>
+    <string name="enhance_video_quality">Enhance quality</string>
+    <string name="change_voice">Change voice</string>
+    <string name="drawing_painter">Drawing</string>
 
 </resources>
