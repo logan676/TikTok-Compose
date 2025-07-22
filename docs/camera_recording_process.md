@@ -6,7 +6,7 @@ This document describes the technical stack and the end-to-end flow that occurs 
 
 - **CameraView Library** – The `CameraMedia` feature relies on the third‑party library [CameraView](https://github.com/natario1/CameraView) to control the camera. The library supports both the legacy `CAMERA1` and the newer `CAMERA2` engine. The recommended preview implementation is the OpenGL `GL_SURFACE` which provides real‑time filters and snapshot support.
 - **Jetpack Compose** – All UI components for the camera screen are implemented using Jetpack Compose. The `CameraView` is embedded in Compose using `AndroidView`.
-- **mp4compose** – Video filters are provided via the mp4compose project (see `feature/filter`). This allows applying OpenGL based `GlFilter` implementations during preview or post‑processing.
+- **mp4compose** – Library included for post‑processing and editing. Real‑time preview uses the filters bundled with `CameraView`.
 
 ## Process Overview
 
