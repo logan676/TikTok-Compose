@@ -31,7 +31,7 @@ import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
 import androidx.compose.ui.unit.dp
 import com.puskal.cameramedia.MusicBarLayout
-import com.puskal.filter.VideoFilter
+import com.puskal.cameramedia.edit.VideoFilter
 import com.puskal.cameramedia.edit.GlFilterPlayerView
 import com.puskal.cameramedia.edit.VideoFilterBottomSheet
 

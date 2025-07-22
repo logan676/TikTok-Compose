@@ -9,7 +9,6 @@ dependencies {
     DOMAIN
     DATA
     CORE
-    FEATURE_FILTER
     cameraXDependencies()
     media3Dependency()
     implementation(project(":feature:video-trimmer"))

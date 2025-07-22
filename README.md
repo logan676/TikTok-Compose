@@ -45,9 +45,9 @@ This app consist of following modules:
 - domain
 - common
 - core
-- filter - provides video filter capabilities accessed via the camera screen
-- `VideoEditScreen` supports filters only when the `enableFilters` parameter is
-  set to `true`.
+
+`VideoEditScreen` supports filters only when the `enableFilters` parameter is
+set to `true`.
 
 <img src="screenshots/tiktokcompose_modularization.jpg" width=760  />
 
@@ -81,6 +81,3 @@ You are always welcome to contribute to this project. For contributing, feel fre
     See the License for the specific language governing permissions and
 limitations under the License.
 
-The **feature/filter** module includes code from the mp4compose project which is
-licensed separately under the Apache License 2.0. A copy of that license is
-available in [feature/filter/LICENSE-mp4compose](feature/filter/LICENSE-mp4compose).
