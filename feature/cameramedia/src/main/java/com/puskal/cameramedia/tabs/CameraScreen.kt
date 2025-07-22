@@ -258,13 +258,17 @@ fun CameraPreview(
             setExperimental(true)
             setEngine(Engine.CAMERA2)
             setRequestPermissions(false)
-            setLifecycleOwner(lifecycleOwner)
             mode = Mode.PICTURE
             facing = defaultCameraFacing
             mapGesture(Gesture.PINCH, GestureAction.ZOOM)
             mapGesture(Gesture.TAP, GestureAction.AUTO_FOCUS)
             mapGesture(Gesture.LONG_TAP, GestureAction.TAKE_PICTURE)
         }
+    }
+
+    DisposableEffect(lifecycleOwner) {
+        cameraView.setLifecycleOwner(lifecycleOwner)
+        onDispose { cameraView.setLifecycleOwner(null) }
     }
     LaunchedEffect(selectedFilter) {
         cameraView.filter = selectedFilter.newInstance()
