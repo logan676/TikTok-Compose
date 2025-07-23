@@ -1,48 +1,35 @@
 package com.puskal.data.source
 
+import android.content.Context
 import com.puskal.data.model.AudioModel
-import com.puskal.data.source.UsersDataSource.charliePuth
-import com.puskal.data.source.UsersDataSource.kylieJenner
-import com.puskal.data.source.UsersDataSource.duaLipa
-import com.puskal.data.source.UsersDataSource.taylor
+import com.puskal.data.source.UsersDataSource.userList
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
+import kotlin.random.Random
 
 object AudioDataSource {
-    private val audioList = listOf(
-        AudioModel(
-            audioCoverImage = "cover_1.jpg",
-            isOriginal = true,
-            audioAuthor = charliePuth,
-            numberOfPost = 239000,
-            duration = "02:10",
-            originalVideoUrl = "audio1.mp3"
-        ),
-        AudioModel(
-            audioCoverImage = "cover_2.jpg",
-            isOriginal = true,
-            audioAuthor = kylieJenner,
-            numberOfPost = 42000,
-            duration = "03:20",
-            originalVideoUrl = "audio2.mp3"
-        ),
-        AudioModel(
-            audioCoverImage = "cover_3.jpg",
-            isOriginal = true,
-            audioAuthor = duaLipa,
-            numberOfPost = 120340,
-            duration = "01:45",
-            originalVideoUrl = "audio3.mp3"
-        ),
-        AudioModel(
-            audioCoverImage = "cover_4.jpg",
-            isOriginal = true,
-            audioAuthor = taylor,
-            numberOfPost = 15200,
-            duration = "02:58",
-            originalVideoUrl = "audio4.mp3"
-        )
-    )
 
-    fun fetchAudios(): Flow<List<AudioModel>> = flow { emit(audioList) }
+    fun fetchAudios(context: Context): Flow<List<AudioModel>> = flow {
+        val assets = context.assets
+        val audioFiles = assets.list("audios")?.filter { it.endsWith(".mp3") } ?: emptyList()
+        val covers = assets.list("audios/cover")?.filter { it.endsWith(".jpg") } ?: emptyList()
+
+        val rnd = Random(System.currentTimeMillis())
+        val result = audioFiles.mapIndexed { index, file ->
+            val cover = covers.getOrElse(index) { covers.random(rnd) }
+            val author = userList[index % userList.size]
+            val duration = String.format("%02d:%02d", rnd.nextInt(1, 4), rnd.nextInt(0, 60))
+            val posts = rnd.nextLong(1000, 300000)
+
+            AudioModel(
+                audioCoverImage = cover,
+                isOriginal = true,
+                audioAuthor = author,
+                numberOfPost = posts,
+                duration = duration,
+                originalVideoUrl = file
+            )
+        }
+        emit(result)
+    }
 }
