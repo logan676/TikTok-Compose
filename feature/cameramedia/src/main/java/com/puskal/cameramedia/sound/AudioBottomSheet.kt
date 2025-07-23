@@ -217,7 +217,7 @@ private fun AudioRow(
             contentDescription = null,
             modifier = Modifier
                 .size(56.dp)
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
         )
         Text(
