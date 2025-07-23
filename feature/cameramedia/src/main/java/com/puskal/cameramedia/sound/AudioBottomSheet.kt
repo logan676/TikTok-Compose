@@ -17,6 +17,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.vectorResource
+import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.material.icons.outlined.Tune
+import androidx.compose.material.icons.outlined.Subtitles
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -195,26 +199,26 @@ fun AudioBottomSheet(
             ) {
                 BottomAction(
                     text = stringResource(id = R.string.original_sound),
-                    icon = R.drawable.ic_music_note
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_music_note)
                 ) {
                     exoPlayer.stop()
                     playingItem = null
                 }
                 BottomAction(
                     text = stringResource(id = R.string.music_off),
-                    icon = R.drawable.ic_music_off
+                    icon = ImageVector.vectorResource(id = R.drawable.ic_music_off)
                 ) {
                     isMuted = !isMuted
                 }
                 BottomAction(
                     text = stringResource(id = R.string.volume),
-                    icon = R.drawable.ic_volume
+                    icon = Icons.Outlined.Tune
                 ) {
                     // TODO: Show volume controls
                 }
                 BottomAction(
                     text = stringResource(id = R.string.subtitle),
-                    icon = R.drawable.ic_auto_subtitles
+                    icon = Icons.Outlined.Subtitles
                 ) {
                     // TODO: Open subtitles options
                 }
@@ -224,12 +228,12 @@ fun AudioBottomSheet(
 }
 
 @Composable
-private fun BottomAction(text: String, icon: Int, onClick: () -> Unit) {
+private fun BottomAction(text: String, icon: ImageVector, onClick: () -> Unit) {
     Column(
         modifier = Modifier.clickable { onClick() },
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
-        Icon(painter = painterResource(id = icon), contentDescription = text, tint = Color.Black)
+        Icon(imageVector = icon, contentDescription = text, tint = Color.Black)
         Spacer(modifier = Modifier.height(4.dp))
         Text(text = text, style = MaterialTheme.typography.labelSmall, color = Color.Black)
     }
