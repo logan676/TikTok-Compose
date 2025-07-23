@@ -310,10 +310,12 @@ fun CameraPreview(
             override fun onPictureTaken(result: PictureResult) {
                 val file = File(context.filesDir, "image_${'$'}{System.currentTimeMillis()}.jpg")
                 result.toBitmap { bitmap ->
-                    val processed = if (isMirror) bitmap.mirrorHorizontally() else bitmap
-                    coroutineScope.launch(Dispatchers.IO) {
-                        FileOutputStream(file).use { out ->
-                            processed.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                    val processed = if (isMirror) bitmap?.mirrorHorizontally() else bitmap
+                    processed?.let { bmp ->
+                        coroutineScope.launch(Dispatchers.IO) {
+                            FileOutputStream(file).use { out ->
+                                bmp.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                            }
                         }
                     }
                 }
