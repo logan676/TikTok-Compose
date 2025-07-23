@@ -71,7 +71,7 @@ fun AudioBottomSheet(
                 Box(
                     modifier = Modifier
                         .size(width = 36.dp, height = 4.dp)
-                        .background(color = GrayMainColor, shape = RoundedCornerShape(2.dp))
+                        .background(color = Gray, shape = RoundedCornerShape(2.dp))
                 )
             }
             
