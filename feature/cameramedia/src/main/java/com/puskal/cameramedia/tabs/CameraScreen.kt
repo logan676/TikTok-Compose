@@ -42,6 +42,7 @@ import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.compose.ui.graphics.graphicsLayer
+import androidx.compose.runtime.rememberCoroutineScope
 import androidx.navigation.NavController
 import com.google.accompanist.permissions.ExperimentalPermissionsApi
 import com.google.accompanist.permissions.isGranted
@@ -52,6 +53,9 @@ import android.content.ContentValues
 import android.media.MediaScannerConnection
 import android.os.Environment
 import android.provider.MediaStore
+import android.graphics.Bitmap
+import android.graphics.Matrix
+import java.io.FileOutputStream
 import com.puskal.cameramedia.*
 import com.puskal.cameramedia.filter.FilterBottomSheet
 import com.puskal.composable.CaptureButton
@@ -67,8 +71,10 @@ import dev.chrisbanes.snapper.ExperimentalSnapperApi
 import dev.chrisbanes.snapper.SnapOffsets
 import dev.chrisbanes.snapper.rememberLazyListSnapperLayoutInfo
 import kotlinx.coroutines.launch
+import kotlinx.coroutines.Dispatchers
 import com.otaliastudios.cameraview.filter.Filters
 import com.otaliastudios.cameraview.filter.Filter as CameraFilter
+import com.daasuu.mp4compose.composer.Mp4Composer
 
 /**
  * Created by Puskal Khadka on 4/2/2023.
@@ -259,6 +265,7 @@ fun CameraPreview(
     var showFilterSheet by remember { mutableStateOf(false) }
     var selectedFilter by remember { mutableStateOf(Filters.NONE) }
     var isMirror by remember { mutableStateOf(false) }
+    val coroutineScope = rememberCoroutineScope()
 
     val cameraView = remember {
         CameraView(context).apply {
@@ -286,21 +293,52 @@ fun CameraPreview(
     var isRecording by remember { mutableStateOf(false) }
     var recordedFile by remember { mutableStateOf<File?>(null) }
 
+    fun handleVideoFile(file: File) {
+        val galleryUri = saveVideoToGallery(context, file)
+        isRecording = false
+        val uriString = (galleryUri ?: Uri.fromFile(file)).toString()
+        navController.navigate(
+            "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uriString)}"
+        )
+    }
+
     DisposableEffect(cameraView) {
         val listener = object : CameraListener() {
             override fun onPictureTaken(result: PictureResult) {
                 val file = File(context.filesDir, "image_${'$'}{System.currentTimeMillis()}.jpg")
-                result.toFile(file) {}
+                result.toBitmap { bitmap ->
+                    val processed = if (isMirror) bitmap.mirrorHorizontally() else bitmap
+                    coroutineScope.launch(Dispatchers.IO) {
+                        FileOutputStream(file).use { out ->
+                            processed.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                        }
+                    }
+                }
             }
 
             override fun onVideoTaken(result: VideoResult) {
-                val file = recordedFile ?: result.getFile()
-                val galleryUri = saveVideoToGallery(context, file)
-                isRecording = false
-                val uriString = (galleryUri ?: Uri.fromFile(file)).toString()
-                navController.navigate(
-                    "${DestinationRoute.VIDEO_EDIT_ROUTE}/${Uri.encode(uriString)}"
-                )
+                val srcFile = recordedFile ?: result.getFile()
+                if (isMirror) {
+                    val mirrorFile = File(context.filesDir, "mirror_${'$'}{srcFile.name}")
+                    Mp4Composer(srcFile.absolutePath, mirrorFile.absolutePath)
+                        .flipHorizontal(true)
+                        .listener(object : Mp4Composer.Listener {
+                            override fun onProgress(progress: Double) {}
+                            override fun onCurrentWrittenVideoTime(timeUs: Long) {}
+                            override fun onCanceled() {}
+                            override fun onFailed(exception: Exception) {
+                                coroutineScope.launch { handleVideoFile(srcFile) }
+                            }
+
+                            override fun onCompleted() {
+                                coroutineScope.launch { handleVideoFile(mirrorFile) }
+                                srcFile.delete()
+                            }
+                        })
+                        .start()
+                } else {
+                    coroutineScope.launch { handleVideoFile(srcFile) }
+                }
                 recordedFile = null
             }
         }
@@ -621,6 +659,11 @@ private fun saveVideoToGallery(context: Context, file: File): Uri? {
         MediaScannerConnection.scanFile(context, arrayOf(outputUri.toString()), null, null)
     }
     return uri
+}
+
+private fun Bitmap.mirrorHorizontally(): Bitmap {
+    val matrix = Matrix().apply { preScale(-1f, 1f) }
+    return Bitmap.createBitmap(this, 0, 0, width, height, matrix, true)
 }
 
 
