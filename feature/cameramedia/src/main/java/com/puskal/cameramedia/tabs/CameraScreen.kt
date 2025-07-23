@@ -564,27 +564,39 @@ fun CameraSideControllerSection(
     defaultCameraFacing: Facing,
     onClickController: (CameraController) -> Unit
 ) {
-    val controllers =
-        if (defaultCameraFacing == Facing.BACK) CameraController.values()
-            .toMutableList().apply { remove(CameraController.MIRROR) }
-        else CameraController.values().toMutableList().apply { remove(CameraController.FLASH) }
+    val controllers = CameraController.values().toMutableList().apply {
+        if (defaultCameraFacing == Facing.FRONT) remove(CameraController.FLASH)
+    }
+
+    val isMirrorEnabled = defaultCameraFacing == Facing.FRONT
 
     Column(modifier = modifier, verticalArrangement = Arrangement.spacedBy(14.dp)) {
-        controllers.forEach {
-            ControllerItem(it, onClickController)
+        controllers.forEach { controller ->
+            val enabled = when (controller) {
+                CameraController.MIRROR -> isMirrorEnabled
+                CameraController.FLASH -> defaultCameraFacing == Facing.BACK
+                else -> true
+            }
+            ControllerItem(controller, enabled, onClickController)
         }
     }
 }
 
 @Composable
 fun ControllerItem(
-    cameraController: CameraController, onClickController: (CameraController) -> Unit
+    cameraController: CameraController,
+    enabled: Boolean = true,
+    onClickController: (CameraController) -> Unit
 ) {
-    Column(verticalArrangement = Arrangement.spacedBy(
-        4.dp, alignment = Alignment.CenterVertically
-    ), horizontalAlignment = Alignment.CenterHorizontally, modifier = Modifier.clickable {
-        onClickController(cameraController)
-    }) {
+    Column(
+        verticalArrangement = Arrangement.spacedBy(4.dp, alignment = Alignment.CenterVertically),
+        horizontalAlignment = Alignment.CenterHorizontally,
+        modifier = Modifier
+            .alpha(if (enabled) 1f else 0.4f)
+            .clickable(enabled = enabled) {
+                onClickController(cameraController)
+            }
+    ) {
         Icon(
             imageVector = cameraController.icon(),
             contentDescription = null,

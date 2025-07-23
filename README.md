@@ -48,6 +48,7 @@ This app consist of following modules:
 
 `VideoEditScreen` supports filters only when the `enableFilters` parameter is
 set to `true`.
+`Mirror` in the camera preview works only when using the front camera.
 
 <img src="screenshots/tiktokcompose_modularization.jpg" width=760  />
 
