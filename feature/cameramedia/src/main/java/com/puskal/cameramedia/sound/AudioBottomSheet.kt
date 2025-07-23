@@ -222,14 +222,14 @@ private fun AudioRow(
                 Icon(
                     imageVector = Icons.Filled.ContentCut,
                     contentDescription = stringResource(id = R.string.cut),
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = stringResource(id = R.string.favorite),
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
         }
