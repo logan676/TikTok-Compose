@@ -56,9 +56,16 @@ fun VideoEditToolBar(
     }
 
     val baseModifier = modifier.width(96.dp)
+    val columnModifier = if (expanded) {
+        baseModifier
+            .verticalScroll(rememberScrollState())
+            .padding(vertical = 50.dp)
+    } else {
+        baseModifier
+    }
 
     Column(
-        modifier = if (expanded) baseModifier.verticalScroll(rememberScrollState()) else baseModifier,
+        modifier = columnModifier,
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
