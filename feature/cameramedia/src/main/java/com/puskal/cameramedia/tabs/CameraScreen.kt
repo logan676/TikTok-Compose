@@ -290,6 +290,9 @@ fun CameraPreview(
     LaunchedEffect(defaultCameraFacing) {
         cameraView.facing = defaultCameraFacing
     }
+    LaunchedEffect(isMirror) {
+        cameraView.scaleX = if (isMirror) -1f else 1f
+    }
     var isRecording by remember { mutableStateOf(false) }
     var recordedFile by remember { mutableStateOf<File?>(null) }
 
