@@ -209,14 +209,14 @@ private fun PlayingAnimation(modifier: Modifier = Modifier) {
     val infinite = rememberInfiniteTransition()
 
     val heights = listOf(0, 1, 2).map { index ->
-        infinite.animateDp(
-            initialValue = 4.dp,
-            targetValue = 12.dp,
+        infinite.animateFloat(
+            initialValue = 4f,
+            targetValue = 12f,
             animationSpec = infiniteRepeatable(
                 animation = keyframes {
                     durationMillis = 600
-                    12.dp at 300
-                    4.dp at 600
+                    12f at 300
+                    4f at 600
                 },
                 delay = index * 100
             )
@@ -232,7 +232,7 @@ private fun PlayingAnimation(modifier: Modifier = Modifier) {
             Box(
                 modifier = Modifier
                     .width(2.dp)
-                    .height(h.value)
+                    .height(h.value.dp)
                     .background(PrimaryColor, RoundedCornerShape(1.dp))
             )
         }
