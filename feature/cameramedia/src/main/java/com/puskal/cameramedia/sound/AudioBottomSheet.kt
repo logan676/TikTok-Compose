@@ -11,6 +11,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import coil.compose.AsyncImage
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
@@ -103,7 +104,14 @@ fun AudioBottomSheet(
             ) {
                 viewState?.audioFiles?.let { list ->
                     items(list) { audio ->
-                        AudioRow(audio)
+                        AudioRow(
+                            AudioUiModel(
+                                cover = com.puskal.theme.R.drawable.logo_tiktok_compose,
+                                title = audio,
+                                author = "Unknown",
+                                duration = "0:30"
+                            )
+                        )
                     }
                 }
             }
@@ -135,28 +143,42 @@ private fun BottomAction(text: String, icon: Int) {
     }
 }
 
+private data class AudioUiModel(
+    val cover: Any,
+    val title: String,
+    val author: String,
+    val duration: String
+)
+
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(audio: AudioUiModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_music_note),
+        AsyncImage(
+            model = audio.cover,
             contentDescription = null,
-            modifier = Modifier.size(56.dp),
-            tint = Color.White
+            modifier = Modifier.size(56.dp)
         )
-        Text(
-            text = name,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White,
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)
-        )
+        ) {
+            Text(
+                text = audio.title,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Black
+            )
+            Text(
+                text = "${'$'}{audio.author} • ${'$'}{audio.duration}",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Black
+            )
+        }
         TextButton(onClick = { }) {
             Text(text = stringResource(id = R.string.use_this_sound))
         }
