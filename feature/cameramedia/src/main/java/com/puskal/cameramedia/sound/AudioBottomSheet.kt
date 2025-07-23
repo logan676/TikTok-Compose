@@ -6,6 +6,8 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
@@ -21,6 +23,7 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import coil.compose.AsyncImage
 import com.puskal.data.model.AudioModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.Gray
@@ -193,11 +196,13 @@ private fun AudioRow(
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_music_note),
+        AsyncImage(
+            model = audio.parseCoverImage(),
             contentDescription = null,
-            modifier = Modifier.size(56.dp),
-            tint = if (isPlaying) MaterialTheme.colorScheme.primary else Color.White
+            modifier = Modifier
+                .size(56.dp)
+                .clip(RoundedCornerShape(4.dp)),
+            contentScale = ContentScale.Crop
         )
         Text(
             text = "${audio.audioAuthor.fullName} \u2022 ${audio.duration}",

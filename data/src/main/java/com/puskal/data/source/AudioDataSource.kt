@@ -11,7 +11,7 @@ import kotlinx.coroutines.flow.flow
 object AudioDataSource {
     private val audioList = listOf(
         AudioModel(
-            audioCoverImage = "img1.jpg",
+            audioCoverImage = "cover_1.jpg",
             isOriginal = true,
             audioAuthor = charliePuth,
             numberOfPost = 239000,
@@ -19,7 +19,7 @@ object AudioDataSource {
             originalVideoUrl = "charlieputh_vid1.mp4"
         ),
         AudioModel(
-            audioCoverImage = "img2.jpg",
+            audioCoverImage = "cover_2.jpg",
             isOriginal = true,
             audioAuthor = kylieJenner,
             numberOfPost = 42000,
@@ -27,7 +27,7 @@ object AudioDataSource {
             originalVideoUrl = "kylie_vid2.mp4"
         ),
         AudioModel(
-            audioCoverImage = "img3.jpg",
+            audioCoverImage = "cover_3.jpg",
             isOriginal = true,
             audioAuthor = duaLipa,
             numberOfPost = 120340,
@@ -35,7 +35,7 @@ object AudioDataSource {
             originalVideoUrl = "dua_vid1.mp4"
         ),
         AudioModel(
-            audioCoverImage = "img4.jpg",
+            audioCoverImage = "cover_4.jpg",
             isOriginal = true,
             audioAuthor = taylor,
             numberOfPost = 15200,
