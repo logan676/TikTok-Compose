@@ -55,7 +55,7 @@ fun VideoEditToolBar(
         }
     }
 
-    val baseModifier = modifier.width(96.dp)
+    val baseModifier = modifier.width(36.dp)
 
     Column(
         modifier = if (expanded) baseModifier.verticalScroll(rememberScrollState()) else baseModifier,
