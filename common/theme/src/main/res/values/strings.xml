@@ -142,4 +142,10 @@
     <string name="favorites">Favorites</string>
     <string name="used">Used</string>
 
+    <string name="friend_daily">Friend Daily</string>
+    <string name="publish">Publish</string>
+    <string name="location">Location</string>
+    <string name="add_labels">Add labels</string>
+    <string name="private_public">Private / Public</string>
+
 </resources>

@@ -12,6 +12,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.viewinterop.AndroidView
 import androidx.media3.common.*
@@ -19,6 +20,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.puskal.cameramedia.MusicBarLayout
+import com.puskal.composable.CustomButton
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
@@ -33,10 +35,30 @@ fun VideoEditScreen(
     onClickBack: () -> Unit,
     onTrimVideo: (String) -> Unit = {},
     onClickAddSound: () -> Unit = {},
-    enableFilters: Boolean = false
+    enableFilters: Boolean = false,
+    onClickNext: (String) -> Unit = {}
 ) {
     TikTokTheme(darkTheme = true) {
-        Scaffold { padding ->
+        Scaffold(
+            bottomBar = {
+                Row(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                        .padding(16.dp),
+                    horizontalArrangement = Arrangement.SpaceBetween
+                ) {
+                    CustomButton(
+                        buttonText = stringResource(id = R.string.friend_daily),
+                        modifier = Modifier.weight(1f)
+                    ) {}
+                    Spacer(modifier = Modifier.width(12.dp))
+                    CustomButton(
+                        buttonText = stringResource(id = R.string.next),
+                        modifier = Modifier.weight(1f)
+                    ) { onClickNext(videoUri) }
+                }
+            }
+        ) { padding ->
             val context = LocalContext.current
 
             /*************** STATE *****************/
