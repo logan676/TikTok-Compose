@@ -68,6 +68,7 @@ fun AudioBottomSheet(
                         .background(color = GrayMainColor, shape = RoundedCornerShape(2.dp))
                 )
             }
+            
             Spacer(modifier = Modifier.height(4.dp))
 
             OutlinedTextField(
