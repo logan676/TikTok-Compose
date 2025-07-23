@@ -115,7 +115,7 @@ fun AudioBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn(
-                modifier = Modifier.weight(1f, fill = false)
+                modifier = Modifier.weight(1f, fill = true)
             ) {
                 viewState?.audioFiles?.let { list ->
                     items(list) { audio ->
@@ -145,9 +145,9 @@ fun AudioBottomSheet(
 @Composable
 private fun BottomAction(text: String, icon: Int) {
     Column(horizontalAlignment = Alignment.CenterHorizontally) {
-        Icon(painter = painterResource(id = icon), contentDescription = text, tint = Color.White)
+        Icon(painter = painterResource(id = icon), contentDescription = text, tint = Color.Black)
         Spacer(modifier = Modifier.height(4.dp))
-        Text(text = text, style = MaterialTheme.typography.labelSmall, color = Color.White)
+        Text(text = text, style = MaterialTheme.typography.labelSmall, color = Color.Black)
     }
 }
 
