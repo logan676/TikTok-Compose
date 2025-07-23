@@ -36,6 +36,7 @@ object DestinationRoute {
         const val USER_ID = "user_id"
         const val VIDEO_INDEX = "video_index"
         const val VIDEO_URI = "video_uri"
+        const val AUDIO = "audio"
     }
 }
 

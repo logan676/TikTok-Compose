@@ -16,6 +16,8 @@ import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_TRIM_ROUTE
 import com.puskal.core.DestinationRoute.PassedKey
 import com.puskal.cameramedia.edit.VideoEditScreen
 import com.puskal.cameramedia.edit.VideoTrimScreen
+import com.puskal.data.model.AudioModel
+import com.google.gson.Gson
 
 /**
  * Created by Puskal Khadka on 4/2/2023.
@@ -26,9 +28,16 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
         CameraMediaScreen(navController)
     }
     bottomSheet(route = DestinationRoute.CHOOSE_SOUND_ROUTE) {
-        com.puskal.cameramedia.sound.AudioBottomSheet(onDismiss = {
-            navController.navigateUp()
-        })
+        com.puskal.cameramedia.sound.AudioBottomSheet(
+            onDismiss = { navController.navigateUp() },
+            onAudioSelected = { audio ->
+                navController.previousBackStackEntry?.savedStateHandle?.set(
+                    PassedKey.AUDIO,
+                    Gson().toJson(audio)
+                )
+                navController.navigateUp()
+            }
+        )
     }
     composable(
         route = FORMATTED_VIDEO_EDIT_ROUTE,
@@ -41,8 +50,14 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
             .savedStateHandle
             .getStateFlow(PassedKey.VIDEO_URI, argUri)
             .collectAsState()
+        val audioJson by backStackEntry
+            .savedStateHandle
+            .getStateFlow<String?>(PassedKey.AUDIO, null)
+            .collectAsState()
+        val audioModel: AudioModel? = audioJson?.let { Gson().fromJson(it, AudioModel::class.java) }
         VideoEditScreen(
             videoUri = videoUri,
+            audio = audioModel,
             onClickBack = { navController.navigateUp() },
             onTrimVideo = { encoded ->
                 navController.navigate(

@@ -16,6 +16,7 @@ import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.puskal.composable.TopBar
 import com.puskal.core.DestinationRoute
+import com.puskal.data.model.AudioModel
 import com.puskal.theme.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -46,7 +47,7 @@ fun ChooseSoundScreen(
 }
 
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(audio: AudioModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -59,7 +60,7 @@ private fun AudioRow(name: String) {
             modifier = Modifier.size(56.dp)
         )
         Text(
-            text = name,
+            text = audio.audioAuthor.fullName,
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)

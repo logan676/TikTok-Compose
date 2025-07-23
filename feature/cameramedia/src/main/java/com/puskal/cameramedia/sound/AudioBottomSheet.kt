@@ -16,11 +16,13 @@ import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.R
+import com.puskal.data.model.AudioModel
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun AudioBottomSheet(
     onDismiss: () -> Unit,
+    onAudioSelected: (AudioModel) -> Unit = {},
     viewModel: ChooseSoundViewModel = hiltViewModel()
 ) {
     val viewState by viewModel.viewState.collectAsState()
@@ -103,7 +105,7 @@ fun AudioBottomSheet(
             ) {
                 viewState?.audioFiles?.let { list ->
                     items(list) { audio ->
-                        AudioRow(audio)
+                        AudioRow(audio) { onAudioSelected(it) }
                     }
                 }
             }
@@ -136,7 +138,7 @@ private fun BottomAction(text: String, icon: Int) {
 }
 
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(audio: AudioModel, onSelect: (AudioModel) -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -150,14 +152,14 @@ private fun AudioRow(name: String) {
             tint = Color.White
         )
         Text(
-            text = name,
+            text = audio.audioAuthor.fullName,
             style = MaterialTheme.typography.bodyMedium,
             color = Color.White,
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)
         )
-        TextButton(onClick = { }) {
+        TextButton(onClick = { onSelect(audio) }) {
             Text(text = stringResource(id = R.string.use_this_sound))
         }
     }

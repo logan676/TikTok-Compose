@@ -19,6 +19,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.puskal.cameramedia.MusicBarLayout
+import com.puskal.data.model.AudioModel
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
@@ -30,6 +31,7 @@ private const val TAG = "VideoEditScreen"
 @Composable
 fun VideoEditScreen(
     videoUri: String,
+    audio: AudioModel? = null,
     onClickBack: () -> Unit,
     onTrimVideo: (String) -> Unit = {},
     enableFilters: Boolean = false
@@ -37,6 +39,7 @@ fun VideoEditScreen(
     TikTokTheme(darkTheme = true) {
         Scaffold { padding ->
             val context = LocalContext.current
+            Log.d(TAG, "Selected audio = ${'$'}audio")
 
             /*************** STATE *****************/
             var showResizeMenu   by remember { mutableStateOf(false) }
