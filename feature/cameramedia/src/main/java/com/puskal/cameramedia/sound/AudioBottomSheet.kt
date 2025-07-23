@@ -53,6 +53,7 @@ fun AudioBottomSheet(
     val context = LocalContext.current
     val exoPlayer = remember { ExoPlayer.Builder(context).build() }
     var playingItem by remember { mutableStateOf<AudioModel?>(null) }
+    var isMuted by remember { mutableStateOf(false) }
 
     DisposableEffect(Unit) {
         onDispose { exoPlayer.release() }
@@ -151,7 +152,8 @@ fun AudioBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn(
-                modifier = Modifier.weight(1f, fill = true)
+                modifier = Modifier.weight(1f, fill = true),
+                contentPadding = PaddingValues(bottom = 56.dp)
             ) {
                 val list = shuffledLists.getOrNull(selectedTab) ?: emptyList()
                 items(list) { audio ->
@@ -186,18 +188,42 @@ fun AudioBottomSheet(
                 horizontalArrangement = Arrangement.SpaceEvenly,
                 verticalAlignment = Alignment.CenterVertically
             ) {
-                BottomAction(text = stringResource(id = R.string.original_sound), icon = R.drawable.ic_music_note)
-                BottomAction(text = stringResource(id = R.string.music_off), icon = R.drawable.ic_music_off)
-                BottomAction(text = stringResource(id = R.string.volume), icon = R.drawable.ic_volume)
-                BottomAction(text = stringResource(id = R.string.subtitle), icon = R.drawable.ic_auto_subtitles)
+                BottomAction(
+                    text = stringResource(id = R.string.original_sound),
+                    icon = R.drawable.ic_music_note
+                ) {
+                    exoPlayer.stop()
+                    playingItem = null
+                }
+                BottomAction(
+                    text = stringResource(id = R.string.music_off),
+                    icon = R.drawable.ic_music_off
+                ) {
+                    isMuted = !isMuted
+                }
+                BottomAction(
+                    text = stringResource(id = R.string.volume),
+                    icon = R.drawable.ic_volume
+                ) {
+                    // TODO: Show volume controls
+                }
+                BottomAction(
+                    text = stringResource(id = R.string.subtitle),
+                    icon = R.drawable.ic_auto_subtitles
+                ) {
+                    // TODO: Open subtitles options
+                }
             }
         }
     }
 }
 
 @Composable
-private fun BottomAction(text: String, icon: Int) {
-    Column(horizontalAlignment = Alignment.CenterHorizontally) {
+private fun BottomAction(text: String, icon: Int, onClick: () -> Unit) {
+    Column(
+        modifier = Modifier.clickable { onClick() },
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
         Icon(painter = painterResource(id = icon), contentDescription = text, tint = Color.Black)
         Spacer(modifier = Modifier.height(4.dp))
         Text(text = text, style = MaterialTheme.typography.labelSmall, color = Color.Black)
