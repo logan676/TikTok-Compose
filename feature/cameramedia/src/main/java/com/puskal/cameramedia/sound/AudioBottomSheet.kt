@@ -17,6 +17,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -113,7 +114,13 @@ fun AudioBottomSheet(
                         Tab(
                             selected = selectedTab == index,
                             onClick = { selectedTab = index },
-                            text = { Text(text = title, color = Color.Black) }
+                            text = {
+                                Text(
+                                    text = title,
+                                    color = Color.Black,
+                                    fontSize = 10.sp
+                                )
+                            }
                         )
                     }
                 }
