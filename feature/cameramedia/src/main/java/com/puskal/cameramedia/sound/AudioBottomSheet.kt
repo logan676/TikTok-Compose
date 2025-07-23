@@ -28,6 +28,7 @@ import com.puskal.data.model.AudioModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.Gray
 import com.puskal.theme.R
+import com.puskal.theme.SeparatorColor
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -147,7 +148,7 @@ fun AudioBottomSheet(
                                     playingItem = null
                                 } else {
                                     exoPlayer.setMediaItem(
-                                        MediaItem.fromUri("asset:///videos/${audio.originalVideoUrl}")
+                                        MediaItem.fromUri("asset:///audios/${audio.originalVideoUrl}")
                                     )
                                     exoPlayer.prepare()
                                     exoPlayer.playWhenReady = true
@@ -155,6 +156,7 @@ fun AudioBottomSheet(
                                 }
                             }
                         )
+                        Divider(thickness = 0.5.dp, color = SeparatorColor)
                     }
                 }
             }
@@ -210,7 +212,7 @@ private fun AudioRow(
         Text(
             text = "${audio.audioAuthor.fullName} \u2022 ${audio.duration}",
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.White,
+            color = Color.Black,
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)

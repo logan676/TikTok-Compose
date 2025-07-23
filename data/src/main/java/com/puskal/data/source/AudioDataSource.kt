@@ -16,7 +16,7 @@ object AudioDataSource {
             audioAuthor = charliePuth,
             numberOfPost = 239000,
             duration = "02:10",
-            originalVideoUrl = "charlieputh_vid1.mp4"
+            originalVideoUrl = "audio1.mp3"
         ),
         AudioModel(
             audioCoverImage = "cover_2.jpg",
@@ -24,7 +24,7 @@ object AudioDataSource {
             audioAuthor = kylieJenner,
             numberOfPost = 42000,
             duration = "03:20",
-            originalVideoUrl = "kylie_vid2.mp4"
+            originalVideoUrl = "audio2.mp3"
         ),
         AudioModel(
             audioCoverImage = "cover_3.jpg",
@@ -32,7 +32,7 @@ object AudioDataSource {
             audioAuthor = duaLipa,
             numberOfPost = 120340,
             duration = "01:45",
-            originalVideoUrl = "dua_vid1.mp4"
+            originalVideoUrl = "audio3.mp3"
         ),
         AudioModel(
             audioCoverImage = "cover_4.jpg",
@@ -40,7 +40,7 @@ object AudioDataSource {
             audioAuthor = taylor,
             numberOfPost = 15200,
             duration = "02:58",
-            originalVideoUrl = "taylor_vid1.mp4"
+            originalVideoUrl = "audio4.mp3"
         )
     )
 
