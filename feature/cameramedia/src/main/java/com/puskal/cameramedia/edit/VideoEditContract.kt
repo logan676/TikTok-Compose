@@ -29,7 +29,7 @@ enum class VideoEditTool(@StringRes val title: Int, val icon: ImageVector) {
     CHALLENGE(R.string.challenge, Icons.Filled.Flag),
     STICKERS(R.string.stickers, Icons.Filled.StickyNote2),
     EFFECTS(R.string.effects, Icons.Filled.Animation),
-    MORE(R.string.see_more, Icons.Filled.KeyboardArrowUp),
+    MORE(R.string.see_more, Icons.Filled.KeyboardArrowDown),
     FILTERS(R.string.filters, Icons.Filled.InvertColors),
     BEAUTY(R.string.beauty, Icons.Filled.Face),
     CROP_RESIZE(R.string.crop_resize, Icons.Filled.Crop)
@@ -40,5 +40,5 @@ enum class ResizeMenuFeature(@StringRes val title: Int, val icon: ImageVector) {
     QUALITY_ENHANCEMENT(R.string.enhance_video_quality, Icons.Outlined.Star),
     VOICE_CHANGER(R.string.change_voice, Icons.Outlined.Mic),
     BRUSH_TOOL(R.string.drawing_painter, Icons.Outlined.Brush),
-    COLLAPSE_TOOLBAR(R.string.hide, Icons.Filled.KeyboardArrowDown)
+    COLLAPSE_TOOLBAR(R.string.hide, Icons.Filled.KeyboardArrowUp)
 }
