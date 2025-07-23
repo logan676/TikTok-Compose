@@ -15,6 +15,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.puskal.theme.GrayMainColor
+import com.puskal.theme.Gray
 import com.puskal.theme.R
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -55,7 +56,16 @@ fun AudioBottomSheet(
                         contentDescription = null
                     )
                 },
-                placeholder = { Text(text = stringResource(id = R.string.search)) }
+                placeholder = {
+                    Text(text = stringResource(id = R.string.search_singer_music_lyric_emotion))
+                },
+                colors = TextFieldDefaults.outlinedTextFieldColors(
+                    textColor = Gray,
+                    placeholderColor = Gray,
+                    focusedLeadingIconColor = Gray,
+                    unfocusedLeadingIconColor = Gray,
+                    containerColor = GrayMainColor
+                )
             )
 
             Spacer(modifier = Modifier.height(12.dp))

@@ -33,6 +33,7 @@
     <!-- search -->
     <string name="find_related_content">Find related content</string>
     <string name="search">Search</string>
+    <string name="search_singer_music_lyric_emotion">Search singer, music, lyric, emotion</string>
 
     <!-- inbox -->
     <string name="message_and_notifications_will_appear_here">Message and notifications will appear here</string>
