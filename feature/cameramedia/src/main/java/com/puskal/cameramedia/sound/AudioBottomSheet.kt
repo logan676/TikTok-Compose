@@ -79,11 +79,14 @@ fun AudioBottomSheet(
                     Text(text = stringResource(id = R.string.search_singer_music_lyric_emotion))
                 },
                 colors = OutlinedTextFieldDefaults.colors(
-                    textColor = Gray,
-                    placeholderColor = Gray,
+                    focusedTextColor = Gray,
+                    unfocusedTextColor = Gray,
+                    focusedPlaceholderColor = Gray,
+                    unfocusedPlaceholderColor = Gray,
                     focusedLeadingIconColor = Gray,
                     unfocusedLeadingIconColor = Gray,
-                    containerColor = GrayMainColor
+                    focusedContainerColor = GrayMainColor,
+                    unfocusedContainerColor = GrayMainColor
                 )
             )
 
