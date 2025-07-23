@@ -1,6 +1,8 @@
 package com.puskal.cameramedia.sound
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
@@ -24,10 +26,12 @@ import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
 import androidx.media3.exoplayer.ExoPlayer
+import androidx.compose.animation.core.*
 import coil.compose.AsyncImage
 import com.puskal.data.model.AudioModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.Gray
+import com.puskal.theme.PrimaryColor
 import com.puskal.theme.R
 import com.puskal.theme.SeparatorColor
 
@@ -201,6 +205,41 @@ private fun BottomAction(text: String, icon: Int) {
 }
 
 @Composable
+private fun PlayingAnimation(modifier: Modifier = Modifier) {
+    val infinite = rememberInfiniteTransition()
+
+    val heights = listOf(0, 1, 2).map { index ->
+        infinite.animateDp(
+            initialValue = 4.dp,
+            targetValue = 12.dp,
+            animationSpec = infiniteRepeatable(
+                animation = keyframes {
+                    durationMillis = 600
+                    12.dp at 300
+                    4.dp at 600
+                },
+                delay = index * 100
+            )
+        )
+    }
+
+    Row(
+        modifier = modifier,
+        horizontalArrangement = Arrangement.spacedBy(1.dp),
+        verticalAlignment = Alignment.Bottom
+    ) {
+        heights.forEach { h ->
+            Box(
+                modifier = Modifier
+                    .width(2.dp)
+                    .height(h.value)
+                    .background(PrimaryColor, RoundedCornerShape(1.dp))
+            )
+        }
+    }
+}
+
+@Composable
 private fun AudioRow(
     audio: AudioModel,
     isPlaying: Boolean,
@@ -218,31 +257,42 @@ private fun AudioRow(
             contentDescription = null,
             modifier = Modifier
                 .size(56.dp)
+                .border(
+                    BorderStroke(width = 1.dp, color = if (isPlaying) PrimaryColor else Color.Transparent),
+                    shape = RoundedCornerShape(4.dp)
+                )
                 .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
         )
         Text(
             text = "${audio.audioAuthor.fullName} \u2022 ${audio.duration}",
             style = MaterialTheme.typography.bodyMedium,
-            color = Color.Black,
+            color = if (isPlaying) PrimaryColor else Color.Black,
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)
         )
-        Row {
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Filled.ContentCut,
-                    contentDescription = stringResource(id = R.string.cut),
-                    tint = Color.Black
-                )
-            }
-            IconButton(onClick = { }) {
-                Icon(
-                    imageVector = Icons.Outlined.FavoriteBorder,
-                    contentDescription = stringResource(id = R.string.favorite),
-                    tint = Color.Black
-                )
+
+        if (isPlaying) {
+            PlayingAnimation(modifier = Modifier.padding(end = 8.dp))
+        }
+
+        if (isPlaying) {
+            Row {
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Filled.ContentCut,
+                        contentDescription = stringResource(id = R.string.cut),
+                        tint = Color.Black
+                    )
+                }
+                IconButton(onClick = { }) {
+                    Icon(
+                        imageVector = Icons.Outlined.FavoriteBorder,
+                        contentDescription = stringResource(id = R.string.favorite),
+                        tint = Color.Black
+                    )
+                }
             }
         }
     }
