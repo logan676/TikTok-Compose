@@ -15,6 +15,7 @@ object AudioDataSource {
             isOriginal = true,
             audioAuthor = charliePuth,
             numberOfPost = 239000,
+            duration = "02:10",
             originalVideoUrl = "charlieputh_vid1.mp4"
         ),
         AudioModel(
@@ -22,6 +23,7 @@ object AudioDataSource {
             isOriginal = true,
             audioAuthor = kylieJenner,
             numberOfPost = 42000,
+            duration = "03:20",
             originalVideoUrl = "kylie_vid2.mp4"
         ),
         AudioModel(
@@ -29,6 +31,7 @@ object AudioDataSource {
             isOriginal = true,
             audioAuthor = duaLipa,
             numberOfPost = 120340,
+            duration = "01:45",
             originalVideoUrl = "dua_vid1.mp4"
         ),
         AudioModel(
@@ -36,6 +39,7 @@ object AudioDataSource {
             isOriginal = true,
             audioAuthor = taylor,
             numberOfPost = 15200,
+            duration = "02:58",
             originalVideoUrl = "taylor_vid1.mp4"
         )
     )

@@ -166,7 +166,7 @@ private fun AudioRow(audio: AudioModel) {
             tint = Color.White
         )
         Text(
-            text = audio.audioAuthor.fullName,
+            text = "${audio.audioAuthor.fullName} \u2022 ${audio.duration}",
             style = MaterialTheme.typography.bodyMedium,
             color = Color.White,
             modifier = Modifier

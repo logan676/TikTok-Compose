@@ -63,7 +63,7 @@ private fun AudioRow(audio: AudioModel) {
             modifier = Modifier.size(56.dp)
         )
         Text(
-            text = audio.audioAuthor.fullName,
+            text = "${audio.audioAuthor.fullName} \u2022 ${audio.duration}",
             style = MaterialTheme.typography.bodyMedium,
             modifier = Modifier
                 .weight(1f)
