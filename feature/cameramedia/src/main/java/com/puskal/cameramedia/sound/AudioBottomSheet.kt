@@ -19,6 +19,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.outlined.FavoriteBorder
@@ -62,7 +63,7 @@ fun AudioBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 8.dp),
+                    .padding(top = 4.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Box(
@@ -71,7 +72,8 @@ fun AudioBottomSheet(
                         .background(color = GrayMainColor, shape = RoundedCornerShape(2.dp))
                 )
             }
-            Spacer(modifier = Modifier.height(8.dp))
+            
+            Spacer(modifier = Modifier.height(4.dp))
 
             OutlinedTextField(
                 value = search,
@@ -122,7 +124,13 @@ fun AudioBottomSheet(
                         Tab(
                             selected = selectedTab == index,
                             onClick = { selectedTab = index },
-                            text = { Text(text = title, color = Color.Black) }
+                            text = {
+                                Text(
+                                    text = title,
+                                    color = Color.Black,
+                                    fontSize = 10.sp
+                                )
+                            }
                         )
                     }
                 }
@@ -253,7 +261,7 @@ private fun AudioRow(
                     BorderStroke(width = 1.dp, color = if (isPlaying) PrimaryColor else Color.Transparent),
                     shape = RoundedCornerShape(4.dp)
                 )
-                .clip(RoundedCornerShape(4.dp)),
+                .clip(RoundedCornerShape(8.dp)),
             contentScale = ContentScale.Crop
         )
         Text(
