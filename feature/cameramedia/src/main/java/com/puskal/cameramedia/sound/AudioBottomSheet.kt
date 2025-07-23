@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
+import androidx.compose.material.icons.filled.AudioFile
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.media3.common.MediaItem
@@ -140,7 +141,7 @@ fun AudioBottomSheet(
                     modifier = Modifier.padding(end = 16.dp, start = 8.dp)
                 ) {
                     Icon(
-                        painter = painterResource(id = R.drawable.ic_plus),
+                        imageVector = Icons.Filled.AudioFile,
                         contentDescription = null,
                         modifier = Modifier.size(10.dp)
                     )
