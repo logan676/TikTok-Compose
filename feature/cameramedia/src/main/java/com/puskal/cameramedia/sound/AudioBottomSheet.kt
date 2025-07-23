@@ -11,6 +11,7 @@ import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.material3.*
+import com.puskal.composable.TiktokBottomSheet
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -64,8 +65,9 @@ fun AudioBottomSheet(
         onDispose { exoPlayer.release() }
     }
 
-    ModalBottomSheet(onDismissRequest = onDismiss) {
-        Column(modifier = Modifier.fillMaxWidth()) {
+    TiktokBottomSheet(
+        onDismissRequest = onDismiss,
+        dragHandle = {
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
@@ -78,7 +80,9 @@ fun AudioBottomSheet(
                         .background(color = Gray, shape = RoundedCornerShape(2.dp))
                 )
             }
-            
+        }
+    ) {
+        Column(modifier = Modifier.fillMaxWidth()) {
             Spacer(modifier = Modifier.height(2.dp))
 
             OutlinedTextField(
