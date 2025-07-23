@@ -69,7 +69,7 @@ fun AudioBottomSheet(
             Box(
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(top = 4.dp),
+                    .padding(top = 2.dp),
                 contentAlignment = Alignment.Center
             ) {
                 Box(
@@ -79,7 +79,7 @@ fun AudioBottomSheet(
                 )
             }
             
-            Spacer(modifier = Modifier.height(4.dp))
+            Spacer(modifier = Modifier.height(2.dp))
 
             OutlinedTextField(
                 value = search,
