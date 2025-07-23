@@ -75,13 +75,15 @@ fun AudioBottomSheet(
                 )
                 TabRow(
                     selectedTabIndex = selectedTab,
-                    modifier = Modifier.weight(1f)
+                    modifier = Modifier.weight(1f),
+                    containerColor = Color.Transparent,
+                    contentColor = Color.Black
                 ) {
                     tabs.forEachIndexed { index, title ->
                         Tab(
                             selected = selectedTab == index,
                             onClick = { selectedTab = index },
-                            text = { Text(text = title) }
+                            text = { Text(text = title, color = Color.Black) }
                         )
                     }
                 }
