@@ -1,6 +1,7 @@
 package com.puskal.cameramedia.sound
 
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -10,9 +11,13 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.media3.common.MediaItem
+import androidx.media3.exoplayer.ExoPlayer
+import android.net.Uri
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.R
@@ -26,6 +31,12 @@ fun AudioBottomSheet(
     val viewState by viewModel.viewState.collectAsState()
     var search by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf(0) }
+    val context = LocalContext.current
+    val exoPlayer = remember { ExoPlayer.Builder(context).build() }
+    var playingItem by remember { mutableStateOf<String?>(null) }
+    DisposableEffect(exoPlayer) {
+        onDispose { exoPlayer.release() }
+    }
 
     ModalBottomSheet(onDismissRequest = onDismiss) {
         Column(modifier = Modifier.fillMaxWidth()) {
@@ -103,7 +114,22 @@ fun AudioBottomSheet(
             ) {
                 viewState?.audioFiles?.let { list ->
                     items(list) { audio ->
-                        AudioRow(audio)
+                        AudioRow(
+                            name = audio,
+                            isPlaying = playingItem == audio,
+                            onClick = {
+                                if (playingItem == audio && exoPlayer.isPlaying) {
+                                    exoPlayer.stop()
+                                    playingItem = null
+                                } else {
+                                    val uri = "file:///android_asset/audios/${audio}.mp3"
+                                    exoPlayer.setMediaItem(MediaItem.fromUri(Uri.parse(uri)))
+                                    exoPlayer.prepare()
+                                    exoPlayer.playWhenReady = true
+                                    playingItem = audio
+                                }
+                            }
+                        )
                     }
                 }
             }
@@ -136,10 +162,11 @@ private fun BottomAction(text: String, icon: Int) {
 }
 
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(name: String, isPlaying: Boolean, onClick: () -> Unit) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
+            .clickable { onClick() }
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
@@ -147,7 +174,7 @@ private fun AudioRow(name: String) {
             painter = painterResource(id = R.drawable.ic_music_note),
             contentDescription = null,
             modifier = Modifier.size(56.dp),
-            tint = Color.White
+            tint = if (isPlaying) MaterialTheme.colorScheme.primary else Color.White
         )
         Text(
             text = name,
