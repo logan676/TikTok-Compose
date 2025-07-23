@@ -40,6 +40,11 @@ fun AudioBottomSheet(
     var search by remember { mutableStateOf("") }
     var selectedTab by remember { mutableStateOf(0) }
 
+    val shuffledLists = remember(viewState?.audioFiles) {
+        val list = viewState?.audioFiles ?: emptyList()
+        List(4) { list.shuffled() }
+    }
+
     val context = LocalContext.current
     val exoPlayer = remember { ExoPlayer.Builder(context).build() }
     var playingItem by remember { mutableStateOf<AudioModel?>(null) }
@@ -136,28 +141,27 @@ fun AudioBottomSheet(
             LazyColumn(
                 modifier = Modifier.weight(1f, fill = true)
             ) {
-                viewState?.audioFiles?.let { list ->
-                    items(list) { audio ->
-                        val isPlaying = playingItem == audio
-                        AudioRow(
-                            audio = audio,
-                            isPlaying = isPlaying,
-                            onClick = {
-                                if (isPlaying) {
-                                    exoPlayer.stop()
-                                    playingItem = null
-                                } else {
-                                    exoPlayer.setMediaItem(
-                                        MediaItem.fromUri("asset:///audios/${audio.originalVideoUrl}")
-                                    )
-                                    exoPlayer.prepare()
-                                    exoPlayer.playWhenReady = true
-                                    playingItem = audio
-                                }
+                val list = shuffledLists.getOrNull(selectedTab) ?: emptyList()
+                items(list) { audio ->
+                    val isPlaying = playingItem == audio
+                    AudioRow(
+                        audio = audio,
+                        isPlaying = isPlaying,
+                        onClick = {
+                            if (isPlaying) {
+                                exoPlayer.stop()
+                                playingItem = null
+                            } else {
+                                exoPlayer.setMediaItem(
+                                    MediaItem.fromUri("asset:///audios/${audio.originalVideoUrl}")
+                                )
+                                exoPlayer.prepare()
+                                exoPlayer.playWhenReady = true
+                                playingItem = audio
                             }
-                        )
-                        Divider(thickness = 0.5.dp, color = SeparatorColor)
-                    }
+                        }
+                    )
+                    Divider(thickness = 0.5.dp, color = SeparatorColor)
                 }
             }
 
