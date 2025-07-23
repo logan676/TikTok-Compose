@@ -9,6 +9,7 @@ data class AudioModel(
     val audioAuthor:UserModel,
     val numberOfPost:Long,
     val originalVideoUrl:String,
+    val duration: String,
 ){
     fun parseCoverImage(): String =
         if (audioCoverImage.startsWith("http")) audioCoverImage

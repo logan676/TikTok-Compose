@@ -14,6 +14,7 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import com.puskal.data.model.AudioModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.R
 
@@ -136,7 +137,7 @@ private fun BottomAction(text: String, icon: Int) {
 }
 
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(audio: AudioModel) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
@@ -149,14 +150,22 @@ private fun AudioRow(name: String) {
             modifier = Modifier.size(56.dp),
             tint = Color.White
         )
-        Text(
-            text = name,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White,
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)
-        )
+        ) {
+            Text(
+                text = audio.originalVideoUrl.substringBeforeLast('.'),
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.White
+            )
+            Text(
+                text = "${audio.audioAuthor.fullName} • ${audio.duration}",
+                style = MaterialTheme.typography.bodySmall,
+                color = Color.White
+            )
+        }
         TextButton(onClick = { }) {
             Text(text = stringResource(id = R.string.use_this_sound))
         }

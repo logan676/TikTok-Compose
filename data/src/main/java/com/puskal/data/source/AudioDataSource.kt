@@ -15,28 +15,32 @@ object AudioDataSource {
             isOriginal = true,
             audioAuthor = charliePuth,
             numberOfPost = 239000,
-            originalVideoUrl = "charlieputh_vid1.mp4"
+            originalVideoUrl = "charlieputh_vid1.mp4",
+            duration = "02:10"
         ),
         AudioModel(
             audioCoverImage = "img2.jpg",
             isOriginal = true,
             audioAuthor = kylieJenner,
             numberOfPost = 42000,
-            originalVideoUrl = "kylie_vid2.mp4"
+            originalVideoUrl = "kylie_vid2.mp4",
+            duration = "01:45"
         ),
         AudioModel(
             audioCoverImage = "img3.jpg",
             isOriginal = true,
             audioAuthor = duaLipa,
             numberOfPost = 120340,
-            originalVideoUrl = "dua_vid1.mp4"
+            originalVideoUrl = "dua_vid1.mp4",
+            duration = "03:05"
         ),
         AudioModel(
             audioCoverImage = "img4.jpg",
             isOriginal = true,
             audioAuthor = taylor,
             numberOfPost = 15200,
-            originalVideoUrl = "taylor_vid1.mp4"
+            originalVideoUrl = "taylor_vid1.mp4",
+            duration = "02:30"
         )
     )
 
