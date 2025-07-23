@@ -10,15 +10,25 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import coil.compose.AsyncImage
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ContentCut
 import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.hilt.navigation.compose.hiltViewModel
 import com.puskal.theme.GrayMainColor
 import com.puskal.theme.R
+
+data class AudioRowItem(
+    val cover: String,
+    val title: String,
+    val author: String,
+    val duration: String
+)
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -108,7 +118,17 @@ fun AudioBottomSheet(
             ) {
                 viewState?.audioFiles?.let { list ->
                     items(list) { audio ->
-                        AudioRow(audio)
+                        val index = audio.removePrefix("audio").toIntOrNull() ?: 1
+                        val imageIndex = if (index in 1..7) index else 1
+                        val cover = "file:///android_asset/templateimages/img${imageIndex}.jpg"
+                        AudioRow(
+                            AudioRowItem(
+                                cover = cover,
+                                title = audio,
+                                author = "Author $index",
+                                duration = "00:30"
+                            )
+                        )
                     }
                 }
             }
@@ -141,40 +161,50 @@ private fun BottomAction(text: String, icon: Int) {
 }
 
 @Composable
-private fun AudioRow(name: String) {
+private fun AudioRow(item: AudioRowItem) {
     Row(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 16.dp, vertical = 12.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
-        Icon(
-            painter = painterResource(id = R.drawable.ic_music_note),
+        AsyncImage(
+            model = item.cover,
             contentDescription = null,
-            modifier = Modifier.size(56.dp),
-            tint = Color.White
+            contentScale = ContentScale.Crop,
+            modifier = Modifier
+                .size(56.dp)
+                .clip(RoundedCornerShape(4.dp))
         )
-        Text(
-            text = name,
-            style = MaterialTheme.typography.bodyMedium,
-            color = Color.White,
+        Column(
             modifier = Modifier
                 .weight(1f)
                 .padding(start = 12.dp)
-        )
+        ) {
+            Text(
+                text = item.title,
+                style = MaterialTheme.typography.bodyMedium,
+                color = Color.Black
+            )
+            Text(
+                text = "${item.author} • ${item.duration}",
+                style = MaterialTheme.typography.labelSmall,
+                color = Color.Black
+            )
+        }
         Row {
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Filled.ContentCut,
                     contentDescription = stringResource(id = R.string.cut),
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
             IconButton(onClick = { }) {
                 Icon(
                     imageVector = Icons.Outlined.FavoriteBorder,
                     contentDescription = stringResource(id = R.string.favorite),
-                    tint = Color.White
+                    tint = Color.Black
                 )
             }
         }
