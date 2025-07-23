@@ -18,7 +18,7 @@ fun ResizeToolBar(
     onFeatureSelected: (ResizeMenuFeature) -> Unit = {}
 ) {
     Column(
-        modifier = modifier.width(96.dp),
+        modifier = modifier.width(36.dp),
         verticalArrangement = Arrangement.spacedBy(16.dp),
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

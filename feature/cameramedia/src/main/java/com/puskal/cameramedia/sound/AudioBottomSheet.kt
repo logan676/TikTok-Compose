@@ -142,10 +142,14 @@ fun AudioBottomSheet(
                     Icon(
                         painter = painterResource(id = R.drawable.ic_plus),
                         contentDescription = null,
-                        modifier = Modifier.size(20.dp)
+                        modifier = Modifier.size(10.dp)
                     )
                     Spacer(modifier = Modifier.width(4.dp))
-                    Text(text = stringResource(id = R.string.import_audio))
+                    Text(
+                        text = stringResource(id = R.string.import_audio),
+                        color = Color.Black,
+                        fontSize = 10.sp
+                    )
                 }
             }
 
@@ -275,14 +279,14 @@ private fun AudioRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = audio.parseCoverImage(),
             contentDescription = null,
             modifier = Modifier
-                .size(56.dp)
+                .size(48.dp)
                 .border(
                     BorderStroke(width = 1.dp, color = if (isPlaying) PrimaryColor else Color.Transparent),
                     shape = RoundedCornerShape(4.dp)
