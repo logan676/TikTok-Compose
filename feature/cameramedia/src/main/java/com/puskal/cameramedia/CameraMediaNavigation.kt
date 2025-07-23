@@ -13,9 +13,11 @@ import androidx.compose.runtime.getValue
 import com.puskal.core.DestinationRoute
 import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_EDIT_ROUTE
 import com.puskal.core.DestinationRoute.FORMATTED_VIDEO_TRIM_ROUTE
+import com.puskal.core.DestinationRoute.FORMATTED_POST_VIDEO_ROUTE
 import com.puskal.core.DestinationRoute.PassedKey
 import com.puskal.cameramedia.edit.VideoEditScreen
 import com.puskal.cameramedia.edit.VideoTrimScreen
+import com.puskal.cameramedia.post.PostVideoScreen
 
 /**
  * Created by Puskal Khadka on 4/2/2023.
@@ -52,7 +54,12 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
             onClickAddSound = {
                 navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE)
             },
-            enableFilters = true
+            enableFilters = true,
+            onClickNext = { encoded ->
+                navController.navigate(
+                    DestinationRoute.POST_VIDEO_ROUTE + "/" + Uri.encode(encoded)
+                )
+            }
         )
     }
 
@@ -71,6 +78,20 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
                 navController.navigateUp()
             },
             onAddSound = { navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE) }
+        )
+    }
+
+    composable(
+        route = FORMATTED_POST_VIDEO_ROUTE,
+        arguments = listOf(navArgument(PassedKey.VIDEO_URI) { type = NavType.StringType })
+    ) { backStackEntry ->
+        val uri = backStackEntry.arguments
+            ?.getString(PassedKey.VIDEO_URI)
+            ?.let { Uri.decode(it) } ?: ""
+        PostVideoScreen(
+            videoUri = uri,
+            onBack = { navController.navigateUp() },
+            onPublish = { navController.navigateUp() }
         )
     }
 }
