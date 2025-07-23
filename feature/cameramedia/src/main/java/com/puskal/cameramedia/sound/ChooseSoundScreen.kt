@@ -12,6 +12,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
+import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.ContentCut
+import androidx.compose.material.icons.outlined.FavoriteBorder
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.navigation.NavController
 import com.puskal.composable.TopBar
@@ -65,8 +68,19 @@ private fun AudioRow(name: String) {
                 .weight(1f)
                 .padding(start = 12.dp)
         )
-        TextButton(onClick = { }) {
-            Text(text = stringResource(id = R.string.use_this_sound))
+        Row {
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Filled.ContentCut,
+                    contentDescription = stringResource(id = R.string.cut)
+                )
+            }
+            IconButton(onClick = { }) {
+                Icon(
+                    imageVector = Icons.Outlined.FavoriteBorder,
+                    contentDescription = stringResource(id = R.string.favorite)
+                )
+            }
         }
     }
 }

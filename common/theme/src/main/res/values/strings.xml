@@ -111,7 +111,8 @@
 
     <!-- choose sound -->
     <string name="sounds">Sounds</string>
-    <string name="use_this_sound">Use this sound</string>
+    <string name="cut">Cut</string>
+    <string name="favorite">Favorite</string>
     <string name="original_sound_of">Original sound - %1$s</string>
     <string name="number_posts">%1$d posts</string>
 
