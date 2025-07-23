@@ -244,7 +244,7 @@ private fun PlayingAnimation(modifier: Modifier = Modifier) {
                     12f at 300
                     4f at 600
                 },
-                delay = index * 100
+                initialStartOffset = StartOffset(index * 100)
             )
         )
     }
