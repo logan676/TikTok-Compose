@@ -49,6 +49,9 @@ fun NavGraphBuilder.cameraMediaNavGraph(navController: NavController) {
                     DestinationRoute.VIDEO_TRIM_ROUTE + "/" + Uri.encode(encoded)
                 )
             },
+            onClickAddSound = {
+                navController.navigate(DestinationRoute.CHOOSE_SOUND_ROUTE)
+            },
             enableFilters = true
         )
     }

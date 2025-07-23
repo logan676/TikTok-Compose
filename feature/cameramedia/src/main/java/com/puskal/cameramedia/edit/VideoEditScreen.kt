@@ -32,6 +32,7 @@ fun VideoEditScreen(
     videoUri: String,
     onClickBack: () -> Unit,
     onTrimVideo: (String) -> Unit = {},
+    onClickAddSound: () -> Unit = {},
     enableFilters: Boolean = false
 ) {
     TikTokTheme(darkTheme = true) {
@@ -175,7 +176,10 @@ fun VideoEditScreen(
                     modifier = Modifier
                         .align(Alignment.TopCenter)
                         .padding(top = 32.dp),
-                    onClickAddSound = { Log.d(TAG, "Add sound clicked") }
+                    onClickAddSound = {
+                        Log.d(TAG, "Add sound clicked")
+                        onClickAddSound()
+                    }
                 )
 
                 /*** Resize toolbar ***/
