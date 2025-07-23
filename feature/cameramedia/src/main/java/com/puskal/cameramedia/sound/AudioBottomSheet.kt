@@ -275,14 +275,14 @@ private fun AudioRow(
         modifier = Modifier
             .fillMaxWidth()
             .clickable(onClick = onClick)
-            .padding(horizontal = 16.dp, vertical = 12.dp),
+            .padding(horizontal = 16.dp, vertical = 8.dp),
         verticalAlignment = Alignment.CenterVertically
     ) {
         AsyncImage(
             model = audio.parseCoverImage(),
             contentDescription = null,
             modifier = Modifier
-                .size(56.dp)
+                .size(48.dp)
                 .border(
                     BorderStroke(width = 1.dp, color = if (isPlaying) PrimaryColor else Color.Transparent),
                     shape = RoundedCornerShape(4.dp)
