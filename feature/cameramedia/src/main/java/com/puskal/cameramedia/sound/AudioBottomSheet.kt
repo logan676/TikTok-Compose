@@ -90,7 +90,8 @@ fun AudioBottomSheet(
                 onValueChange = { search = it },
                 modifier = Modifier
                     .fillMaxWidth()
-                    .padding(horizontal = 16.dp),
+                    .height(30.dp)
+                    .padding(horizontal = 20.dp),
                 leadingIcon = {
                     Icon(
                         painter = painterResource(id = R.drawable.ic_search),

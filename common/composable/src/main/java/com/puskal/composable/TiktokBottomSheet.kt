@@ -41,7 +41,7 @@ fun TiktokBottomSheet(
 private fun DefaultDragHandle(color: Color) {
     Box(
         modifier = Modifier
-            .padding(vertical = 8.dp)
+            .padding(top = 6.dp)
             .size(width = 32.dp, height = 4.dp)
             .background(color = color, shape = RoundedCornerShape(2.dp))
     )
