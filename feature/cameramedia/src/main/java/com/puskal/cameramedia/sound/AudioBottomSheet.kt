@@ -165,7 +165,9 @@ fun AudioBottomSheet(
             Spacer(modifier = Modifier.height(8.dp))
 
             LazyColumn(
-                modifier = Modifier.weight(1f, fill = true),
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .height(100.dp),
                 contentPadding = PaddingValues(bottom = 56.dp)
             ) {
                 val list = shuffledLists.getOrNull(selectedTab) ?: emptyList()
