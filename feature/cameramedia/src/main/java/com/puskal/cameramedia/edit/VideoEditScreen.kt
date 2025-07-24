@@ -20,7 +20,7 @@ import androidx.media3.exoplayer.ExoPlayer
 import androidx.media3.ui.AspectRatioFrameLayout
 import androidx.media3.ui.PlayerView
 import com.puskal.cameramedia.MusicBarLayout
-import com.puskal.composable.CustomButton
+import com.puskal.composable.RoundedButton
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
@@ -47,12 +47,12 @@ fun VideoEditScreen(
                         .padding(16.dp),
                     horizontalArrangement = Arrangement.SpaceBetween
                 ) {
-                    CustomButton(
+                    RoundedButton(
                         buttonText = stringResource(id = R.string.friend_daily),
                         modifier = Modifier.weight(1f)
                     ) {}
                     Spacer(modifier = Modifier.width(12.dp))
-                    CustomButton(
+                    RoundedButton(
                         buttonText = stringResource(id = R.string.next),
                         modifier = Modifier.weight(1f)
                     ) { onClickNext(videoUri) }
