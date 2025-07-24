@@ -24,6 +24,7 @@ import com.puskal.composable.RoundedButton
 import com.puskal.theme.R
 import com.puskal.theme.TikTokTheme
 import com.puskal.theme.White
+import com.puskal.theme.GrayMainColor
 
 private const val TAG = "VideoEditScreen"
 
@@ -49,7 +50,8 @@ fun VideoEditScreen(
                 ) {
                     RoundedButton(
                         buttonText = stringResource(id = R.string.friend_daily),
-                        modifier = Modifier.weight(1f)
+                        modifier = Modifier.weight(1f),
+                        containerColor = GrayMainColor
                     ) {}
                     Spacer(modifier = Modifier.width(12.dp))
                     RoundedButton(
