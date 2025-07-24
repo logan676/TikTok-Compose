@@ -16,6 +16,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 
 @Composable
@@ -90,7 +91,9 @@ fun VideoEditToolBar(
                 Text(
                     text = stringResource(id = tool.title),
                     style = MaterialTheme.typography.labelSmall,
-                    color = Color.White
+                    color = Color.White,
+                    modifier = Modifier.fillMaxWidth(),
+                    textAlign = TextAlign.Center
                 )
             }
         }
@@ -115,7 +118,9 @@ fun VideoEditToolBar(
                     Text(
                         text = stringResource(id = feature.title),
                         style = MaterialTheme.typography.labelSmall,
-                        color = Color.White
+                        color = Color.White,
+                        modifier = Modifier.fillMaxWidth(),
+                        textAlign = TextAlign.Center
                     )
                 }
             }
